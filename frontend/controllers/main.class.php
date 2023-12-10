@@ -117,7 +117,7 @@ class WOO_Order_Tip_Main {
         check_ajax_referer( 'apply_order_tip', 'security' );
 
         $tip = array(
-            'tip'       => intval( sanitize_text_field( $_POST['tip'] ) ),
+            'tip'       => floatval( sanitize_text_field( $_POST['tip'] ) ),
             'tip_type'  => intval( sanitize_text_field( $_POST['tip_type'] ) ),
             'tip_label' => sanitize_text_field( $_POST['tip_label'] ),
             'tip_cash'  => intval( sanitize_text_field( $_POST['tip_cash'] ) ),
@@ -213,7 +213,7 @@ class WOO_Order_Tip_Main {
     **/
     function remove_tip_on_order_placed( $orderid ) {
 
-        if( $this->settings['wc_order_tip_remove_new_order'] ) {
+        if( $this->settings['wc_order_tip_remove_new_order'] && ! is_admin() ) {
             $wc_session = WC()->session;
             $wc_session->__unset( 'tip' );
         }

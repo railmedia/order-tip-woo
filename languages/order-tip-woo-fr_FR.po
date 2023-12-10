@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Woo Order Tip\n"
-"POT-Creation-Date: 2021-01-30 15:57+0100\n"
-"PO-Revision-Date: 2021-01-30 15:58+0100\n"
+"POT-Creation-Date: 2021-02-07 18:29+0100\n"
+"PO-Revision-Date: 2021-02-07 18:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -37,70 +37,74 @@ msgstr "page de configuration"
 msgid "Order Tips"
 msgstr "Pourboire commande"
 
-#: admin/controllers/reports.class.php:132
+#: admin/controllers/reports.class.php:133
 msgid "From"
 msgstr "À partir de"
 
-#: admin/controllers/reports.class.php:138
+#: admin/controllers/reports.class.php:139
 msgid "To"
 msgstr "À"
 
-#: admin/controllers/reports.class.php:146
+#: admin/controllers/reports.class.php:147
 msgid "Export to CSV"
 msgstr "Exportation CSV"
 
-#: admin/controllers/reports.class.php:153
+#: admin/controllers/reports.class.php:154
 #, php-format
 msgid "Displaying orders between %s and %s"
 msgstr "Affichage des commandes entre %s et %s"
 
-#: admin/controllers/reports.class.php:162
-#: admin/controllers/reports.class.php:367
+#: admin/controllers/reports.class.php:163
+#: admin/controllers/reports.class.php:386
 msgid "Order ID"
 msgstr "ID commande"
 
-#: admin/controllers/reports.class.php:163
-msgid "Name"
-msgstr "Nom"
-
 #: admin/controllers/reports.class.php:164
+msgid "Customer"
+msgstr "Client"
+
+#: admin/controllers/reports.class.php:165
+msgid "Type"
+msgstr "Type"
+
+#: admin/controllers/reports.class.php:166
 msgid "Value"
 msgstr "Valeur"
 
-#: admin/controllers/reports.class.php:165
-msgid "Date"
-msgstr "Date"
+#: admin/controllers/reports.class.php:167
+msgid "Date/Time"
+msgstr "Date/Heure"
 
-#: admin/controllers/reports.class.php:192
-#: admin/controllers/reports.class.php:439
+#: admin/controllers/reports.class.php:202
+#: admin/controllers/reports.class.php:458
 msgid "Total"
 msgstr "Total"
 
-#: admin/controllers/reports.class.php:202
+#: admin/controllers/reports.class.php:212
 msgid "There are no orders with tips in the database just yet"
 msgstr ""
 "Il n'y a pas encore de commandes avec des pourboire dans la base de données"
 
-#: admin/controllers/reports.class.php:249
-#: admin/controllers/reports.class.php:322
+#: admin/controllers/reports.class.php:267
+#: admin/controllers/reports.class.php:341
 msgid "There are no orders with tips based on your date range."
 msgstr ""
 "Il n'y a pas de commandes avec des pourboire basés sur votre fourchette de "
 "dates."
 
-#: admin/controllers/reports.class.php:368
+#: admin/controllers/reports.class.php:387
 msgid "Tip name"
 msgstr "Nom du pourboir"
 
-#: admin/controllers/reports.class.php:369
+#: admin/controllers/reports.class.php:388
 msgid "Tip value"
 msgstr "Valeur du pourboire"
 
-#: admin/controllers/reports.class.php:370
+#: admin/controllers/reports.class.php:389
 msgid "Order date"
 msgstr "Date commande"
 
-#: admin/controllers/reports.class.php:440
+#: admin/controllers/reports.class.php:459
 msgid "Currency"
 msgstr "Monnaie"
 
@@ -436,3 +440,6 @@ msgstr "Êtes-vous sûr de vouloir supprimer le pourboire?"
 #: admin/controllers/settings.class.php:292
 msgid "Updated to 1.1"
 msgstr ""
+
+#~ msgid "Name"
+#~ msgstr "Nom"

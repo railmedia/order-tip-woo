@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Woo Order Tip\n"
-"POT-Creation-Date: 2021-01-30 15:51+0100\n"
-"PO-Revision-Date: 2021-01-30 15:55+0100\n"
+"POT-Creation-Date: 2021-02-07 18:28+0100\n"
+"PO-Revision-Date: 2021-02-07 18:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -37,68 +37,72 @@ msgstr "Einstellungsseite"
 msgid "Order Tips"
 msgstr "Bestellen Trinkgeld"
 
-#: admin/controllers/reports.class.php:132
+#: admin/controllers/reports.class.php:133
 msgid "From"
 msgstr "Von"
 
-#: admin/controllers/reports.class.php:138
+#: admin/controllers/reports.class.php:139
 msgid "To"
 msgstr "Bis"
 
-#: admin/controllers/reports.class.php:146
+#: admin/controllers/reports.class.php:147
 msgid "Export to CSV"
 msgstr "CSV-Export"
 
-#: admin/controllers/reports.class.php:153
+#: admin/controllers/reports.class.php:154
 #, php-format
 msgid "Displaying orders between %s and %s"
 msgstr "Anzeigen von Bestellungen zwischen %s und %s"
 
-#: admin/controllers/reports.class.php:162
-#: admin/controllers/reports.class.php:367
+#: admin/controllers/reports.class.php:163
+#: admin/controllers/reports.class.php:386
 msgid "Order ID"
 msgstr "ID"
 
-#: admin/controllers/reports.class.php:163
-msgid "Name"
-msgstr "Name"
-
 #: admin/controllers/reports.class.php:164
+msgid "Customer"
+msgstr "Kunde"
+
+#: admin/controllers/reports.class.php:165
+msgid "Type"
+msgstr "Typ"
+
+#: admin/controllers/reports.class.php:166
 msgid "Value"
 msgstr "Wert"
 
-#: admin/controllers/reports.class.php:165
-msgid "Date"
-msgstr "Datum"
+#: admin/controllers/reports.class.php:167
+msgid "Date/Time"
+msgstr "Datum/Zeit"
 
-#: admin/controllers/reports.class.php:192
-#: admin/controllers/reports.class.php:439
+#: admin/controllers/reports.class.php:202
+#: admin/controllers/reports.class.php:458
 msgid "Total"
 msgstr "Gesamt"
 
-#: admin/controllers/reports.class.php:202
+#: admin/controllers/reports.class.php:212
 msgid "There are no orders with tips in the database just yet"
 msgstr ""
 "Es befinden sich noch keine Bestellungen mit Trinkgeld in der Datenbank"
 
-#: admin/controllers/reports.class.php:249
-#: admin/controllers/reports.class.php:322
+#: admin/controllers/reports.class.php:267
+#: admin/controllers/reports.class.php:341
 msgid "There are no orders with tips based on your date range."
 msgstr "Es gibt keine Bestellungen mit Trinkgeld in Ihrem Datumsbereich."
 
-#: admin/controllers/reports.class.php:368
+#: admin/controllers/reports.class.php:387
 msgid "Tip name"
 msgstr "Trinkgeld Name"
 
-#: admin/controllers/reports.class.php:369
+#: admin/controllers/reports.class.php:388
 msgid "Tip value"
 msgstr "Trinkgeld Wert"
 
-#: admin/controllers/reports.class.php:370
+#: admin/controllers/reports.class.php:389
 msgid "Order date"
 msgstr "Datum"
 
-#: admin/controllers/reports.class.php:440
+#: admin/controllers/reports.class.php:459
 msgid "Currency"
 msgstr "Währung"
 
@@ -438,3 +442,6 @@ msgstr "Sind Sie sicher, dass Sie die Trinkgelder entfernen möchten?"
 #: admin/controllers/settings.class.php:292
 msgid "Updated to 1.1"
 msgstr ""
+
+#~ msgid "Name"
+#~ msgstr "Name"

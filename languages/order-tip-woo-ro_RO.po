@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Woo Order Tip\n"
-"POT-Creation-Date: 2021-01-30 16:02+0100\n"
-"PO-Revision-Date: 2021-01-30 16:03+0100\n"
+"POT-Creation-Date: 2021-02-07 18:33+0100\n"
+"PO-Revision-Date: 2021-02-07 18:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ro\n"
@@ -38,69 +38,73 @@ msgstr "pagina de setări"
 msgid "Order Tips"
 msgstr "Bacșiș comandă"
 
-#: admin/controllers/reports.class.php:132
+#: admin/controllers/reports.class.php:133
 msgid "From"
 msgstr "De la"
 
-#: admin/controllers/reports.class.php:138
+#: admin/controllers/reports.class.php:139
 msgid "To"
 msgstr "Până la"
 
-#: admin/controllers/reports.class.php:146
+#: admin/controllers/reports.class.php:147
 msgid "Export to CSV"
 msgstr "Export CSV"
 
-#: admin/controllers/reports.class.php:153
+#: admin/controllers/reports.class.php:154
 #, php-format
 msgid "Displaying orders between %s and %s"
 msgstr "Afișează comenzile între %s și %s"
 
-#: admin/controllers/reports.class.php:162
-#: admin/controllers/reports.class.php:367
+#: admin/controllers/reports.class.php:163
+#: admin/controllers/reports.class.php:386
 msgid "Order ID"
 msgstr "ID comandă"
 
-#: admin/controllers/reports.class.php:163
-msgid "Name"
-msgstr "Nume"
-
 #: admin/controllers/reports.class.php:164
+msgid "Customer"
+msgstr "Client"
+
+#: admin/controllers/reports.class.php:165
+msgid "Type"
+msgstr "Tip"
+
+#: admin/controllers/reports.class.php:166
 msgid "Value"
 msgstr "Valoare"
 
-#: admin/controllers/reports.class.php:165
-msgid "Date"
-msgstr "Dată"
+#: admin/controllers/reports.class.php:167
+msgid "Date/Time"
+msgstr "Dată/Oră"
 
-#: admin/controllers/reports.class.php:192
-#: admin/controllers/reports.class.php:439
+#: admin/controllers/reports.class.php:202
+#: admin/controllers/reports.class.php:458
 msgid "Total"
 msgstr "Total"
 
-#: admin/controllers/reports.class.php:202
+#: admin/controllers/reports.class.php:212
 msgid "There are no orders with tips in the database just yet"
 msgstr "Încă nu există comenzi cu bacșișuri în baza de date"
 
-#: admin/controllers/reports.class.php:249
-#: admin/controllers/reports.class.php:322
+#: admin/controllers/reports.class.php:267
+#: admin/controllers/reports.class.php:341
 msgid "There are no orders with tips based on your date range."
 msgstr "Nu există comenzi cu bacșișuri pentru datele selectate."
 
-#: admin/controllers/reports.class.php:368
+#: admin/controllers/reports.class.php:387
 #, fuzzy
 #| msgid "Tip fee name"
 msgid "Tip name"
 msgstr "Nume bacșiș"
 
-#: admin/controllers/reports.class.php:369
+#: admin/controllers/reports.class.php:388
 msgid "Tip value"
 msgstr "Valoare bacșiș"
 
-#: admin/controllers/reports.class.php:370
+#: admin/controllers/reports.class.php:389
 msgid "Order date"
 msgstr "Dată comandă"
 
-#: admin/controllers/reports.class.php:440
+#: admin/controllers/reports.class.php:459
 msgid "Currency"
 msgstr "Monedă"
 
@@ -433,3 +437,6 @@ msgstr "Ești sigur că vrei să ștergi bacșișul?"
 #: admin/controllers/settings.class.php:292
 msgid "Updated to 1.1"
 msgstr ""
+
+#~ msgid "Name"
+#~ msgstr "Nume"

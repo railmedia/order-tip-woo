@@ -20,9 +20,9 @@ class WOO_Order_Tip_Main_Views {
     **/
     function tip_form( $data ) {
 
-        $settings = $data['settings'];
-        $tip_type = $settings['wc_order_tip_type'] == '1' ? '%' : get_woocommerce_currency_symbol();
-        $tip_rates = apply_filters( 'wc_order_tip_rates', $settings['wc_order_tip_rates'] );
+        $settings   = $data['settings'];
+        $tip_type   = $settings['wc_order_tip_type'] == '1' ? '%' : get_woocommerce_currency_symbol();
+        $tip_rates  = apply_filters( 'wc_order_tip_rates', $settings['wc_order_tip_rates'] );
         $wc_session = WC()->session;
         $active_tip = $wc_session->get('tip');
 
@@ -60,7 +60,7 @@ class WOO_Order_Tip_Main_Views {
         ?>
 
         <button id="woo_order_tip_custom" class="woo_order_tip <?php echo $active_class; ?>" data-tip="0" data-tip-type="2" data-tip-custom="0"  data-tip-cash="1">
-            <?php echo apply_filters( 'order_tip_woo_cash_label', $settings['wc_order_tip_cash_label'] ); ?>
+            <?php echo apply_filters( 'wc_order_tip_cash_label', $settings['wc_order_tip_cash_label'] ); ?>
         </button>
 
         <?php } ?>
@@ -72,11 +72,11 @@ class WOO_Order_Tip_Main_Views {
         ?>
 
         <button id="woo_order_tip_custom" class="woo_order_tip <?php echo $active_class; ?>" data-tip="custom" data-tip-type="2" data-tip-custom="1"  data-tip-cash="0">
-            <?php echo apply_filters( 'order_tip_woo_custom_label', $settings['wc_order_tip_custom_label'] ); ?><?php echo $custom_tip_suffix; ?>
+            <?php echo apply_filters( 'wc_order_tip_custom_label', $settings['wc_order_tip_custom_label'] ); ?><?php echo $custom_tip_suffix; ?>
         </button>
 
         <p class="form-row woo_order_tip_custom_text_field">
-            <input style="display:none;" type="text" class="input-text woo_order_tip_custom_text" data-tip-type="<?php echo esc_html( $settings['wc_order_tip_type'] ); ?>" data-currency="<?php echo get_woocommerce_currency_symbol(); ?>" placeholder="<?php echo apply_filters( 'order_tip_woo_custom_enter_tip_placeholder', $settings['wc_order_tip_enter_placeholder'] ); ?>" />
+            <input style="display:none;" type="text" class="input-text woo_order_tip_custom_text" data-tip-type="<?php echo esc_html( $settings['wc_order_tip_type'] ); ?>" data-currency="<?php echo get_woocommerce_currency_symbol(); ?>" placeholder="<?php echo apply_filters( 'wc_order_tip_custom_enter_tip_placeholder', $settings['wc_order_tip_enter_placeholder'] ); ?>" />
         </p>
 
         <?php } ?>

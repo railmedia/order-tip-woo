@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Woo Order Tip\n"
-"POT-Creation-Date: 2021-01-30 15:51+0100\n"
+"POT-Creation-Date: 2021-02-07 18:28+0100\n"
 "PO-Revision-Date: 2020-08-08 13:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -33,67 +33,71 @@ msgstr ""
 msgid "Order Tips"
 msgstr ""
 
-#: admin/controllers/reports.class.php:132
+#: admin/controllers/reports.class.php:133
 msgid "From"
 msgstr ""
 
-#: admin/controllers/reports.class.php:138
+#: admin/controllers/reports.class.php:139
 msgid "To"
 msgstr ""
 
-#: admin/controllers/reports.class.php:146
+#: admin/controllers/reports.class.php:147
 msgid "Export to CSV"
 msgstr ""
 
-#: admin/controllers/reports.class.php:153
+#: admin/controllers/reports.class.php:154
 #, php-format
 msgid "Displaying orders between %s and %s"
 msgstr ""
 
-#: admin/controllers/reports.class.php:162
-#: admin/controllers/reports.class.php:367
+#: admin/controllers/reports.class.php:163
+#: admin/controllers/reports.class.php:386
 msgid "Order ID"
 msgstr ""
 
-#: admin/controllers/reports.class.php:163
-msgid "Name"
-msgstr ""
-
 #: admin/controllers/reports.class.php:164
-msgid "Value"
+msgid "Customer"
 msgstr ""
 
 #: admin/controllers/reports.class.php:165
-msgid "Date"
+msgid "Type"
 msgstr ""
 
-#: admin/controllers/reports.class.php:192
-#: admin/controllers/reports.class.php:439
-msgid "Total"
+#: admin/controllers/reports.class.php:166
+msgid "Value"
+msgstr ""
+
+#: admin/controllers/reports.class.php:167
+msgid "Date/Time"
 msgstr ""
 
 #: admin/controllers/reports.class.php:202
+#: admin/controllers/reports.class.php:458
+msgid "Total"
+msgstr ""
+
+#: admin/controllers/reports.class.php:212
 msgid "There are no orders with tips in the database just yet"
 msgstr ""
 
-#: admin/controllers/reports.class.php:249
-#: admin/controllers/reports.class.php:322
+#: admin/controllers/reports.class.php:267
+#: admin/controllers/reports.class.php:341
 msgid "There are no orders with tips based on your date range."
 msgstr ""
 
-#: admin/controllers/reports.class.php:368
+#: admin/controllers/reports.class.php:387
 msgid "Tip name"
 msgstr ""
 
-#: admin/controllers/reports.class.php:369
+#: admin/controllers/reports.class.php:388
 msgid "Tip value"
 msgstr ""
 
-#: admin/controllers/reports.class.php:370
+#: admin/controllers/reports.class.php:389
 msgid "Order date"
 msgstr ""
 
-#: admin/controllers/reports.class.php:440
+#: admin/controllers/reports.class.php:459
 msgid "Currency"
 msgstr ""
 

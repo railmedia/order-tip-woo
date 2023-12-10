@@ -116,9 +116,10 @@ class WOO_Order_Tip_Admin_Reports {
                         $fee_name = $fee_name[0];
                         if( ! isset( $order_ids[ $order->get_id() ] ) && in_array( $fee_name, $this->fee_names ) ) {
                             $order_ids[ $order->get_id() ] = array(
-                                'date'  => $order->get_date_created(),
-                                'value' => floatval( $fee->get_total() ),
-                                'name'  => $fee_name
+                                'date'     => $order->get_date_created(),
+                                'customer' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+                                'value'    => floatval( $fee->get_total() ),
+                                'type'     => $fee_name
                             );
                         }
                     }
@@ -160,9 +161,10 @@ class WOO_Order_Tip_Admin_Reports {
                 <thead>
                 <tr>
                     <th><?php _e( 'Order ID', 'order-tip-woo' ); ?></th>
-                    <th><?php _e( 'Name', 'order-tip-woo' ); ?></th>
+                    <th><?php _e( 'Customer', 'order-tip-woo' ); ?></th>
+                    <th><?php _e( 'Type', 'order-tip-woo' ); ?></th>
                     <th><?php _e( 'Value', 'order-tip-woo' ); ?></th>
-                    <th><?php _e( 'Date', 'order-tip-woo' ); ?></th>
+                    <th><?php _e( 'Date/Time', 'order-tip-woo' ); ?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -170,26 +172,34 @@ class WOO_Order_Tip_Admin_Reports {
                     $total = 0;
                     foreach( $order_ids as $order_id => $data ) {
                         $total += $data['value'];
+                        $date = $data['date'];
+                        $date_format = str_split( $this->date_format );
+                        if( ! in_array( array( 'a', 'A', 'B', 'g', 'G', 'h', 'H', 'i', 's', 'u', 'v' ), $date_format ) ) {
+                            $date_format = apply_filters( 'wc_order_tip_reports_date_time_format', implode( '', $date_format ) . ' H:i:s' );
+                        }
                 ?>
                 <tr>
                     <td>
                         <a href="<?php echo esc_url( admin_url() ); ?>post.php?post=<?php echo esc_html( $order_id ); ?>&action=edit" target="_blank"><?php echo esc_html( $order_id ); ?></a>
                     </td>
                     <td>
-                        <?php echo esc_html( $data['name'] ); ?>
+                        <?php echo esc_html( $data['customer'] ); ?>
+                    </td>
+                    <td>
+                        <?php echo esc_html( $data['type'] ); ?>
                     </td>
                     <td>
                         <?php echo get_woocommerce_currency_symbol() . esc_html( number_format( $data['value'], 2 ) ); ?>
                     </td>
                     <td>
-                        <?php echo esc_html( date( $this->date_format, strtotime( $data['date'] ) ) ); ?>
+                        <?php echo esc_html( date( $date_format, strtotime( $data['date'] ) ) ); ?>
                     </td>
                 </tr>
                 <?php } ?>
                 </tbody>
                 <?php if( $order_ids && $total ) { ?>
                 <tfoot>
-                    <td colspan="2"><strong><?php _e( 'Total', 'order-tip-woo' ); ?></strong></td>
+                    <td colspan="3"><strong><?php _e( 'Total', 'order-tip-woo' ); ?></strong></td>
                     <td><strong><?php echo get_woocommerce_currency_symbol(); ?> <span id="woo-order-tip-reports-total"><?php echo number_format( $total, 2 ); ?></span></strong></td>
                 </tfoot>
                 <?php } ?>
@@ -224,19 +234,27 @@ class WOO_Order_Tip_Admin_Reports {
                 $total = 0;
                 foreach( $order_ids['order_ids'] as $order_id => $data ) {
                     $total += $data['value'];
+                    $date = $data['date'];
+                    $date_format = str_split( $this->date_format );
+                    if( ! in_array( array( 'a', 'A', 'B', 'g', 'G', 'h', 'H', 'i', 's', 'u', 'v' ), $date_format ) ) {
+                        $date_format = apply_filters( 'wc_order_tip_reports_date_time_format', implode( '', $date_format ) . ' H:i:s' );
+                    }
             ?>
             <tr>
                 <td>
                     <a href="<?php echo esc_url( admin_url() ); ?>post.php?post=<?php echo esc_html( $order_id ); ?>&action=edit" target="_blank"><?php echo esc_html( $order_id ); ?></a>
                 </td>
                 <td>
-                    <?php echo esc_html( $data['name'] ); ?>
+                    <?php echo esc_html( $data['customer'] ); ?>
+                </td>
+                <td>
+                    <?php echo esc_html( $data['type'] ); ?>
                 </td>
                 <td>
                     <?php echo get_woocommerce_currency_symbol() . esc_html( number_format( $data['value'], 2 ) ); ?>
                 </td>
                 <td>
-                    <?php echo esc_html( date( $this->date_format, strtotime( $data['date'] ) ) ); ?>
+                    <?php echo esc_html( date( $date_format, strtotime( $data['date'] ) ) ); ?>
                 </td>
             </tr>
             <?php
@@ -311,9 +329,10 @@ class WOO_Order_Tip_Admin_Reports {
                     $fee_name = $fee_name[0];
                     if( ! isset( $order_ids[ $order->get_id() ] ) && in_array( $fee_name, $fee_names ) ) {
                         $order_ids[ $order->get_id() ] = array(
-                            'date'  => $order->get_date_created(),
-                            'value' => floatval( $fee->get_total() ),
-                            'name'  => $fee_name
+                            'date'     => $order->get_date_created(),
+                            'customer' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+                            'value'    => floatval( $fee->get_total() ),
+                            'type'     => $fee_name
                         );
                     }
                 }
