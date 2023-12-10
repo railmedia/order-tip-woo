@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Woo Order Tip\n"
-"POT-Creation-Date: 2021-01-25 22:50+0100\n"
-"PO-Revision-Date: 2021-01-25 22:51+0100\n"
+"POT-Creation-Date: 2021-01-30 15:59+0100\n"
+"PO-Revision-Date: 2021-01-30 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -30,29 +30,78 @@ msgstr ""
 msgid "settings page"
 msgstr "pagina delle impostazioni"
 
-#: admin/controllers/reports.class.php:36
-#: admin/controllers/reports.class.php:39
+#: admin/controllers/reports.class.php:58
+#: admin/controllers/reports.class.php:61
 #, fuzzy
 #| msgid "Order Tip"
 msgid "Order Tips"
 msgstr "Mancia per l'ordine"
 
-#: admin/controllers/reports.class.php:111
+#: admin/controllers/reports.class.php:132
 msgid "From"
 msgstr "Da"
 
-#: admin/controllers/reports.class.php:117
+#: admin/controllers/reports.class.php:138
 msgid "To"
 msgstr "Alla"
 
-#: admin/controllers/reports.class.php:175
+#: admin/controllers/reports.class.php:146
+msgid "Export to CSV"
+msgstr "Esportazione CSV"
+
+#: admin/controllers/reports.class.php:153
+#, php-format
+msgid "Displaying orders between %s and %s"
+msgstr "Visualizzazione degli ordini tra %s e %s"
+
+#: admin/controllers/reports.class.php:162
+#: admin/controllers/reports.class.php:367
+msgid "Order ID"
+msgstr "ID Ordine"
+
+#: admin/controllers/reports.class.php:163
+msgid "Name"
+msgstr "Nome"
+
+#: admin/controllers/reports.class.php:164
+msgid "Value"
+msgstr "Valore"
+
+#: admin/controllers/reports.class.php:165
+msgid "Date"
+msgstr "Data"
+
+#: admin/controllers/reports.class.php:192
+#: admin/controllers/reports.class.php:439
+msgid "Total"
+msgstr "Totale"
+
+#: admin/controllers/reports.class.php:202
 msgid "There are no orders with tips in the database just yet"
 msgstr "Non ci sono ordini con suggerimenti nel database"
 
-#: admin/controllers/reports.class.php:241
-#: admin/controllers/reports.class.php:269
+#: admin/controllers/reports.class.php:249
+#: admin/controllers/reports.class.php:322
 msgid "There are no orders with tips based on your date range."
 msgstr "Non ci sono ordini con suggerimenti basati sul tuo intervallo di date."
+
+#: admin/controllers/reports.class.php:368
+#, fuzzy
+#| msgid "Tip fee name"
+msgid "Tip name"
+msgstr "Nome della mancia"
+
+#: admin/controllers/reports.class.php:369
+msgid "Tip value"
+msgstr "Valore della mancia"
+
+#: admin/controllers/reports.class.php:370
+msgid "Order date"
+msgstr "Data ordine"
+
+#: admin/controllers/reports.class.php:440
+msgid "Currency"
+msgstr "Valuta"
 
 #: admin/controllers/settings.class.php:62
 msgid "Settings"

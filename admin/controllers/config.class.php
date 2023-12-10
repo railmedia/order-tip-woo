@@ -32,6 +32,7 @@ class WOO_Order_Tip_Admin_Config {
         wp_register_script( 'woo-order-tip-admin-blockui', WOOOTIPURL . 'admin/assets/js/jquery.blockUI.js', array('jquery'), null, true );
         wp_register_script( 'woo-order-tip-admin-reports', WOOOTIPURL . 'admin/assets/js/woo-order-tip-admin-reports.js', array('jquery'), null, true );
         wp_localize_script( 'woo-order-tip-admin-reports', 'wootipar', array(
+            'au'  => admin_url(),
             'aju' => admin_url( 'admin-ajax.php' ),
             'ajn' => wp_create_nonce('reps')
         ) );
