@@ -2,7 +2,7 @@
 Contributors: railmedia
 Tags: Woocommerce, Ecommerce, Order, Tip, Donation
 Requires at least: 3.0
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 Tested up to: 5.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -51,7 +51,8 @@ And a few other filters for changing various strings dynamically, from a differe
 * wc_order_tip_title - changes the tip form title;
 * wc_order_tip_cash_label - changes the Cash tip button label;
 * wc_order_tip_custom_label - changes the Custom tip button label;
-* wc_order_tip_custom_enter_tip_placeholder - changes the Custom tip field placeholder.
+* wc_order_tip_custom_enter_tip_placeholder - changes the Custom tip field placeholder;
+* wc_order_tip_display_form - prevents the tip form from being displayed on the page.
 
 And one filter for the backend:
 
@@ -80,13 +81,21 @@ And one filter for the backend:
 
 == Changelog ==
 
-= 1.2.1 = 
-* Released 08 March 2022*
+= 1.2.2 =
+*Released 10 March 2022*
+
+* Added type attribute to <button> tags for the tip. This fixes issues on some websites which were experimenting them especially on the checkout page
+* Added wc_order_tip_display_form filter which prevents the tip form from being displayed on the page
+* Tested PHP 8.1.3
+* Tested WooCommerce 6.3.0
+
+= 1.2.1 =
+*Released 08 March 2022*
 
 * Fixed plugin breaking backend of site
 
 = 1.2.0 =
-* Released 08 March 2022*
+*Released 08 March 2022*
 
 * Added possibility of adding a label for the custom field tip in order to avoid displaying the label in paranthesis such as Tip (Add a tip). Admin is able to set their own custom label
 * Fixed wrong label in checkout summary problem. The value in the label was being set one step behind the current custom tip

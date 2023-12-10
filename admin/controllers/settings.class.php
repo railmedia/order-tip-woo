@@ -6,18 +6,16 @@
 * @link    https://www.tudorache.me/
 **/
 
-namespace CW_VidaXL_DS;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	header( 'Status: 403 Forbidden' );
 	header( 'HTTP/1.1 403 Forbidden' );
 	exit;
 }
 
-if ( ! class_exists( 'WC_Settings_CW_VidaXL_DS' ) ) :
+if ( ! class_exists( 'WOO_Order_Tip_Admin_Settings' ) ) :
 
 
-function cw_vidaxl_ds_add_settings( $settings ) {
+function woo_order_tip_admin_add_settings( $settings ) {
 
 	/**
 	 * Settings class
@@ -446,7 +444,7 @@ function cw_vidaxl_ds_add_settings( $settings ) {
 	return $settings;
 
 }
-add_filter( 'woocommerce_get_settings_pages', __NAMESPACE__ . '\cw_vidaxl_ds_add_settings', 15 );
+add_filter( 'woocommerce_get_settings_pages', 'woo_order_tip_admin_add_settings', 15 );
 
 endif;
 

@@ -187,12 +187,18 @@ class WOO_Order_Tip_Main {
     * Tip form
     **/
     function tip_form() {
-        wp_enqueue_style( 'woo-order-tip-css' );
-        wp_enqueue_script( 'woo-order-tip-js' );
-        $data = array(
-            'settings' => $this->settings
-        );
-        echo $this->views->tip_form( $data );
+
+        $display_form = apply_filters( 'wc_order_tip_display_form', 1 );
+
+        if( $display_form ) {
+            wp_enqueue_style( 'woo-order-tip-css' );
+            wp_enqueue_script( 'woo-order-tip-js' );
+            $data = array(
+                'settings' => $this->settings
+            );
+            echo $this->views->tip_form( $data );
+        }
+
     }
 
     /**

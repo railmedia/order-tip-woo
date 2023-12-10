@@ -48,7 +48,7 @@ class WOO_Order_Tip_Main_Views {
                 }
         ?>
 
-        <button id="woo_order_tip_<?php echo $tip_rate; ?>" class="woo_order_tip <?php echo isset( $active_class ) ? $active_class : ''; ?>" data-tip="<?php echo $tip_rate; ?>" data-tip-type="<?php echo $settings['wc_order_tip_type'] ?>" data-tip-custom="0" data-tip-cash="0"><?php echo $tip_label; ?></button>
+        <button id="woo_order_tip_<?php echo $tip_rate; ?>" type="button" class="woo_order_tip <?php echo isset( $active_class ) ? $active_class : ''; ?>" data-tip="<?php echo $tip_rate; ?>" data-tip-type="<?php echo $settings['wc_order_tip_type'] ?>" data-tip-custom="0" data-tip-cash="0"><?php echo $tip_label; ?></button>
 
         <?php } ?>
 
@@ -60,7 +60,7 @@ class WOO_Order_Tip_Main_Views {
                 }
         ?>
 
-        <button id="woo_order_tip_custom" class="woo_order_tip <?php echo $active_class; ?>" data-tip="0" data-tip-type="2" data-tip-custom="0"  data-tip-cash="1">
+        <button id="woo_order_tip_custom" type="button" class="woo_order_tip <?php echo $active_class; ?>" data-tip="0" data-tip-type="2" data-tip-custom="0"  data-tip-cash="1">
             <?php echo apply_filters( 'wc_order_tip_cash_label', $settings['wc_order_tip_cash_label'] ); ?>
         </button>
 
@@ -75,7 +75,7 @@ class WOO_Order_Tip_Main_Views {
                 $active_class      = isset( $active_tip['tip_custom'] ) && $active_tip['tip_custom'] == 1 ? 'active' : '';
         ?>
 
-        <button id="woo_order_tip_custom" class="woo_order_tip <?php echo $active_class; ?>" data-tip="custom" data-tip-type="2" data-tip-custom="1" data-tip-cash="0">
+        <button id="woo_order_tip_custom" type="button" class="woo_order_tip <?php echo $active_class; ?>" data-tip="custom" data-tip-type="2" data-tip-custom="1" data-tip-cash="0">
             <?php echo apply_filters( 'wc_order_tip_custom_label', $settings['wc_order_tip_custom_label'] ); ?><?php echo $custom_tip_suffix; ?>
         </button>
 
@@ -85,9 +85,9 @@ class WOO_Order_Tip_Main_Views {
 
         <?php } ?>
 
-        <button class="woo_order_tip_apply" name="woo_order_tip_apply" style="display:none;"><?php echo esc_html( $settings['wc_order_tip_custom_apply_label'] ); ?><span></span></button>
+        <button class="woo_order_tip_apply" type="button" name="woo_order_tip_apply" style="display:none;"><?php echo esc_html( $settings['wc_order_tip_custom_apply_label'] ); ?><span></span></button>
 
-        <button class="woo_order_tip_remove" style="<?php echo ! $active_tip ? 'display:none;' : ''; ?>"><?php echo esc_html( $settings['wc_order_tip_custom_remove_label'] ); ?></button>
+        <button class="woo_order_tip_remove" type="button" style="<?php echo ! $active_tip ? 'display:none;' : ''; ?>"><?php echo esc_html( $settings['wc_order_tip_custom_remove_label'] ); ?></button>
 
     </div>
 <?php
