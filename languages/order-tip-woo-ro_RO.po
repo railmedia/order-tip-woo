@@ -1,0 +1,170 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Woo Order Tip\n"
+"POT-Creation-Date: 2020-08-14 08:33+0200\n"
+"PO-Revision-Date: 2020-08-14 08:43+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n==0 || (n!=1 && n%100>=1 && n"
+"%100<=19) ? 1 : 2);\n"
+"X-Poedit-KeywordsList: _;__;_e;esc_html;esc_html__;esc_html_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/controllers/settings.class.php:25
+msgid "Settings"
+msgstr "Setări"
+
+#: admin/controllers/settings.class.php:35
+msgid "Order Tip"
+msgstr "Bacșiș comandă"
+
+#: admin/controllers/settings.class.php:51
+msgid "Order Tip Settings"
+msgstr "Setări bacșiș comandă"
+
+#: admin/controllers/settings.class.php:57
+msgid "Enabled on Cart page"
+msgstr "Activează pe pagina coșului de cumpărături"
+
+#: admin/controllers/settings.class.php:59
+msgid ""
+"If checked, the tip form will appear under the Apply Coupon form on the Cart "
+"page"
+msgstr ""
+"Dacă este activat, formularul de bacșiș va apărea sub formularul de Aplicare "
+"Cupon pe pagina coșului de cumpărături"
+
+#: admin/controllers/settings.class.php:62
+#: admin/controllers/settings.class.php:71
+#: admin/controllers/settings.class.php:80
+#: admin/controllers/settings.class.php:88
+msgid "Enable"
+msgstr "Activează"
+
+#: admin/controllers/settings.class.php:66
+msgid "Enabled on Checkout page"
+msgstr "Activează pe pagina de plată"
+
+#: admin/controllers/settings.class.php:68
+msgid ""
+"If checked, the tip form will appear under the Checkout form on the Checkout "
+"page"
+msgstr ""
+"Dacă este activat, formularul de bacșiș va apărea sub lista de produse pe "
+"pagina de plată"
+
+#: admin/controllers/settings.class.php:75
+msgid "Is taxable"
+msgstr "Este taxabil"
+
+#: admin/controllers/settings.class.php:77
+msgid ""
+"If checked, the tip amount will be taxed as per your WooCommerce Tax "
+"settings."
+msgstr ""
+"Dacă este activat, bacșișul va fi taxat conform setărilor de taxare ale "
+"WooCommerce."
+
+#: admin/controllers/settings.class.php:84
+msgid "Tip form title"
+msgstr "Titlu formular de bacșiș"
+
+#: admin/controllers/settings.class.php:86
+msgid "The tip form title will appear before the tip form"
+msgstr "Titlul va apărea înaintea formularului"
+
+#: admin/controllers/settings.class.php:92
+msgid "Tip Type"
+msgstr "Tip de bacșiș"
+
+#: admin/controllers/settings.class.php:95
+msgid "Percent of the order total"
+msgstr "Procent din totalul comenzii"
+
+#: admin/controllers/settings.class.php:96
+msgid "Fixed amount"
+msgstr "Valoare fixă"
+
+#: admin/controllers/settings.class.php:99
+msgid "Select the type of tip you would like to use."
+msgstr "Alege tipul de bacșiș pe care ai vrea să îl folosești."
+
+#: admin/controllers/settings.class.php:103
+msgid "Tip Rates"
+msgstr "Rate de bacșiș"
+
+#: admin/controllers/settings.class.php:115
+msgid "Enable various tip rates. Keep CTRL or CMD key pressed while selecting."
+msgstr ""
+"Activează diverse rate. Ține apăsata tasta CTRL sau CMD în timpul selecției."
+
+#: admin/controllers/settings.class.php:119
+msgid "Enable custom tip field"
+msgstr "Activează bacșișul personalizat"
+
+#: admin/controllers/settings.class.php:122
+#: admin/controllers/settings.class.php:133
+#: admin/controllers/settings.class.php:144
+msgid "Yes"
+msgstr "Da"
+
+#: admin/controllers/settings.class.php:123
+#: admin/controllers/settings.class.php:134
+#: admin/controllers/settings.class.php:145
+msgid "No"
+msgstr "Nu"
+
+#: admin/controllers/settings.class.php:126
+msgid ""
+"If enabled, the customer will be able to add their own fixed amount tip."
+msgstr ""
+"Dacă este activat, clientul va putea să adauge valoarea de bacșiș pe care "
+"dorește să o adauge."
+
+#: admin/controllers/settings.class.php:130
+msgid "Enable cash tip"
+msgstr "Activează bacșișul în numerar"
+
+#: admin/controllers/settings.class.php:137
+msgid ""
+"If enabled, customers will be able to choose to tip by cash (on delivery or "
+"local pickup)."
+msgstr ""
+"Dacă este activat, clienții vor putea sa aleagă să lase bacșiș în numerar "
+"(la livrare sau la ridicarea din magazin)."
+
+#: admin/controllers/settings.class.php:141
+msgid "Clear tip after the order has been placed"
+msgstr "Șterge bacșișul după ce comanda a fost plasată"
+
+#: admin/controllers/settings.class.php:148
+msgid ""
+"If enabled, the tip that may be added to the cart, will be removed. "
+"Otherwise, it will be preserved on future orders in the current session."
+msgstr ""
+"Daca este activat, bacșișul ce ar putea fi adăugat în coș, va fi șters. În "
+"mod contrar, va fi păstrat și aplicat comenzilor ulterioare din cadrul "
+"sesiunii curente."
+
+#: frontend/controllers/config.class.php:18
+msgid "Are you sure you wish to remove the tip?"
+msgstr "Ești sigur că vrei să ștergi bacșișul?"
+
+#: frontend/views/main.views.class.php:58
+msgid "Enter tip amount"
+msgstr "Adaugă bacșiș"
+
+#: frontend/views/main.views.class.php:63
+#, php-format
+msgid "Add %s tip to order"
+msgstr "Adaugă %s bacșiș la comandă"
+
+#: frontend/views/main.views.class.php:65
+msgid "Remove Tip"
+msgstr "Șterge bacșișul"

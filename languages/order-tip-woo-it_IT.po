@@ -1,0 +1,170 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Woo Order Tip\n"
+"POT-Creation-Date: 2020-08-14 08:33+0200\n"
+"PO-Revision-Date: 2020-08-14 08:33+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _;__;_e;esc_html;esc_html__;esc_html_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/controllers/settings.class.php:25
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: admin/controllers/settings.class.php:35
+msgid "Order Tip"
+msgstr "Mancia per l'ordine"
+
+#: admin/controllers/settings.class.php:51
+msgid "Order Tip Settings"
+msgstr "Impostazioni mancia per l'ordine"
+
+#: admin/controllers/settings.class.php:57
+msgid "Enabled on Cart page"
+msgstr "Abilitato nella pagina del carrello"
+
+#: admin/controllers/settings.class.php:59
+msgid ""
+"If checked, the tip form will appear under the Apply Coupon form on the Cart "
+"page"
+msgstr ""
+"Se spuntata, il modulo di mancia apparirà sotto il modulo Applica Buono "
+"nella pagina del Carrello"
+
+#: admin/controllers/settings.class.php:62
+#: admin/controllers/settings.class.php:71
+#: admin/controllers/settings.class.php:80
+#: admin/controllers/settings.class.php:88
+msgid "Enable"
+msgstr "Attivare"
+
+#: admin/controllers/settings.class.php:66
+msgid "Enabled on Checkout page"
+msgstr "Attivato nella pagina di checkout"
+
+#: admin/controllers/settings.class.php:68
+msgid ""
+"If checked, the tip form will appear under the Checkout form on the Checkout "
+"page"
+msgstr ""
+"Se spuntata, il modulo di mancia apparirà sotto il modulo di checkout nella "
+"pagina di checkout"
+
+#: admin/controllers/settings.class.php:75
+msgid "Is taxable"
+msgstr "È tassabile"
+
+#: admin/controllers/settings.class.php:77
+msgid ""
+"If checked, the tip amount will be taxed as per your WooCommerce Tax "
+"settings."
+msgstr ""
+"Se spuntata, l'importo della mancia sarà tassato in base alle impostazioni "
+"di WooCommerce Tax."
+
+#: admin/controllers/settings.class.php:84
+msgid "Tip form title"
+msgstr "Titolo del modulo per le mance"
+
+#: admin/controllers/settings.class.php:86
+msgid "The tip form title will appear before the tip form"
+msgstr ""
+"Il titolo del modulo di mancia apparirà prima del modulo di suggerimento"
+
+#: admin/controllers/settings.class.php:92
+msgid "Tip Type"
+msgstr "Tipo di mancia"
+
+#: admin/controllers/settings.class.php:95
+msgid "Percent of the order total"
+msgstr "Percentuale del totale dell'ordine"
+
+#: admin/controllers/settings.class.php:96
+msgid "Fixed amount"
+msgstr "Importo fisso"
+
+#: admin/controllers/settings.class.php:99
+msgid "Select the type of tip you would like to use."
+msgstr "Selezionare il tipo di mancia che si desidera utilizzare."
+
+#: admin/controllers/settings.class.php:103
+msgid "Tip Rates"
+msgstr "Tassi di mancia"
+
+#: admin/controllers/settings.class.php:115
+msgid "Enable various tip rates. Keep CTRL or CMD key pressed while selecting."
+msgstr ""
+"Attivare varie tariffe. Tenere premuto il tasto CTRL o CMD durante la "
+"selezione."
+
+#: admin/controllers/settings.class.php:119
+msgid "Enable custom tip field"
+msgstr "Abilita campo mancia personalizzata"
+
+#: admin/controllers/settings.class.php:122
+#: admin/controllers/settings.class.php:133
+#: admin/controllers/settings.class.php:144
+msgid "Yes"
+msgstr "Sì"
+
+#: admin/controllers/settings.class.php:123
+#: admin/controllers/settings.class.php:134
+#: admin/controllers/settings.class.php:145
+msgid "No"
+msgstr "Non"
+
+#: admin/controllers/settings.class.php:126
+msgid ""
+"If enabled, the customer will be able to add their own fixed amount tip."
+msgstr ""
+"Se abilitato, il cliente potrà aggiungere la propria mancia a importo fisso."
+
+#: admin/controllers/settings.class.php:130
+msgid "Enable cash tip"
+msgstr "Abilita la mancia in contanti"
+
+#: admin/controllers/settings.class.php:137
+msgid ""
+"If enabled, customers will be able to choose to tip by cash (on delivery or "
+"local pickup)."
+msgstr ""
+"Se abilitato, i clienti potranno scegliere di lasciare la mancia in contanti "
+"(alla consegna o al ritiro locale)."
+
+#: admin/controllers/settings.class.php:141
+msgid "Clear tip after the order has been placed"
+msgstr "Cancella la mancia dopo l'ordine"
+
+#: admin/controllers/settings.class.php:148
+msgid ""
+"If enabled, the tip that may be added to the cart, will be removed. "
+"Otherwise, it will be preserved on future orders in the current session."
+msgstr ""
+"Se abilitato, la mancia che può essere aggiunta al carrello, verrà rimossa. "
+"In caso contrario, verrà conservata per gli ordini futuri nella sessione "
+"corrente."
+
+#: frontend/controllers/config.class.php:18
+msgid "Are you sure you wish to remove the tip?"
+msgstr "Sei sicuro di voler rimuovere il suggerimento?"
+
+#: frontend/views/main.views.class.php:58
+msgid "Enter tip amount"
+msgstr "Inserire l'importo della mancia"
+
+#: frontend/views/main.views.class.php:63
+#, php-format
+msgid "Add %s tip to order"
+msgstr "Aggiungi %s di mancia all'ordine"
+
+#: frontend/views/main.views.class.php:65
+msgid "Remove Tip"
+msgstr "Rimuovere la mancia"
