@@ -111,7 +111,7 @@ class WOO_Order_Tip_Main {
             $is_taxable = isset( $this->settings['wc_order_tip_is_taxable'] ) && $this->settings['wc_order_tip_is_taxable'] == 'yes' ? true : false;
             $tip_label = esc_html__( sprintf( 'Tip (%s)', esc_html( $tip['tip_label'] ) ), 'order-tip-woo' );
 
-            WC()->cart->add_fee( $tip_label, number_format( $tip_amount, 2 ), $is_taxable, '' );
+            WC()->cart->add_fee( $tip_label, $tip_amount, $is_taxable, '' );
 
         }
 

@@ -2,3 +2,6 @@
  
 = 1.0.0 =
 * First stable version
+
+= 1.0.1 =
+* Applied fix for calculating the tip amount
