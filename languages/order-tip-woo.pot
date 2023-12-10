@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Woo Order Tip\n"
-"POT-Creation-Date: 2020-08-09 08:45+0200\n"
+"POT-Creation-Date: 2021-01-25 22:48+0100\n"
 "PO-Revision-Date: 2020-08-08 13:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -10,143 +10,334 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: _;__;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/controllers/settings.class.php:25
+#: admin/controllers/notices.class.php:37
+#, php-format
+msgid ""
+"To ensure full compatibility of the %sOrder Tip for WooCommerce%s plugin, "
+"please navigate to the plugin's %s, review the settings and save before "
+"proceeding."
+msgstr ""
+
+#: admin/controllers/notices.class.php:40
+msgid "settings page"
+msgstr ""
+
+#: admin/controllers/reports.class.php:36
+#: admin/controllers/reports.class.php:39
+msgid "Order Tips"
+msgstr ""
+
+#: admin/controllers/reports.class.php:111
+msgid "From"
+msgstr ""
+
+#: admin/controllers/reports.class.php:117
+msgid "To"
+msgstr ""
+
+#: admin/controllers/reports.class.php:175
+msgid "There are no orders with tips in the database just yet"
+msgstr ""
+
+#: admin/controllers/reports.class.php:241
+#: admin/controllers/reports.class.php:269
+msgid "There are no orders with tips based on your date range."
+msgstr ""
+
+#: admin/controllers/settings.class.php:62
 msgid "Settings"
 msgstr ""
 
-#: admin/controllers/settings.class.php:35
+#: admin/controllers/settings.class.php:75
 msgid "Order Tip"
 msgstr ""
 
-#: admin/controllers/settings.class.php:51
+#: admin/controllers/settings.class.php:100
 msgid "Order Tip Settings"
 msgstr ""
 
-#: admin/controllers/settings.class.php:57
+#: admin/controllers/settings.class.php:106
+msgid "Shortcode"
+msgstr ""
+
+#: admin/controllers/settings.class.php:108
+#, php-format
+msgid ""
+"You can use the %1$s[order_tip_form]%2$s shortcode in any page, post or "
+"widget. It will automatically take the settings below. However, we %1$sdo not"
+"%2$s recommend to use the shortcode on the cart or checkout pages if you "
+"enable the tip form using the checkboxes below."
+msgstr ""
+
+#: admin/controllers/settings.class.php:112
 msgid "Enabled on Cart page"
 msgstr ""
 
-#: admin/controllers/settings.class.php:59
+#: admin/controllers/settings.class.php:114
 msgid ""
 "If checked, the tip form will appear under the Apply Coupon form on the Cart "
 "page"
 msgstr ""
 
-#: admin/controllers/settings.class.php:62
-#: admin/controllers/settings.class.php:71
-#: admin/controllers/settings.class.php:80
-#: admin/controllers/settings.class.php:88
+#: admin/controllers/settings.class.php:117
+#: admin/controllers/settings.class.php:140
+#: admin/controllers/settings.class.php:163
+#: admin/controllers/settings.class.php:172
+#: admin/controllers/settings.class.php:180
 msgid "Enable"
 msgstr ""
 
-#: admin/controllers/settings.class.php:66
+#: admin/controllers/settings.class.php:121
+msgid "Select position on the cart page"
+msgstr ""
+
+#: admin/controllers/settings.class.php:123
+msgid ""
+"Select the position on the cart page. Please make sure to enable the tip "
+"form using the checkbox above."
+msgstr ""
+
+#: admin/controllers/settings.class.php:126
+msgid "Before the cart"
+msgstr ""
+
+#: admin/controllers/settings.class.php:127
+msgid "After the coupon and before the Update cart button"
+msgstr ""
+
+#: admin/controllers/settings.class.php:128
+msgid "After the cart table"
+msgstr ""
+
+#: admin/controllers/settings.class.php:129
+msgid "Before cart totals"
+msgstr ""
+
+#: admin/controllers/settings.class.php:130
+msgid "After the cart"
+msgstr ""
+
+#: admin/controllers/settings.class.php:135
 msgid "Enabled on Checkout page"
 msgstr ""
 
-#: admin/controllers/settings.class.php:68
+#: admin/controllers/settings.class.php:137
 msgid ""
 "If checked, the tip form will appear under the Checkout form on the Checkout "
 "page"
 msgstr ""
 
-#: admin/controllers/settings.class.php:75
+#: admin/controllers/settings.class.php:144
+msgid "Select position on the checkout page"
+msgstr ""
+
+#: admin/controllers/settings.class.php:146
+msgid ""
+"Select the position on the checkout page. Please make sure to enable the tip "
+"form using the checkbox above."
+msgstr ""
+
+#: admin/controllers/settings.class.php:149
+msgid "Before the checkout form"
+msgstr ""
+
+#: admin/controllers/settings.class.php:150
+msgid "Before the order notes field"
+msgstr ""
+
+#: admin/controllers/settings.class.php:151
+msgid "After customer details"
+msgstr ""
+
+#: admin/controllers/settings.class.php:152
+msgid "Before the order review"
+msgstr ""
+
+#: admin/controllers/settings.class.php:153
+msgid "After the checkout form"
+msgstr ""
+
+#: admin/controllers/settings.class.php:158
 msgid "Is taxable"
 msgstr ""
 
-#: admin/controllers/settings.class.php:77
+#: admin/controllers/settings.class.php:160
 msgid ""
 "If checked, the tip amount will be taxed as per your WooCommerce Tax "
 "settings."
 msgstr ""
 
-#: admin/controllers/settings.class.php:84
+#: admin/controllers/settings.class.php:167
+msgid "Tip fee name"
+msgstr ""
+
+#: admin/controllers/settings.class.php:169
+msgid ""
+"The tip fee name will appear before the order total. It will always be "
+"followed by the tip amount. Default format is \"Tip (AMOUNT)\""
+msgstr ""
+
+#: admin/controllers/settings.class.php:176
 msgid "Tip form title"
 msgstr ""
 
-#: admin/controllers/settings.class.php:86
+#: admin/controllers/settings.class.php:178
 msgid "The tip form title will appear before the tip form"
 msgstr ""
 
-#: admin/controllers/settings.class.php:92
+#: admin/controllers/settings.class.php:184
 msgid "Tip Type"
 msgstr ""
 
-#: admin/controllers/settings.class.php:95
+#: admin/controllers/settings.class.php:187
 msgid "Percent of the order total"
 msgstr ""
 
-#: admin/controllers/settings.class.php:96
+#: admin/controllers/settings.class.php:188
 msgid "Fixed amount"
 msgstr ""
 
-#: admin/controllers/settings.class.php:99
+#: admin/controllers/settings.class.php:191
 msgid "Select the type of tip you would like to use."
 msgstr ""
 
-#: admin/controllers/settings.class.php:103
+#: admin/controllers/settings.class.php:195
 msgid "Tip Rates"
 msgstr ""
 
-#: admin/controllers/settings.class.php:115
+#: admin/controllers/settings.class.php:207
 msgid "Enable various tip rates. Keep CTRL or CMD key pressed while selecting."
 msgstr ""
 
-#: admin/controllers/settings.class.php:119
+#: admin/controllers/settings.class.php:211
 msgid "Enable custom tip field"
 msgstr ""
 
-#: admin/controllers/settings.class.php:122
-#: admin/controllers/settings.class.php:133
-#: admin/controllers/settings.class.php:144
+#: admin/controllers/settings.class.php:214
+#: admin/controllers/settings.class.php:257
+#: admin/controllers/settings.class.php:276
 msgid "Yes"
 msgstr ""
 
-#: admin/controllers/settings.class.php:123
-#: admin/controllers/settings.class.php:134
-#: admin/controllers/settings.class.php:145
+#: admin/controllers/settings.class.php:215
+#: admin/controllers/settings.class.php:258
+#: admin/controllers/settings.class.php:277
 msgid "No"
 msgstr ""
 
-#: admin/controllers/settings.class.php:126
+#: admin/controllers/settings.class.php:218
 msgid ""
 "If enabled, the customer will be able to add their own fixed amount tip."
 msgstr ""
 
-#: admin/controllers/settings.class.php:130
+#: admin/controllers/settings.class.php:222
+msgid "Custom tip field label"
+msgstr ""
+
+#: admin/controllers/settings.class.php:225
+msgid ""
+"Set a label of your choice for the custom tip button. The default label is "
+"\"Custom Tip\""
+msgstr ""
+
+#: admin/controllers/settings.class.php:227
+msgid "Custom Tip"
+msgstr ""
+
+#: admin/controllers/settings.class.php:230
+msgid "Custom tip apply tip button label"
+msgstr ""
+
+#: admin/controllers/settings.class.php:233
+msgid ""
+"Set a label of your choice for the custom tip apply button. The default "
+"label is \"Add tip to order\""
+msgstr ""
+
+#: admin/controllers/settings.class.php:235
+msgid "Add tip to order"
+msgstr ""
+
+#: admin/controllers/settings.class.php:238
+msgid "Custom tip enter tip input placeholder label"
+msgstr ""
+
+#: admin/controllers/settings.class.php:241
+msgid ""
+"Set a placeholder of your choice for the custom enter tip input field. The "
+"default label is \"Enter tip amount\""
+msgstr ""
+
+#: admin/controllers/settings.class.php:243
+msgid "Enter tip amount"
+msgstr ""
+
+#: admin/controllers/settings.class.php:246
+msgid "Custom tip remove tip button label"
+msgstr ""
+
+#: admin/controllers/settings.class.php:249
+msgid ""
+"Set a label of your choice for the custom tip remove button. The default "
+"label is \"Remove tip\""
+msgstr ""
+
+#: admin/controllers/settings.class.php:251
+msgid "Remove tip"
+msgstr ""
+
+#: admin/controllers/settings.class.php:254
 msgid "Enable cash tip"
 msgstr ""
 
-#: admin/controllers/settings.class.php:137
+#: admin/controllers/settings.class.php:261
 msgid ""
 "If enabled, customers will be able to choose to tip by cash (on delivery or "
 "local pickup)."
 msgstr ""
 
-#: admin/controllers/settings.class.php:141
+#: admin/controllers/settings.class.php:265
+msgid "Cash tip field label"
+msgstr ""
+
+#: admin/controllers/settings.class.php:268
+msgid ""
+"Set a label of your choice for the cash tip button. The default label is "
+"\"Cash\""
+msgstr ""
+
+#: admin/controllers/settings.class.php:270
+msgid "Cash"
+msgstr ""
+
+#: admin/controllers/settings.class.php:273
 msgid "Clear tip after the order has been placed"
 msgstr ""
 
-#: admin/controllers/settings.class.php:148
+#: admin/controllers/settings.class.php:280
 msgid ""
 "If enabled, the tip that may be added to the cart, will be removed. "
 "Otherwise, it will be preserved on future orders in the current session."
 msgstr ""
 
-#: frontend/controllers/config.class.php:18
+#: admin/controllers/settings.class.php:284
+msgid "Remove tip confirmation message"
+msgstr ""
+
+#: admin/controllers/settings.class.php:287
+msgid "Set a message of your choice for the tip removal confirmation message."
+msgstr ""
+
+#: admin/controllers/settings.class.php:289
 msgid "Are you sure you wish to remove the tip?"
 msgstr ""
 
-#: frontend/views/main.views.class.php:58
-msgid "Enter tip amount"
-msgstr ""
-
-#: frontend/views/main.views.class.php:63
-#, php-format
-msgid "Add %s tip to order"
+#: admin/controllers/settings.class.php:292
+msgid "Updated to 1.1"
 msgstr ""

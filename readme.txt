@@ -1,9 +1,9 @@
 === Order Tip for WooCommerce ===
-Contributors: railmedia
+Contributors: railmedia, mhlkpf
 Tags: Woocommerce, Ecommerce, Order, Tip, Donation
 Requires at least: 3.0
-Stable tag: 1.0.1
-Tested up to: 5.5
+Stable tag: 1.1
+Tested up to: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,13 +15,13 @@ Order Tip for WooCommerce is a plugin which allows customers to add a tip or don
 
 It allows the tip to be a percentage of the order total or a fixed custom amount. Cash tip is also available which marks the tip as 0 in value, but you should expect a tip on the delivery of your products or on the pickup of the order by the customer.
 
-There is also an option for custom tip which brings up a text field where the customer is able to type in a custom amount and which is subsequently added as a fixed amount. 
+There is also an option for custom tip which brings up a text field where the customer is able to type in a custom amount and which is subsequently added as a fixed amount.
 
 The tip can also be set to be taxed or not as per your current Tax options set in WooCommerce. It features 6 standard tip rates (5, 10, 15, 20, 25, 30).
 
 It features various configuration options in the WooCommerce Settings panel under the tab Order Tip.
 
-The plugin's backend is translated in German, Swiss German, Spanish, French, Italian and Romanian.
+The plugin's backend is translated in German, Swiss German, Spanish, French, Italian, Romanian and partially in Dutch.
 
 = Check out a demo here: =
 
@@ -34,6 +34,8 @@ The plugin's backend is translated in German, Swiss German, Spanish, French, Ita
 = Important Notes =
 
 The plugin works out of the box, with no coding skills required on basically any theme. However, it uses JavaScript for adding the tip to the order. If for some reason it doesn't work as expected, please check your browser's console for any JS errors or drop a line here in the Support tab providing a link to your website.
+
+Websites using the Astra theme should avoid using the After customer details position to display the tip form. It may break the layout causing the order review sidebar to fall under the customer details one.
 
 = Developers =
 

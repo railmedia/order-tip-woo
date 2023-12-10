@@ -1,8 +1,35 @@
 <?php
+/**
+*
+* Main Frontend
+*
+* @package Order Tip for WooCommerce
+* @author  Adrian Emil Tudorache
+* @license GPL-2.0+
+* @link    https://www.tudorache.me/
+**/
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
 class WOO_Order_Tip_Main {
 
-    var $views, $settings;
+    /**
+    * Frontend Views
+    * @var object;
+    **/
+    private $views;
 
+    /**
+    * Plugin options
+    * @var array;
+    **/
+    private $settings;
+
+    /**
+    * Constructor
+    **/
     function __construct() {
 
         $this->views = new WOO_Order_Tip_Main_Views;
@@ -10,23 +37,64 @@ class WOO_Order_Tip_Main {
         $this->settings = array();
         $settings = array(
             'wc_order_tip_enabled_cart',
+            'wc_order_tip_cart_position',
             'wc_order_tip_enabled_checkout',
+            'wc_order_tip_checkout_position',
             'wc_order_tip_is_taxable',
+            'wc_order_tip_fee_name',
             'wc_order_tip_title',
             'wc_order_tip_type',
             'wc_order_tip_rates',
             'wc_order_tip_custom',
+            'wc_order_tip_custom_label',
+            'wc_order_tip_custom_apply_label',
+            'wc_order_tip_enter_placeholder',
+            'wc_order_tip_custom_remove_label',
             'wc_order_tip_cash',
+            'wc_order_tip_cash_label',
             'wc_order_tip_remove_new_order'
         );
         foreach( $settings as $setting ) {
             $this->settings[ $setting ] = get_option( $setting );
         }
-        if( $this->settings['wc_order_tip_enabled_cart'] == 'yes' ) {
-            add_action( 'woocommerce_cart_coupon', array( $this, 'tip_form' ) );
+        if( $this->settings['wc_order_tip_enabled_cart'] == 'yes' && $this->settings['wc_order_tip_cart_position'] ) {
+            switch( $this->settings['wc_order_tip_cart_position'] ) {
+                case 'before_cart':
+                    add_action( 'woocommerce_before_cart', array( $this, 'tip_form' ) );
+                break;
+                case 'after_coupon':
+                    add_action( 'woocommerce_cart_coupon', array( $this, 'tip_form' ) );
+                break;
+                case 'after_cart_table':
+                    add_action( 'woocommerce_after_cart_table', array( $this, 'tip_form' ) );
+                break;
+                case 'before_totals':
+                    add_action( 'woocommerce_before_cart_totals', array( $this, 'tip_form' ) );
+                break;
+                case 'after_cart':
+                    add_action( 'woocommerce_after_cart', array( $this, 'tip_form' ) );
+                break;
+            }
         }
-        if( $this->settings['wc_order_tip_enabled_checkout'] == 'yes' ) {
-            add_action( 'woocommerce_checkout_after_customer_details', array( $this, 'tip_form' ) );
+        if( $this->settings['wc_order_tip_enabled_checkout'] == 'yes' && $this->settings['wc_order_tip_checkout_position'] ) {
+            switch( $this->settings['wc_order_tip_checkout_position'] ) {
+                case 'before_checkout_form':
+                    add_action( 'woocommerce_before_checkout_form', array( $this, 'tip_form' ) );
+                break;
+                case 'before_order_notes':
+                    add_action( 'woocommerce_before_order_notes', array( $this, 'tip_form' ) );
+                break;
+                case 'after_customer_details':
+                    add_action( 'woocommerce_checkout_after_customer_details', array( $this, 'tip_form' ) );
+                break;
+                case 'before_order_review':
+                    add_action( 'woocommerce_checkout_order_review', array( $this, 'tip_form' ) );
+                break;
+                case 'after_checkout_form':
+                    add_action( 'woocommerce_after_checkout_form', array( $this, 'tip_form' ) );
+                break;
+            }
+
         }
 
         add_action( 'wp_ajax_apply_tip', array( $this, 'add_tip_to_session' ) );
@@ -37,8 +105,13 @@ class WOO_Order_Tip_Main {
         add_action( 'woocommerce_cart_calculate_fees', array( $this, 'do_add_tip' ) );
         add_action( 'woocommerce_new_order', array( $this, 'remove_tip_on_order_placed' ) );
 
+        add_shortcode( 'order_tip_form', array( $this, 'tip_form_shortcode' ) );
+
     }
 
+    /**
+    * Store the tip in the session
+    **/
     function add_tip_to_session() {
 
         check_ajax_referer( 'apply_order_tip', 'security' );
@@ -60,6 +133,9 @@ class WOO_Order_Tip_Main {
 
     }
 
+    /**
+    * Remove the tip from the session
+    **/
     function remove_tip_from_session() {
 
         check_ajax_referer( 'remove_order_tip', 'security' );
@@ -73,6 +149,18 @@ class WOO_Order_Tip_Main {
 
     }
 
+    /**
+    * Tip form shortcode callback
+    **/
+    function tip_form_shortcode() {
+
+        return $this->tip_form();
+
+    }
+
+    /**
+    * Tip form
+    **/
     function tip_form() {
         wp_enqueue_style( 'woo-order-tip-css' );
         wp_enqueue_script( 'woo-order-tip-js' );
@@ -82,6 +170,9 @@ class WOO_Order_Tip_Main {
         echo $this->views->tip_form( $data );
     }
 
+    /**
+    * Add tip action
+    **/
     function do_add_tip() {
 
         $wc_session = WC()->session;
@@ -109,7 +200,7 @@ class WOO_Order_Tip_Main {
             }
 
             $is_taxable = isset( $this->settings['wc_order_tip_is_taxable'] ) && $this->settings['wc_order_tip_is_taxable'] == 'yes' ? true : false;
-            $tip_label = esc_html__( sprintf( 'Tip (%s)', esc_html( $tip['tip_label'] ) ), 'order-tip-woo' );
+            $tip_label = sprintf( '%s (%s)', esc_html( $this->settings['wc_order_tip_fee_name'] ), esc_html( $tip['tip_label'] ) );
 
             WC()->cart->add_fee( $tip_label, $tip_amount, $is_taxable, '' );
 
@@ -117,6 +208,9 @@ class WOO_Order_Tip_Main {
 
     }
 
+    /**
+    * Remove tip when an order is placed, if this feature is enabled in the backend
+    **/
     function remove_tip_on_order_placed( $orderid ) {
 
         if( $this->settings['wc_order_tip_remove_new_order'] ) {

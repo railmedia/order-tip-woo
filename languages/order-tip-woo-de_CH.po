@@ -1,37 +1,95 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Woo Order Tip\n"
-"POT-Creation-Date: 2020-08-14 08:22+0200\n"
-"PO-Revision-Date: 2020-08-14 08:25+0200\n"
+"POT-Creation-Date: 2021-01-25 22:48+0100\n"
+"PO-Revision-Date: 2021-01-25 22:49+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: _;__;_e;esc_html;esc_html__;esc_html_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/controllers/settings.class.php:25
+#: admin/controllers/notices.class.php:37
+#, php-format
+msgid ""
+"To ensure full compatibility of the %sOrder Tip for WooCommerce%s plugin, "
+"please navigate to the plugin's %s, review the settings and save before "
+"proceeding."
+msgstr ""
+"Um die volle Kompatibilität des Plugins %sOrder Tip for WooCommerce%s "
+"sicherzustellen, navigieren Sie bitte zu den %s des Plugins, überprüfen Sie "
+"die Einstellungen und speichern Sie, bevor Sie fortfahren."
+
+#: admin/controllers/notices.class.php:40
+msgid "settings page"
+msgstr "Einstellungsseite"
+
+#: admin/controllers/reports.class.php:36
+#: admin/controllers/reports.class.php:39
+#, fuzzy
+#| msgid "Order Tip"
+msgid "Order Tips"
+msgstr "Bestellen Trinkgeld"
+
+#: admin/controllers/reports.class.php:111
+msgid "From"
+msgstr "Von"
+
+#: admin/controllers/reports.class.php:117
+msgid "To"
+msgstr "Bis"
+
+#: admin/controllers/reports.class.php:175
+msgid "There are no orders with tips in the database just yet"
+msgstr ""
+"Es befinden sich noch keine Bestellungen mit Trinkgeld in der Datenbank"
+
+#: admin/controllers/reports.class.php:241
+#: admin/controllers/reports.class.php:269
+msgid "There are no orders with tips based on your date range."
+msgstr "Es gibt keine Bestellungen mit Trinkgeld in Ihrem Datumsbereich."
+
+#: admin/controllers/settings.class.php:62
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: admin/controllers/settings.class.php:35
+#: admin/controllers/settings.class.php:75
 msgid "Order Tip"
 msgstr "Bestellen Trinkgeld"
 
-#: admin/controllers/settings.class.php:51
+#: admin/controllers/settings.class.php:100
 msgid "Order Tip Settings"
 msgstr "Einstellungen für Bestellen Trinkgeld"
 
-#: admin/controllers/settings.class.php:57
+#: admin/controllers/settings.class.php:106
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: admin/controllers/settings.class.php:108
+#, php-format
+msgid ""
+"You can use the %1$s[order_tip_form]%2$s shortcode in any page, post or "
+"widget. It will automatically take the settings below. However, we %1$sdo not"
+"%2$s recommend to use the shortcode on the cart or checkout pages if you "
+"enable the tip form using the checkboxes below."
+msgstr ""
+"Sie können den Shortcode %1$s[order_tip_form]%2$s in jeder Seite, jedem "
+"Beitrag oder Widget verwenden. Er übernimmt dann automatisch die unten "
+"stehenden Einstellungen. Wir %1$s empfehlen jedoch nicht%2$s, den Shortcode "
+"auf der Warenkorb- oder Kassenseite zu verwenden, wenn Sie das Tippformular "
+"mit den unten stehenden Kontrollkästchen aktivieren."
+
+#: admin/controllers/settings.class.php:112
 msgid "Enabled on Cart page"
 msgstr "Aktiviert auf der Seite Warenkorb"
 
-#: admin/controllers/settings.class.php:59
+#: admin/controllers/settings.class.php:114
 msgid ""
 "If checked, the tip form will appear under the Apply Coupon form on the Cart "
 "page"
@@ -39,18 +97,51 @@ msgstr ""
 "Wenn aktiviert, erscheint das Trinkgeldformular unter dem Formular "
 "\"Gutschein anwenden\" auf der Seite \"Warenkorb\""
 
-#: admin/controllers/settings.class.php:62
-#: admin/controllers/settings.class.php:71
-#: admin/controllers/settings.class.php:80
-#: admin/controllers/settings.class.php:88
+#: admin/controllers/settings.class.php:117
+#: admin/controllers/settings.class.php:140
+#: admin/controllers/settings.class.php:163
+#: admin/controllers/settings.class.php:172
+#: admin/controllers/settings.class.php:180
 msgid "Enable"
 msgstr "Aktivieren"
 
-#: admin/controllers/settings.class.php:66
+#: admin/controllers/settings.class.php:121
+msgid "Select position on the cart page"
+msgstr "Position auf der Warenkorbseite auswählen"
+
+#: admin/controllers/settings.class.php:123
+msgid ""
+"Select the position on the cart page. Please make sure to enable the tip "
+"form using the checkbox above."
+msgstr ""
+"Wählen Sie die Position auf der Warenkorbseite. Bitte stellen Sie sicher, "
+"dass Sie das Tipp-Formular über die Checkbox oben aktivieren."
+
+#: admin/controllers/settings.class.php:126
+msgid "Before the cart"
+msgstr "Vor dem Warenkorb"
+
+#: admin/controllers/settings.class.php:127
+msgid "After the coupon and before the Update cart button"
+msgstr "Nach dem Coupon und vor der Schaltfläche Warenkorb aktualisieren"
+
+#: admin/controllers/settings.class.php:128
+msgid "After the cart table"
+msgstr "Nach der Warenkorbtabelle"
+
+#: admin/controllers/settings.class.php:129
+msgid "Before cart totals"
+msgstr "Vor den Warenkorbsummen"
+
+#: admin/controllers/settings.class.php:130
+msgid "After the cart"
+msgstr "Nach dem Warenkorb"
+
+#: admin/controllers/settings.class.php:135
 msgid "Enabled on Checkout page"
 msgstr "Aktiviert auf der Checkout-Seite"
 
-#: admin/controllers/settings.class.php:68
+#: admin/controllers/settings.class.php:137
 msgid ""
 "If checked, the tip form will appear under the Checkout form on the Checkout "
 "page"
@@ -58,11 +149,43 @@ msgstr ""
 "Wenn aktiviert, erscheint das Trinkgeldformular unter dem Checkout-Formular "
 "auf der Checkout-Seite"
 
-#: admin/controllers/settings.class.php:75
+#: admin/controllers/settings.class.php:144
+msgid "Select position on the checkout page"
+msgstr "Position auf der Checkout-Seite wählen"
+
+#: admin/controllers/settings.class.php:146
+msgid ""
+"Select the position on the checkout page. Please make sure to enable the tip "
+"form using the checkbox above."
+msgstr ""
+"Wählen Sie die Position auf der Kassenseite. Bitte stellen Sie sicher, dass "
+"Sie das Tipp-Formular über das Kontrollkästchen oben aktivieren."
+
+#: admin/controllers/settings.class.php:149
+msgid "Before the checkout form"
+msgstr "Vor dem Kassenformular"
+
+#: admin/controllers/settings.class.php:150
+msgid "Before the order notes field"
+msgstr "Vor dem Feld für die Bestellnotizen"
+
+#: admin/controllers/settings.class.php:151
+msgid "After customer details"
+msgstr "Nach den Kundendaten"
+
+#: admin/controllers/settings.class.php:152
+msgid "Before the order review"
+msgstr "Vor der Bestellübersicht"
+
+#: admin/controllers/settings.class.php:153
+msgid "After the checkout form"
+msgstr "Nach dem Checkout-Formular"
+
+#: admin/controllers/settings.class.php:158
 msgid "Is taxable"
 msgstr "Ist steuerpflichtig"
 
-#: admin/controllers/settings.class.php:77
+#: admin/controllers/settings.class.php:160
 msgid ""
 "If checked, the tip amount will be taxed as per your WooCommerce Tax "
 "settings."
@@ -70,68 +193,151 @@ msgstr ""
 "Wenn diese Option aktiviert ist, wird der Trinkgeldbetrag basierend auf "
 "Ihren WooCommerce Tax-Einstellungen besteuert."
 
-#: admin/controllers/settings.class.php:84
+#: admin/controllers/settings.class.php:167
+msgid "Tip fee name"
+msgstr "Name der Trinkgeldgebühr"
+
+#: admin/controllers/settings.class.php:169
+msgid ""
+"The tip fee name will appear before the order total. It will always be "
+"followed by the tip amount. Default format is \"Tip (AMOUNT)\""
+msgstr ""
+"Der Name der Trinkgeldgebühr wird vor der Bestellsumme angezeigt. Ihm folgt "
+"immer der Betrag des Trinkgelds. Das Standardformat ist \"Tip (AMOUNT)\"."
+
+#: admin/controllers/settings.class.php:176
 msgid "Tip form title"
 msgstr "Trinkgeldformular Titel"
 
-#: admin/controllers/settings.class.php:86
+#: admin/controllers/settings.class.php:178
 msgid "The tip form title will appear before the tip form"
 msgstr "Der Titel wird vor dem Tippformular angezeigt"
 
-#: admin/controllers/settings.class.php:92
+#: admin/controllers/settings.class.php:184
 msgid "Tip Type"
 msgstr "Trinkengeld Typ"
 
-#: admin/controllers/settings.class.php:95
+#: admin/controllers/settings.class.php:187
 msgid "Percent of the order total"
 msgstr "Prozent der Gesamtsumme der Bestellung"
 
-#: admin/controllers/settings.class.php:96
+#: admin/controllers/settings.class.php:188
 msgid "Fixed amount"
 msgstr "Fester Betrag"
 
-#: admin/controllers/settings.class.php:99
+#: admin/controllers/settings.class.php:191
 msgid "Select the type of tip you would like to use."
 msgstr "Wählen Sie die Art der Trinkgelder aus, die Sie verwenden möchten."
 
-#: admin/controllers/settings.class.php:103
+#: admin/controllers/settings.class.php:195
 msgid "Tip Rates"
 msgstr "Trinkgeldpreise"
 
-#: admin/controllers/settings.class.php:115
+#: admin/controllers/settings.class.php:207
 msgid "Enable various tip rates. Keep CTRL or CMD key pressed while selecting."
 msgstr ""
 "Aktivieren Sie verschiedene Trinkgeldraten. Halten Sie die STRG- oder CMD-"
 "Taste gedrückt, während Sie auswählen."
 
-#: admin/controllers/settings.class.php:119
+#: admin/controllers/settings.class.php:211
 msgid "Enable custom tip field"
 msgstr "Aktivieren das benutzerdefinierte Trinkgeldfeld"
 
-#: admin/controllers/settings.class.php:122
-#: admin/controllers/settings.class.php:133
-#: admin/controllers/settings.class.php:144
+#: admin/controllers/settings.class.php:214
+#: admin/controllers/settings.class.php:257
+#: admin/controllers/settings.class.php:276
 msgid "Yes"
 msgstr "Ja"
 
-#: admin/controllers/settings.class.php:123
-#: admin/controllers/settings.class.php:134
-#: admin/controllers/settings.class.php:145
+#: admin/controllers/settings.class.php:215
+#: admin/controllers/settings.class.php:258
+#: admin/controllers/settings.class.php:277
 msgid "No"
 msgstr "Nein"
 
-#: admin/controllers/settings.class.php:126
+#: admin/controllers/settings.class.php:218
 msgid ""
 "If enabled, the customer will be able to add their own fixed amount tip."
 msgstr ""
 "Wenn aktiviert, kann der Kunde sein eigenes Trinkgeld mit festem Betrag "
 "hinzufügen."
 
-#: admin/controllers/settings.class.php:130
+#: admin/controllers/settings.class.php:222
+msgid "Custom tip field label"
+msgstr "Benutzerdefinierte Trinkgeld-Feldbezeichnung"
+
+#: admin/controllers/settings.class.php:225
+msgid ""
+"Set a label of your choice for the custom tip button. The default label is "
+"\"Custom Tip\""
+msgstr ""
+"Legen Sie eine Beschriftung Ihrer Wahl für die Schaltfläche "
+"\"Benutzerdefiniertes Trinkgeld\" fest. Die Standardbeschriftung ist "
+"\"Custom Tip\"."
+
+#: admin/controllers/settings.class.php:227
+msgid "Custom Tip"
+msgstr "Benutzerdefiniertes Trinkgeld"
+
+#: admin/controllers/settings.class.php:230
+msgid "Custom tip apply tip button label"
+msgstr "Beschriftung der Schaltfläche \"Benutzerdefinierter Tipp"
+
+#: admin/controllers/settings.class.php:233
+msgid ""
+"Set a label of your choice for the custom tip apply button. The default "
+"label is \"Add tip to order\""
+msgstr ""
+"Legen Sie eine beliebige Beschriftung für die Schaltfläche "
+"\"Benutzerdefinierter Tipp\" fest. Die Standardbeschriftung ist \"Add tip to "
+"order\"."
+
+#: admin/controllers/settings.class.php:235
+msgid "Add tip to order"
+msgstr "Trinkgeld zur Bestellung hinzufügen"
+
+#: admin/controllers/settings.class.php:238
+msgid "Custom tip enter tip input placeholder label"
+msgstr ""
+"Beschriftung des Platzhalters für die Eingabe des benutzerdefinierten "
+"Trinkgeld"
+
+#: admin/controllers/settings.class.php:241
+msgid ""
+"Set a placeholder of your choice for the custom enter tip input field. The "
+"default label is \"Enter tip amount\""
+msgstr ""
+"Legen Sie einen Platzhalter Ihrer Wahl für das benutzerdefinierte Trinkgeld-"
+"Eingabefeld fest. Die Standardbeschriftung ist \"Enter tip amount\""
+
+#: admin/controllers/settings.class.php:243
+msgid "Enter tip amount"
+msgstr "Trinkgeldbetrag eingeben"
+
+#: admin/controllers/settings.class.php:246
+msgid "Custom tip remove tip button label"
+msgstr "Benutzerdefinierte Trinkgeld der Schaltfläche Trinkgeld entfernen"
+
+#: admin/controllers/settings.class.php:249
+msgid ""
+"Set a label of your choice for the custom tip remove button. The default "
+"label is \"Remove tip\""
+msgstr ""
+"Legen Sie eine beliebige Beschriftung für die benutzerdefinierte "
+"Schaltfläche zum Entfernen des Trinkgelds fest. Die Standardbeschriftung ist "
+"\"Remove tip\""
+
+#: admin/controllers/settings.class.php:251
+#, fuzzy
+#| msgid "Remove Tip"
+msgid "Remove tip"
+msgstr "Trinkgeld entfernen"
+
+#: admin/controllers/settings.class.php:254
 msgid "Enable cash tip"
 msgstr "Bargeld-Trinkgeld aktivieren"
 
-#: admin/controllers/settings.class.php:137
+#: admin/controllers/settings.class.php:261
 msgid ""
 "If enabled, customers will be able to choose to tip by cash (on delivery or "
 "local pickup)."
@@ -139,11 +345,27 @@ msgstr ""
 "Wenn diese Option aktiviert ist, können Kunden ein Trinkgeld in bar (bei "
 "Lieferung oder Abholung vor Ort) geben."
 
-#: admin/controllers/settings.class.php:141
+#: admin/controllers/settings.class.php:265
+msgid "Cash tip field label"
+msgstr "Beschriftung des Feldes Cash Tip"
+
+#: admin/controllers/settings.class.php:268
+msgid ""
+"Set a label of your choice for the cash tip button. The default label is "
+"\"Cash\""
+msgstr ""
+"Legen Sie eine beliebige Beschriftung für die Schaltfläche \"Bargeld\" fest. "
+"Die Standardbeschriftung ist \"Cash\""
+
+#: admin/controllers/settings.class.php:270
+msgid "Cash"
+msgstr "Bargeld"
+
+#: admin/controllers/settings.class.php:273
 msgid "Clear tip after the order has been placed"
 msgstr "Trinkengeld löschen, nachdem die Bestellung aufgegeben wurde"
 
-#: admin/controllers/settings.class.php:148
+#: admin/controllers/settings.class.php:280
 msgid ""
 "If enabled, the tip that may be added to the cart, will be removed. "
 "Otherwise, it will be preserved on future orders in the current session."
@@ -152,19 +374,20 @@ msgstr ""
 "kann, entfernt. Andernfalls bleibt es bei zukünftigen Bestellungen in der "
 "aktuellen Sitzung erhalten."
 
-#: frontend/controllers/config.class.php:18
+#: admin/controllers/settings.class.php:284
+msgid "Remove tip confirmation message"
+msgstr "Trinkgeld entfernen Bestätigungsmeldung"
+
+#: admin/controllers/settings.class.php:287
+msgid "Set a message of your choice for the tip removal confirmation message."
+msgstr ""
+"Legen Sie eine beliebige Nachricht für die Bestätigungsmeldung zum Entfernen "
+"des Trinkgelds fest."
+
+#: admin/controllers/settings.class.php:289
 msgid "Are you sure you wish to remove the tip?"
 msgstr "Sind Sie sicher, dass Sie die Trinkgelder entfernen möchten?"
 
-#: frontend/views/main.views.class.php:58
-msgid "Enter tip amount"
-msgstr "Trinkgeldbetrag eingeben"
-
-#: frontend/views/main.views.class.php:63
-#, php-format
-msgid "Add %s tip to order"
-msgstr "Fügen Sie der Bestellung% s Trinkgeld hinzu"
-
-#: frontend/views/main.views.class.php:65
-msgid "Remove Tip"
-msgstr "Trinkgeld entfernen"
+#: admin/controllers/settings.class.php:292
+msgid "Updated to 1.1"
+msgstr ""

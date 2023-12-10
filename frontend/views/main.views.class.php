@@ -1,6 +1,23 @@
 <?php
+/**
+*
+* Frontend Views
+*
+* @package Order Tip for WooCommerce
+* @author  Adrian Emil Tudorache
+* @license GPL-2.0+
+* @link    https://www.tudorache.me/
+**/
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
 class WOO_Order_Tip_Main_Views {
 
+    /**
+    * Tip form view
+    **/
     function tip_form( $data ) {
 
         $settings = $data['settings'];
@@ -12,7 +29,7 @@ class WOO_Order_Tip_Main_Views {
 ?>
     <div id="wooot_order_tip_form">
 
-        <h3><?php echo apply_filters( 'wc_order_tip_title', $settings['wc_order_tip_title'] ); ?></h3>
+        <div class="order_tip_title"><?php echo apply_filters( 'wc_order_tip_title', $settings['wc_order_tip_title'] ); ?></div>
 
         <?php
             foreach( $tip_rates as $tip_rate ) {
@@ -30,7 +47,7 @@ class WOO_Order_Tip_Main_Views {
                 }
         ?>
 
-        <button id="woo_order_tip_<?php echo $tip_rate; ?>" class="woo_order_tip <?php echo $active_class; ?>" data-tip="<?php echo $tip_rate; ?>" data-tip-type="<?php echo $settings['wc_order_tip_type'] ?>" data-tip-custom="0" data-tip-cash="0"><?php echo $tip_label; ?></button>
+        <button id="woo_order_tip_<?php echo $tip_rate; ?>" class="woo_order_tip <?php echo isset( $active_class ) ? $active_class : ''; ?>" data-tip="<?php echo $tip_rate; ?>" data-tip-type="<?php echo $settings['wc_order_tip_type'] ?>" data-tip-custom="0" data-tip-cash="0"><?php echo $tip_label; ?></button>
 
         <?php } ?>
 
@@ -42,7 +59,9 @@ class WOO_Order_Tip_Main_Views {
                 }
         ?>
 
-        <button id="woo_order_tip_custom" class="woo_order_tip <?php echo $active_class; ?>" data-tip="0" data-tip-type="2" data-tip-custom="0"  data-tip-cash="1">Cash</button>
+        <button id="woo_order_tip_custom" class="woo_order_tip <?php echo $active_class; ?>" data-tip="0" data-tip-type="2" data-tip-custom="0"  data-tip-cash="1">
+            <?php echo apply_filters( 'order_tip_woo_cash_label', $settings['wc_order_tip_cash_label'] ); ?>
+        </button>
 
         <?php } ?>
 
@@ -52,17 +71,19 @@ class WOO_Order_Tip_Main_Views {
                 $active_class      = isset( $active_tip['tip_custom'] ) && $active_tip['tip_custom'] == 1 ? 'active' : '';
         ?>
 
-        <button id="woo_order_tip_custom" class="woo_order_tip <?php echo $active_class; ?>" data-tip="custom" data-tip-type="2" data-tip-custom="1"  data-tip-cash="0">Custom Tip<?php echo $custom_tip_suffix; ?></button>
+        <button id="woo_order_tip_custom" class="woo_order_tip <?php echo $active_class; ?>" data-tip="custom" data-tip-type="2" data-tip-custom="1"  data-tip-cash="0">
+            <?php echo apply_filters( 'order_tip_woo_custom_label', $settings['wc_order_tip_custom_label'] ); ?><?php echo $custom_tip_suffix; ?>
+        </button>
 
-        <p class="form-row woo_order_tip_custom_text">
-            <input style="display:none;" type="text" class="input-text" data-tip-type="<?php echo $settings['wc_order_tip_type'] ?>" data-currency="<?php echo get_woocommerce_currency_symbol(); ?>" placeholder="<?php _e( 'Enter tip amount', 'order-tip-woo' ); ?>" id="woo_order_tip_custom_text" />
+        <p class="form-row woo_order_tip_custom_text_field">
+            <input style="display:none;" type="text" class="input-text woo_order_tip_custom_text" data-tip-type="<?php echo esc_html( $settings['wc_order_tip_type'] ); ?>" data-currency="<?php echo get_woocommerce_currency_symbol(); ?>" placeholder="<?php echo apply_filters( 'order_tip_woo_custom_enter_tip_placeholder', $settings['wc_order_tip_enter_placeholder'] ); ?>" />
         </p>
 
         <?php } ?>
 
-        <button id="woo_order_tip_apply" name="woo_order_tip_apply" style="display:none;"><?php printf( __( 'Add %s tip to order', 'order-tip-woo' ), '<span></span>' ); ?></button>
+        <button class="woo_order_tip_apply" name="woo_order_tip_apply" style="display:none;"><?php echo esc_html( $settings['wc_order_tip_custom_apply_label'] ); ?><span></span></button>
 
-        <button id="woo_order_tip_remove" style="<?php echo ! $active_tip ? 'display:none;' : ''; ?>"><?php _e( 'Remove Tip', 'order-tip-woo' ); ?></button>
+        <button class="woo_order_tip_remove" style="<?php echo ! $active_tip ? 'display:none;' : ''; ?>"><?php echo esc_html( $settings['wc_order_tip_custom_remove_label'] ); ?></button>
 
     </div>
 <?php

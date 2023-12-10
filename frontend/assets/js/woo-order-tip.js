@@ -4,12 +4,12 @@ jQuery(document).ready(function() {
        woo_order_select_tip();
    }
 
-   jQuery('#woo_order_tip_apply').on('click', function(e){
+   jQuery('body').on('click', '.woo_order_tip_apply', function(e){
        e.preventDefault();
        woo_order_apply_tip( jQuery(this) );
    });
 
-   jQuery('#woo_order_tip_remove').on('click', function(e){
+   jQuery('body').on('click', '.woo_order_tip_remove', function(e){
        e.preventDefault();
        woo_order_remove_tip();
    });
@@ -18,33 +18,33 @@ jQuery(document).ready(function() {
 
 function woo_order_select_tip() {
 
-   jQuery('.woo_order_tip').on('click', function(e){
+   jQuery('body').on('click', '.woo_order_tip', function(e){
 
        e.preventDefault();
 
-       var applyTip = jQuery('#woo_order_tip_apply');
+       var applyTip = jQuery(this).parent().find('button.woo_order_tip_apply');
 
        jQuery('.woo_order_tip').removeClass('active');
 
        jQuery(this).addClass('active');
 
-       var tip = jQuery(this).attr('data-tip');
+       var tip = jQuery(this).data('tip');
 
        if( tip == 'custom' ) {
-           applyTip.show();
-           jQuery('#woo_order_tip_custom_text').toggle().focus();
+           applyTip.toggle();
+           jQuery(this).parent().find('.woo_order_tip_custom_text').toggle().focus();
        } else {
-           woo_order_apply_tip();
+           woo_order_apply_tip( jQuery(this) );
        }
 
-       jQuery('#woo_order_tip_custom_text').on('keypress', function(e){
+       jQuery('.woo_order_tip_custom_text').on('keypress', function(e){
            if(e.keyCode == 13) {
                e.preventDefault();
                return false;
            }
        });
 
-       jQuery('#woo_order_tip_custom_text').on('change', function(e){
+       jQuery('.woo_order_tip_custom_text').on('change', function(e){
 
            jQuery(this).val( jQuery(this).val().replace(/[^\d\.]/g, '') );
 
@@ -56,23 +56,24 @@ function woo_order_select_tip() {
 
 function woo_order_apply_tip( trigger ) {
 
-   var tip       = jQuery('.woo_order_tip.active').attr('data-tip'),
-       tip_type  = jQuery('.woo_order_tip.active').attr('data-tip-type'),
-       tip_custom= jQuery('.woo_order_tip.active').attr('data-tip-custom'),
-       tip_cash  = jQuery('.woo_order_tip.active').attr('data-tip-cash'),
-       tip_label = jQuery('.woo_order_tip.active').text(),
+   var container = trigger.parent(),
+       tip       = container.find('.woo_order_tip.active').data('tip'),
+       tip_type  = container.find('.woo_order_tip.active').data('tip-type'),
+       tip_custom= container.find('.woo_order_tip.active').data('tip-custom'),
+       tip_cash  = container.find('.woo_order_tip.active').data('tip-cash'),
+       tip_label = container.find('.woo_order_tip.active').text(),
        errors    = 0;
 
    if( tip == 'custom' ) {
 
-       tip = jQuery('#woo_order_tip_custom_text').val();
+       tip = container.find('.woo_order_tip_custom_text').val();
 
        if( ! tip ) {
-           jQuery('#woo_order_tip_custom_text').css('border', '1px solid red').focus();
+           container.find('.woo_order_tip_custom_text').css('border', '1px solid red').focus();
            errors = 1;
            return false;
        } else {
-           jQuery('#woo_order_tip_custom_text').css('border', 'initial');
+           container.find('.woo_order_tip_custom_text').css('border', 'initial');
            errors = 0;
        }
 
@@ -90,7 +91,17 @@ function woo_order_apply_tip( trigger ) {
            success: function (tipApplied) {
 
                if( tipApplied == 'success' ) {
-                   location.reload(true);
+                   //location.reload(true);
+                   //console.log(tip_type);
+                   if( tip_custom ) {
+                       jQuery('.woo_order_tip[data-tip="custom"]').text( wootip.s.cut + ' (' + wootip.cs + tip + ')' );
+                   }
+                   jQuery('body').trigger( 'update_checkout' );
+                   jQuery('[name="update_cart"]').attr('aria-disabled', false).removeAttr('disabled').trigger('click');
+                   jQuery('.woocommerce').unblock();
+                   jQuery('.woo_order_tip_remove').show();
+                   jQuery('.woo_order_tip_apply').hide();
+                   jQuery('.woo_order_tip_custom_text').hide();
                }
 
            }
@@ -112,9 +123,17 @@ function woo_order_remove_tip() {
            dataType: 'html',
            data: ({action: 'remove_tip', security: wootip.n2}),
            success: function (tipRemoved) {
+
                if( tipRemoved == 'success' ) {
-                   location.reload(true);
+                   //location.reload(true);
+                   jQuery('.woo_order_tip[data-tip="custom"]').text( wootip.s.cut );
+                   jQuery('body').trigger( 'update_checkout' );
+                   jQuery('[name="update_cart"]').attr('aria-disabled', false).removeAttr('disabled').trigger('click');
+                   jQuery('.woocommerce').unblock();
+                   jQuery('.woo_order_tip_remove').hide();
+                   jQuery('.woo_order_tip').removeClass('active');
                }
+
            }
        });
 

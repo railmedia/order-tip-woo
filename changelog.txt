@@ -1,7 +1,22 @@
 == Changelog ==
- 
+
 = 1.0.0 =
 * First stable version
 
 = 1.0.1 =
 * Applied fix for calculating the tip amount
+
+= 1.1 =
+* Added a new option for selecting more than one position of the tip form on the cart page
+* Added a new option for selecting more than one position of the tip form on the checkout page
+* Added a new option to change the Tip name. You can use Donation or any other name
+* Added a new option to set the label of the Custom Tip button
+* Added a new option to set the label of the Custom Tip Apply Tip button
+* Added a new option to set the placeholder of the Custom Tip field
+* Added a new option to set the label of the Custom Tip Remove Tip button
+* Added a new option to set the label of the Cash Tip button label
+* Added a new option to set the prompt message for when a tip is removed
+* Added a shortcode [order_tip_form] that would enable displaying the tip form on any post, page, sidebar, etc.
+* Added reports under WooCommerce -> Reports -> tab Order Tip. Reports can be filtered by date range
+* Change the process of applying the tip. It no longer refreshes the page. It uses the update_checkout jQuery trigger instead
+* Added partial Dutch translations thanks to Roel Mehlkopf (mhlkpf)
