@@ -13,7 +13,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-/**
+/***
 * @since 1.2.0
 */
 class WOO_Order_Tip_Admin_Reports_Views {

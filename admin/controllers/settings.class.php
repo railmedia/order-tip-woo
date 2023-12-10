@@ -168,7 +168,7 @@ function cw_vidaxl_ds_add_settings( $settings ) {
                         ),
 
                         array(
-                            'name'     => __( 'Refresh the order totals on the Cart page', 'order-tip-woo' ),
+                            'name'     => __( 'Refresh the order totals on the Checkout page', 'order-tip-woo' ),
                             'type'     => 'select',
                             'desc'     => __( 'If checked, the order totals on the cart page will be automatically updated when a tip is added or removed. If unchecked, the tip will not appear in the totals until a page refresh is performed.', 'order-tip-woo' ),
                             'desc_tip' => true,

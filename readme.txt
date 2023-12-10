@@ -2,7 +2,7 @@
 Contributors: railmedia
 Tags: Woocommerce, Ecommerce, Order, Tip, Donation
 Requires at least: 3.0
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 Tested up to: 5.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -80,6 +80,11 @@ And one filter for the backend:
 
 == Changelog ==
 
+= 1.2.1 = 
+* Released 08 March 2022*
+
+* Fixed plugin breaking backend of site
+
 = 1.2.0 =
 * Released 08 March 2022*
 
@@ -92,7 +97,6 @@ And one filter for the backend:
 * In the Reports filters, a new field has been added for Order Status. Selecting a specific order status from this field will display orders having said status only after pressing the Filter button
 * Export to CSV was displaying the order date in the tip name column. This has been fixed
 * On certain hosting plans and on various server configurations, some of the WooCommerce session functionality was failing on the __unset methods. Added a fix to detect if there is any data set in the session before unsetting it
-* Added action links to the Order tip settings and Tip reports pages under WooCommerce on the plugins screen, where the Deactivate link is
 
 = 1.1.2 =
 *Released 07 February 2021*
