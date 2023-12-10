@@ -117,7 +117,7 @@ class WOO_Order_Tip_Main {
     * Initialize the classic PHP session. The tip is stored in both PHP session and Woo session.
     **/
     function init_session() {
-        if( ! session_id() && WC()->session ) {
+        if( function_exists( 'WC' ) && ! session_id() && WC()->session ) {
             session_start();
         }
     }
@@ -214,7 +214,7 @@ class WOO_Order_Tip_Main {
             }
         }
 
-        if( $tip ) {
+        if( $tip && WC()->cart ) {
 
             if( $tip == 'custom' ) {
 

@@ -2,8 +2,8 @@
 Contributors: railmedia
 Tags: Woocommerce, Ecommerce, Order, Tip, Donation
 Requires at least: 3.0
-Stable tag: 1.2.2
-Tested up to: 5.9.1
+Stable tag: 1.3.0
+Tested up to: 6.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,16 @@ And one filter for the backend:
 6. Backend Order displaying tip
 
 == Changelog ==
+
+= 1.3.0 =
+*Released 27 March 2023*
+
+* Fixed tips not displaying in Reports
+* Added new feature to apply fee filter in the Reports section in order to display tips. All fees will appear in the panel so you will need to apply the corresponding fee filters to see all the related reports
+* Fixed tip being taxed when Is taxable setting is set to No
+* Fixed Fatal error appearing on Coupon Management page (frontend/controllers/main.class.php line 248 - Uncaught Error: Call to a member function add_fee() on null)
+* Fixed Fatal error preventing navigation to Orders page
+* Tested WooCommerce 7.5.1 & PHP 8.1
 
 = 1.2.2 =
 *Released 10 March 2022*

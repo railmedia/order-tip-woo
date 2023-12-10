@@ -4,13 +4,14 @@ jQuery(document).ready(function(){
         dateFormat: 'yy-mm-dd'
     });
 
-    jQuery('body').on('click', '#wot-set-filters', function(e){
+    jQuery('body').on('click', '#wot-set-filters', function(evt){
 
-        e.preventDefault();
+        evt.preventDefault();
 
         var dateFrom = jQuery('#wot-reports-date-from'),
             dateTo   = jQuery('#wot-reports-date-to'),
             status   = jQuery('#wot-reports-order-status'),
+            feeNames = jQuery('#wot-reports-order-fees input:checked'),
             errormsg = jQuery('#woo-order-tip-reports-errors'),
             containerRes = jQuery('#woo-order-tip-reports-table tbody'),
             totalRes = jQuery('#woo-order-tip-reports-table tfoot #woo-order-tip-reports-total'),
@@ -29,11 +30,25 @@ jQuery(document).ready(function(){
                 }
             });
 
+            let queryFeeNames = [];
+            feeNames.map(function(index, fee){
+                if( ! queryFeeNames.includes( fee.value ) ) {
+                    queryFeeNames.push( fee.value );
+                }
+            });
+
             jQuery.ajax({
                 type: "POST",
                 url: wootipar.aju,
                 dataType: 'json',
-                data: ({action: 'display_orders_list_reports_ajax', from: dateFrom.val(), to: dateTo.val(), status: status.val(), security: wootipar.ajn}),
+                data: ({
+                    action: 'display_orders_list_reports_ajax', 
+                    from: dateFrom.val(), 
+                    to: dateTo.val(), 
+                    feeNames: queryFeeNames,
+                    status: status.val(), 
+                    security: wootipar.ajn
+                }),
                 success: function(data) {
 
                     if( data.status == 'error' ) {
@@ -56,21 +71,31 @@ jQuery(document).ready(function(){
 
     });
 
-    jQuery('body').on('change', '#wot-reports-date-from, #wot-reports-date-to', function(){
+    jQuery('body').on('change', '#wot-reports-date-from, #wot-reports-date-to, #wot-reports-order-fees input', function(){
 
         var dateFrom = jQuery('#wot-reports-date-from'),
             dateTo   = jQuery('#wot-reports-date-to'),
+            feeNames = jQuery('#wot-reports-order-fees input:checked'),
             expButton= jQuery('#wot-export-csv'),
             errors   = order_tip_validate_dates();
 
-        console.log(errors);
+        let queryFeeNames = [];
+        feeNames.map(function(index, fee){
+            if( ! queryFeeNames.includes( fee.value ) ) {
+                queryFeeNames.push( fee.value );
+            }
+        });
 
         if( ! errors ) {
-            expButton.removeAttr('disabled').attr('href', wootipar.au + 'admin.php?page=wc-reports&tab=order_tip&a=export&from=' + dateFrom.val() + '&to=' + dateTo.val());
+            expButton.removeAttr('disabled').attr('href', wootipar.au + 'admin.php?page=wc-reports&tab=order_tip&a=export&from=' + dateFrom.val() + '&to=' + dateTo.val() + '&fees=' + queryFeeNames.join(','));
         } else {
             expButton.attr('disabled', 'disabled').attr('href', '#!');
         }
 
+    });
+
+    jQuery('label[for="wot-reports-order-fees"]').on('click', function(evt){
+        jQuery('#wot-reports-order-fees').slideToggle()
     });
 
 });

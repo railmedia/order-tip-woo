@@ -183,8 +183,8 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'desc'     => __( 'If checked, the tip amount will be taxed as per your WooCommerce Tax settings.', 'order-tip-woo' ),
                             'desc_tip' => true,
                             'options'  => array(
-                                'no'   => __( 'Yes', 'order-tip-woo' ),
-                                'yes'  => __( 'No', 'order-tip-woo' )
+                                'yes'   => __( 'Yes', 'order-tip-woo' ),
+                                'no'  => __( 'No', 'order-tip-woo' )
                             ),
                             'label'    => __( 'Enable', 'order-tip-woo' ),
                             'id'       => 'wc_order_tip_is_taxable'

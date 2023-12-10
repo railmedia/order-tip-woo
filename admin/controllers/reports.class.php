@@ -42,10 +42,7 @@ class WOO_Order_Tip_Admin_Reports {
 
         $this->date_format = get_option( 'date_format' );
 
-        $this->fee_names   = get_option( 'wc_order_tip_fee_names', array() );
-        if( ! in_array( 'Tip', $this->fee_names ) ) {
-            $this->fee_names[] = 'Tip'; //Backward compatibility with previously added tips
-        }
+        $this->fee_names = $this->get_fee_names();
 
         add_filter( 'woocommerce_admin_reports', array( $this, 'tip_reports' ) );
         add_action( 'order_tip_settings_reports', array( $this, 'display_orders_list_reports' ) );
@@ -59,6 +56,29 @@ class WOO_Order_Tip_Admin_Reports {
         }
 
         add_action( 'admin_init', array($this, 'export_tips_to_csv') );
+
+    }
+
+    /**
+    * Get all fee names
+    * @since 1.3.0
+    **/
+    function get_fee_names() {
+
+        global $wpdb;
+
+        $fees = array();
+        $order_fees = $wpdb->get_results("SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type='fee'");
+
+        if( $order_fees ) {
+            foreach( $order_fees as $order_fee_name ) {
+                if( ! in_array( $order_fee_name->order_item_name, $fees ) ) {
+                    $fees[] = $order_fee_name->order_item_name;
+                }
+            }
+        }
+
+        return $fees;
 
     }
 
@@ -160,8 +180,8 @@ class WOO_Order_Tip_Admin_Reports {
 
                     foreach( $fees as $fee ) {
                         $fee_name = $fee->get_name();
-                        $fee_name = explode( ' ', $fee_name );
-                        $fee_name = $fee_name[0];
+                        // $fee_name = explode( ' ', $fee_name );
+                        // $fee_name = $fee_name[0];
                         if( ! isset( $order_ids[ $order->get_id() ] ) && in_array( $fee_name, $this->fee_names ) ) {
                             $order_ids[ $order->get_id() ] = array(
                                 'date'     => $order->get_date_created(),
@@ -179,7 +199,8 @@ class WOO_Order_Tip_Admin_Reports {
             $data = array(
                 'av_statuses' => $av_statuses,
                 'date_format' => $this->date_format,
-                'order_ids'   => $order_ids
+                'order_ids'   => $order_ids,
+                'fee_names'   => $this->fee_names
             );
 
             echo $this->views->display_orders_list_reports( $data );
@@ -203,12 +224,13 @@ class WOO_Order_Tip_Admin_Reports {
         $after_date  = sanitize_text_field( esc_html( $_POST['from'] ) );
         $before_date = sanitize_text_field( esc_html( $_POST['to'] ) );
         $status      = sanitize_text_field( esc_html( $_POST['status'] ) );
+        $fee_names   = isset( $_POST['feeNames'] ) && $_POST['feeNames'] ? array_map( 'sanitize_text_field', $_POST['feeNames'] ) : $this->fee_names;
         $av_statuses = wc_get_order_statuses();
         $order_statuses = $status == 'all' ? $this->get_order_statuses() : array( $status );
 
-        if( $this->fee_names && $after_date && $before_date ) {
+        if( $fee_names && $after_date && $before_date ) {
 
-            $order_ids = $this->get_filtered_order_tips( $this->fee_names, $after_date, $before_date, $order_statuses );
+            $order_ids = $this->get_filtered_order_tips( $fee_names, $after_date, $before_date, $order_statuses );
 
             if( $order_ids['order_ids'] && ! $order_ids['errors'] ) {
 
@@ -309,8 +331,6 @@ class WOO_Order_Tip_Admin_Reports {
                 $fees  = $order->get_fees();
                 foreach( $fees as $fee ) {
                     $fee_name = $fee->get_name();
-                    $fee_name = explode(' ', $fee_name);
-                    $fee_name = $fee_name[0];
                     if( ! isset( $order_ids[ $order->get_id() ] ) && in_array( $fee_name, $fee_names ) ) {
                         $order_ids[ $order->get_id() ] = array(
                             'date'     => $order->get_date_created(),
@@ -348,7 +368,7 @@ class WOO_Order_Tip_Admin_Reports {
             $date_to   = $_GET['to'];
 
     		$fp = $this->get_tips_csv_header( $date_from, $date_to );
-    		$this->create_tips_csv_lines($fp, $date_from, $date_to );
+    		$this->create_tips_csv_lines( $fp, $date_from, $date_to, $_GET['fees'] );
     		fclose($fp);
             exit;
 
@@ -388,10 +408,11 @@ class WOO_Order_Tip_Admin_Reports {
     * Add CSV lines to the CSV file
     * @since 1.1.1
     **/
-    function create_tips_csv_lines($fp, $date_from, $date_to) {
+    function create_tips_csv_lines( $fp, $date_from, $date_to, $fee_names = array() ) {
 
         $a_date = explode( '-', $date_from );
         $b_date = explode( '-', $date_to );
+        $fee_names = ! empty( $fee_names ) ? explode( ',', $fee_names ) : $this->fee_names;
 
         $orders = new WP_Query( array(
             'post_type'      => 'shop_order',
@@ -426,9 +447,7 @@ class WOO_Order_Tip_Admin_Reports {
                 $fees  = $order->get_fees();
                 foreach( $fees as $fee ) {
                     $fee_name = $fee->get_name();
-                    $fee_name = explode(' ', $fee_name);
-                    $fee_name = $fee_name[0];
-                    if( in_array( $fee_name, $this->fee_names ) ) {
+                    if( in_array( $fee_name, $fee_names ) ) {
                         $total += $fee->get_total();
                         fputcsv($fp, array(
                             $order->get_id(),
@@ -440,7 +459,7 @@ class WOO_Order_Tip_Admin_Reports {
                 }
 
             }
-
+            
             fputcsv( $fp, array(), ',' );
             fputcsv( $fp, array( __( 'Total', 'order-tip-woo' ), $total ), ',' );
             fputcsv( $fp, array( __( 'Currency', 'order-tip-woo' ), get_woocommerce_currency() ), ',' );

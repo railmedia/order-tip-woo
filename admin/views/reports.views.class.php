@@ -23,6 +23,7 @@ class WOO_Order_Tip_Admin_Reports_Views {
     ?>
     <div id="woo-order-tip-reports">
         <div id="woo-order-tip-reports-date-range">
+            <div class="row">
             <div class="wot-reports-col">
                 <label for="wot-reports-date-from">
                     <?php _e( 'From', 'order-tip-woo' ); ?>
@@ -58,6 +59,30 @@ class WOO_Order_Tip_Admin_Reports_Views {
             <div class="wot-reports-col">
                 <a id="wot-export-csv" href="<?php echo esc_url( admin_url() ) . 'admin.php?page=wc-reports&tab=order_tip&a=export&from=' . date( 'Y-m-d', strtotime('-30 days') ) . '&to=' . date('Y-m-d'); ?>" class="button"><?php _e( 'Export to CSV', 'order-tip-woo' ); ?></a>
             </div>
+            </div>
+            <div class="row">
+                <div class="wot-reports-col">
+                    <label for="wot-reports-order-fees">
+                        <?php _e( 'Fee title', 'order-tip-woo' ); ?>
+                        <?php if( $data['fee_names'] ) { ?>
+                        - <a href="#!"><?php _e( 'Apply fee title filter', 'order-tip-woo' ); ?></a>
+                        <?php } ?>
+                    </label>
+                    <?php if( $data['fee_names'] ) { ?>
+                    <div id="wot-reports-order-fees" style="display: none;">
+                        <?php
+                            if( $data['fee_names'] ) {
+                                foreach( $data['fee_names'] as $name ) {
+                        ?>
+                        <p>
+                        <input id="<?php echo $name; ?>" value="<?php echo $name; ?>" type="checkbox" />
+                        <label for="<?php echo $name; ?>"><?php echo $name; ?></label>
+                        </p>
+                        <?php } } ?>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
         </div>
         <div id="woo-order-tip-reports-errors"></div>
         <p id="displaying-from-to">
@@ -72,12 +97,12 @@ class WOO_Order_Tip_Admin_Reports_Views {
         <table id="woo-order-tip-reports-table" class="wp-list-table widefat fixed striped table-view-list pages">
             <thead>
             <tr>
-                <th><?php _e( 'Order ID', 'order-tip-woo' ); ?></th>
-                <th><?php _e( 'Order Status', 'order-tip-woo' ); ?></th>
-                <th><?php _e( 'Customer', 'order-tip-woo' ); ?></th>
-                <th><?php _e( 'Type', 'order-tip-woo' ); ?></th>
-                <th><?php _e( 'Value', 'order-tip-woo' ); ?></th>
-                <th><?php _e( 'Date/Time', 'order-tip-woo' ); ?></th>
+                <th><strong><?php _e( 'Order ID', 'order-tip-woo' ); ?></strong></th>
+                <th><strong><?php _e( 'Order Status', 'order-tip-woo' ); ?></strong></th>
+                <th><strong><?php _e( 'Customer', 'order-tip-woo' ); ?></strong></th>
+                <th><strong><?php _e( 'Type', 'order-tip-woo' ); ?></strong></th>
+                <th><strong><?php _e( 'Value', 'order-tip-woo' ); ?></strong></th>
+                <th><strong><?php _e( 'Date/Time', 'order-tip-woo' ); ?></strong></th>
             </tr>
             </thead>
             <tbody>
