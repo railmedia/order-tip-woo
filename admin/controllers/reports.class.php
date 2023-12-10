@@ -2,6 +2,7 @@
 /**
 *
 * Admin Reports - /wp-admin/admin.php?page=wc-reports&tab=order_tip
+* Soon these reports will be removed. For the time being they can still be accessed at the above URL
 *
 * @package Order Tip for WooCommerce
 * @author  Adrian Emil Tudorache
@@ -12,7 +13,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-
+/**
+* @since 1.1.0
+*/
 class WOO_Order_Tip_Admin_Reports {
 
     /**
@@ -26,19 +29,29 @@ class WOO_Order_Tip_Admin_Reports {
     private $fee_names;
 
     /**
+    * @var object
+    **/
+    private $views;
+
+    /**
     * Constructor
     **/
     function __construct() {
 
+        $this->views = new WOO_Order_Tip_Admin_Reports_Views();
+
         $this->date_format = get_option( 'date_format' );
 
         $this->fee_names   = get_option( 'wc_order_tip_fee_names', array() );
-        $this->fee_names[] = 'Tip'; //Backward compatibility with previously added tips
+        if( ! in_array( 'Tip', $this->fee_names ) ) {
+            $this->fee_names[] = 'Tip'; //Backward compatibility with previously added tips
+        }
 
-        add_filter('woocommerce_admin_reports', array( $this, 'tip_reports' ) );
+        add_filter( 'woocommerce_admin_reports', array( $this, 'tip_reports' ) );
+        add_action( 'order_tip_settings_reports', array( $this, 'display_orders_list_reports' ) );
 
         $ajax = array(
-            'display_orders_list_customers_ajax',
+            'display_orders_list_reports_ajax',
         );
         foreach( $ajax as $ajax ) {
             add_action( 'wp_ajax_' . $ajax, array( $this, $ajax ) );
@@ -50,18 +63,42 @@ class WOO_Order_Tip_Admin_Reports {
     }
 
     /**
+    * Gets all the available WooCommerce orders statuses
+    * @since 1.1.0
+    **/
+    function get_order_statuses() {
+
+        $av_statuses = wc_get_order_statuses();
+        $order_statuses = array();
+
+        if( $av_statuses ) {
+            foreach( $av_statuses as $status => $label ) {
+                if( ! in_array( $status, $order_statuses ) ) {
+                    $order_statuses[] = $status;
+                }
+            }
+        }
+
+        ksort( $order_statuses );
+
+        return $order_statuses;
+
+    }
+
+    /**
     * Register reports tab
+    * @since 1.1.0
     **/
     function tip_reports($reports) {
 
         $reports['order_tip'] = array(
-            'title'   =>__('Order Tips','woocommerce'),
+            'title'   => __( 'Order Tips','woocommerce' ),
             'reports' => array(
                 'tip' => array(
                     'title'       => __( 'Order Tips', 'order-tip-woo' ),
                     'description' => '',
                     'hide_title'  => true,
-                    'callback'    => array( $this, 'display_orders_list_customers' )
+                    'callback'    => array( $this, 'display_orders_list_reports' )
                 )
             )
         );
@@ -72,8 +109,9 @@ class WOO_Order_Tip_Admin_Reports {
 
     /**
     * Default reports view
+    * @since 1.1.0
     **/
-    function display_orders_list_customers() {
+    function display_orders_list_reports() {
 
         if( $this->fee_names ) {
 
@@ -88,12 +126,16 @@ class WOO_Order_Tip_Admin_Reports {
 
             $order_ids = array();
 
+            $av_statuses = wc_get_order_statuses();
+            $order_statuses = $this->get_order_statuses();
+
             $orders = new WP_Query( array(
                 'post_type'      => 'shop_order',
                 'posts_per_page' => 9999,
                 'post_status'    => 'any',
                 'orderby'        => 'date',
                 'order'          => 'DESC',
+                'post_status'    => $order_statuses ? $order_statuses : array( 'wc-completed' ),
                 'date_query'     => array(
                     array(
                         'after'  => array(
@@ -107,12 +149,18 @@ class WOO_Order_Tip_Admin_Reports {
             ) );
 
             if( $orders->post_count ) {
+
                 foreach( $orders->posts as $order ) {
-                    $order = new WC_Order( $order->ID );
+
+                    $order = wc_get_order( $order->ID );
+
+                    $order_status = $order->get_status();
+
                     $fees  = $order->get_fees();
+
                     foreach( $fees as $fee ) {
                         $fee_name = $fee->get_name();
-                        $fee_name = explode(' ', $fee_name);
+                        $fee_name = explode( ' ', $fee_name );
                         $fee_name = $fee_name[0];
                         if( ! isset( $order_ids[ $order->get_id() ] ) && in_array( $fee_name, $this->fee_names ) ) {
                             $order_ids[ $order->get_id() ] = array(
@@ -123,89 +171,18 @@ class WOO_Order_Tip_Admin_Reports {
                             );
                         }
                     }
+
                 }
+
             }
-?>
-        <div id="woo-order-tip-reports">
-            <div id="woo-order-tip-reports-date-range">
-                <div class="wot-reports-col">
-                    <label for="wot-reports-date-from">
-                        <?php _e( 'From', 'order-tip-woo' ); ?>
-                    </label>
-                    <input type="text" id="wot-reports-date-from" placeholder="Click to choose date" value="<?php echo date( 'Y-m-d', strtotime('-30 days') ); ?>" />
-                </div>
-                <div class="wot-reports-col">
-                    <label for="wot-reports-date-to">
-                        <?php _e( 'To', 'order-tip-woo' ); ?>
-                    </label>
-                    <input type="text" id="wot-reports-date-to" placeholder="Click to choose date" value="<?php echo date('Y-m-d'); ?>" />
-                </div>
-                <div class="wot-reports-col">
-                    <button id="wot-set-date-range" class="button">Search</button>
-                </div>
-                <div class="wot-reports-col">
-                    <a id="wot-export-csv" href="<?php echo esc_url( admin_url() ) . 'admin.php?page=wc-reports&tab=order_tip&a=export&from=' . date( 'Y-m-d', strtotime('-30 days') ) . '&to=' . date('Y-m-d'); ?>" class="button"><?php _e( 'Export to CSV', 'order-tip-woo' ); ?></a>
-                </div>
-            </div>
-            <div id="woo-order-tip-reports-errors"></div>
-            <p id="displaying-from-to">
-                <?php
-                    printf(
-                        __( 'Displaying orders between %s and %s', 'order-tip-woo' ),
-                        '<span id="displaying-from">' . date( $this->date_format, strtotime('-30 days') ) . '</span>',
-                        '<span id="displaying-to">' . date( $this->date_format ) . '</span>'
-                    );
-                ?>
-            </p>
-            <table id="woo-order-tip-reports-table" class="wp-list-table widefat fixed striped table-view-list pages">
-                <thead>
-                <tr>
-                    <th><?php _e( 'Order ID', 'order-tip-woo' ); ?></th>
-                    <th><?php _e( 'Customer', 'order-tip-woo' ); ?></th>
-                    <th><?php _e( 'Type', 'order-tip-woo' ); ?></th>
-                    <th><?php _e( 'Value', 'order-tip-woo' ); ?></th>
-                    <th><?php _e( 'Date/Time', 'order-tip-woo' ); ?></th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                    $total = 0;
-                    foreach( $order_ids as $order_id => $data ) {
-                        $total += $data['value'];
-                        $date = $data['date'];
-                        $date_format = str_split( $this->date_format );
-                        if( ! in_array( array( 'a', 'A', 'B', 'g', 'G', 'h', 'H', 'i', 's', 'u', 'v' ), $date_format ) ) {
-                            $date_format = apply_filters( 'wc_order_tip_reports_date_time_format', implode( '', $date_format ) . ' H:i:s' );
-                        }
-                ?>
-                <tr>
-                    <td>
-                        <a href="<?php echo esc_url( admin_url() ); ?>post.php?post=<?php echo esc_html( $order_id ); ?>&action=edit" target="_blank"><?php echo esc_html( $order_id ); ?></a>
-                    </td>
-                    <td>
-                        <?php echo esc_html( $data['customer'] ); ?>
-                    </td>
-                    <td>
-                        <?php echo esc_html( $data['type'] ); ?>
-                    </td>
-                    <td>
-                        <?php echo get_woocommerce_currency_symbol() . esc_html( number_format( $data['value'], 2 ) ); ?>
-                    </td>
-                    <td>
-                        <?php echo esc_html( date( $date_format, strtotime( $data['date'] ) ) ); ?>
-                    </td>
-                </tr>
-                <?php } ?>
-                </tbody>
-                <?php if( $order_ids && $total ) { ?>
-                <tfoot>
-                    <td colspan="3"><strong><?php _e( 'Total', 'order-tip-woo' ); ?></strong></td>
-                    <td><strong><?php echo get_woocommerce_currency_symbol(); ?> <span id="woo-order-tip-reports-total"><?php echo number_format( $total, 2 ); ?></span></strong></td>
-                </tfoot>
-                <?php } ?>
-            </table>
-        </div>
-<?php
+
+            $data = array(
+                'av_statuses' => $av_statuses,
+                'date_format' => $this->date_format,
+                'order_ids'   => $order_ids
+            );
+
+            echo $this->views->display_orders_list_reports( $data );
 
         } else {
 ?>
@@ -217,56 +194,61 @@ class WOO_Order_Tip_Admin_Reports {
 
     /**
     * Get reports for date range through AJAX
+    * @since 1.1.0
     **/
-    function display_orders_list_customers_ajax() {
+    function display_orders_list_reports_ajax() {
 
         check_ajax_referer( 'reps', 'security' );
 
-        $after_date  = $_POST['from'];
-        $before_date = $_POST['to'];
+        $after_date  = sanitize_text_field( esc_html( $_POST['from'] ) );
+        $before_date = sanitize_text_field( esc_html( $_POST['to'] ) );
+        $status      = sanitize_text_field( esc_html( $_POST['status'] ) );
+        $av_statuses = wc_get_order_statuses();
+        $order_statuses = $status == 'all' ? $this->get_order_statuses() : array( $status );
 
         if( $this->fee_names && $after_date && $before_date ) {
 
-            $order_ids = $this->get_filtered_order_tips( $this->fee_names, $after_date, $before_date );
+            $order_ids = $this->get_filtered_order_tips( $this->fee_names, $after_date, $before_date, $order_statuses );
 
             if( $order_ids['order_ids'] && ! $order_ids['errors'] ) {
+
                 ob_start();
+
                 $total = 0;
                 foreach( $order_ids['order_ids'] as $order_id => $data ) {
+                    
+                    $order = wc_get_order( $order_id );
+                    $order_status = $order->get_status();
                     $total += $data['value'];
                     $date = $data['date'];
                     $date_format = str_split( $this->date_format );
                     if( ! in_array( array( 'a', 'A', 'B', 'g', 'G', 'h', 'H', 'i', 's', 'u', 'v' ), $date_format ) ) {
                         $date_format = apply_filters( 'wc_order_tip_reports_date_time_format', implode( '', $date_format ) . ' H:i:s' );
                     }
-            ?>
-            <tr>
-                <td>
-                    <a href="<?php echo esc_url( admin_url() ); ?>post.php?post=<?php echo esc_html( $order_id ); ?>&action=edit" target="_blank"><?php echo esc_html( $order_id ); ?></a>
-                </td>
-                <td>
-                    <?php echo esc_html( $data['customer'] ); ?>
-                </td>
-                <td>
-                    <?php echo esc_html( $data['type'] ); ?>
-                </td>
-                <td>
-                    <?php echo get_woocommerce_currency_symbol() . esc_html( number_format( $data['value'], 2 ) ); ?>
-                </td>
-                <td>
-                    <?php echo esc_html( date( $date_format, strtotime( $data['date'] ) ) ); ?>
-                </td>
-            </tr>
-            <?php
+
+                    $row_data = array(
+                        'order_id'     => $order_id,
+                        'av_statuses'  => $av_statuses,
+                        'order_status' => $order_status,
+                        'customer'     => $data['customer'],
+                        'type'         => $data['type'],
+                        'value'        => $data['value'],
+                        'date'         => $data['date'],
+                        'date_format'  => $date_format
+                    );
+
+                    echo $this->views->display_orders_list_reports_row( $row_data );
+
                 }
+
                 $result = ob_get_clean();
+
             }
 
         } else {
 
             $errors[] = __( 'There are no orders with tips based on your date range.', 'order-tip-woo' );
-?>
-<?php
+
         }
 
         echo wp_send_json( array(
@@ -286,8 +268,9 @@ class WOO_Order_Tip_Admin_Reports {
 
     /**
     * Get filtered orders
+    * @since 1.1.0
     **/
-    function get_filtered_order_tips( $fee_names, $after_date, $before_date ) {
+    function get_filtered_order_tips( $fee_names, $after_date, $before_date, $order_statuses = array() ) {
 
         if( ! $fee_names || ! $after_date || ! $before_date ) return;
 
@@ -302,6 +285,7 @@ class WOO_Order_Tip_Admin_Reports {
             'post_status'    => 'any',
             'orderby'        => 'date',
             'order'          => 'DESC',
+            'post_status'    => $order_statuses ? $order_statuses : array( 'wc-completed' ),
             'date_query'     => array(
                 array(
                     'after'  => array(
@@ -350,6 +334,7 @@ class WOO_Order_Tip_Admin_Reports {
 
     /**
     * Perform export action
+    * @since 1.1.0
     **/
     function export_tips_to_csv() {
 
@@ -373,6 +358,7 @@ class WOO_Order_Tip_Admin_Reports {
 
     /**
     * Get CSV file header
+    * @since 1.1.1
     **/
     function get_tips_csv_header( $date_from, $date_to ) {
 
@@ -400,6 +386,7 @@ class WOO_Order_Tip_Admin_Reports {
 
     /**
     * Add CSV lines to the CSV file
+    * @since 1.1.1
     **/
     function create_tips_csv_lines($fp, $date_from, $date_to) {
 
@@ -445,9 +432,9 @@ class WOO_Order_Tip_Admin_Reports {
                         $total += $fee->get_total();
                         fputcsv($fp, array(
                             $order->get_id(),
-                            date( $this->date_format, strtotime( $order->get_date_created() ) ),
+                            $fee_name,
                             floatval( $fee->get_total() ),
-                            $fee_name
+                            date( $this->date_format, strtotime( $order->get_date_created() ) )
                         ), ',');
                     }
                 }

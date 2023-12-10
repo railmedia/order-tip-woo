@@ -19,3 +19,7 @@
 #woo-order-tip-reports-errors {
     color: red;
 }
+
+.order-tip-reports-settings p.submit {
+    display: none;
+}

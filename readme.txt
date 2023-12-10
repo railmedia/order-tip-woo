@@ -2,8 +2,8 @@
 Contributors: railmedia
 Tags: Woocommerce, Ecommerce, Order, Tip, Donation
 Requires at least: 3.0
-Stable tag: 1.1.2
-Tested up to: 5.6
+Stable tag: 1.2.0
+Tested up to: 5.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,15 +80,36 @@ And one filter for the backend:
 
 == Changelog ==
 
-= 1.0.0 =
-*Released 18 August 2020*
+= 1.2.0 =
+* Released 08 March 2022*
 
-* First stable version
+* Added possibility of adding a label for the custom field tip in order to avoid displaying the label in paranthesis such as Tip (Add a tip). Admin is able to set their own custom label
+* Fixed wrong label in checkout summary problem. The value in the label was being set one step behind the current custom tip
+* Fixed order fail on checkout page clearing the tip. If an order failed for any reason (credit card issue or otherwise), the tip would disappear from the order total. The issue has been fixed
+* Added new options to enable/disable the alert when the tip is removed and to set a custom message if the alert is enabled
+* The custom tip field used to allow only numbers and . (dot, for decimal) characters in it. Some users prefer to use the , (comma, for decimal) symbol. This feature has been added
+* Since WooCommerce announces the WooCommerce -> Reports will be removed in the future, the order tips reports have been made available also in the WooCommerce -> Settings -> Order Tip tab -> Tip Reports subtab
+* In the Reports filters, a new field has been added for Order Status. Selecting a specific order status from this field will display orders having said status only after pressing the Filter button
+* Export to CSV was displaying the order date in the tip name column. This has been fixed
+* On certain hosting plans and on various server configurations, some of the WooCommerce session functionality was failing on the __unset methods. Added a fix to detect if there is any data set in the session before unsetting it
+* Added action links to the Order tip settings and Tip reports pages under WooCommerce on the plugins screen, where the Deactivate link is
 
-= 1.0.1 =
-*Released 30 August 2020*
+= 1.1.2 =
+*Released 07 February 2021*
 
-* Applied fix for calculating the tip amount
+* Added a fix for creating an order from the backend. The plugin was crashing the website when a new order was added manually from the backend
+* Added capability for decimal tip amount
+* Added a filter to allow changing the reports order creation date/time in the Reports section in the backend
+* Renamed the reports Name column to Type. It refers to the type of tip
+* Added the customer name in the reports
+
+= 1.1.1 =
+*Released 30 January 2021*
+
+* Added backward compatibility with 1.0.1 to display tips in the reports for the orders placed before v. 1.1
+* Added functionality for CSV exports of tip reports
+* Added version 1.1 for Dutch translations
+* Fixed dates not being updated when a search is performed on the Reports page and a custom date (From/To) is selected
 
 = 1.1 =
 *Released 25 January 2021*
@@ -108,19 +129,12 @@ And one filter for the backend:
 * Change the process of applying the tip. It no longer refreshes the page. It uses the update_checkout jQuery trigger instead
 * Added partial Dutch translations thanks to Roel Mehlkopf (@mhlkpf)
 
-= 1.1.1 =
-*Released 30 January 2021*
+= 1.0.1 =
+*Released 30 August 2020*
 
-* Added backward compatibility with 1.0.1 to display tips in the reports for the orders placed before v. 1.1
-* Added functionality for CSV exports of tip reports
-* Added version 1.1 for Dutch translations
-* Fixed dates not being updated when a search is performed on the Reports page and a custom date (From/To) is selected
+* Applied fix for calculating the tip amount
 
-= 1.1.2 =
-*Released 07 February 2021*
+= 1.0.0 =
+*Released 18 August 2020*
 
-* Added a fix for creating an order from the backend. The plugin was crashing the website when a new order was added manually from the backend
-* Added capability for decimal tip amount
-* Added a filter to allow changing the reports order creation date/time in the Reports section in the backend
-* Renamed the reports Name column to Type. It refers to the type of tip
-* Added the customer name in the reports
+* First stable version

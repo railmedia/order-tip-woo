@@ -46,7 +46,7 @@ function woo_order_select_tip() {
 
        jQuery('.woo_order_tip_custom_text').on('change', function(e){
 
-           jQuery(this).val( jQuery(this).val().replace(/[^\d\.]/g, '') );
+           jQuery(this).val( jQuery(this).val().replace(/[^0-9.,]/g, '') );
 
        });
 
@@ -91,13 +91,13 @@ function woo_order_apply_tip( trigger ) {
            success: function (tipApplied) {
 
                if( tipApplied == 'success' ) {
-                   //location.reload(true);
-                   //console.log(tip_type);
                    if( tip_custom ) {
-                       jQuery('.woo_order_tip[data-tip="custom"]').text( wootip.s.cut + ' (' + wootip.cs + tip + ')' );
+                       jQuery('.woo_order_tip[data-tip="custom"]').text( wootip.s.cut + ' (' + wootip.cs + tip.replace( ',', wootip.ds ).replace( '.', wootip.ds ) + ')' );
                    }
                    jQuery('body').trigger( 'update_checkout' );
-                   jQuery('[name="update_cart"]').attr('aria-disabled', false).removeAttr('disabled').trigger('click');
+                   if( jQuery( 'button[name="update_cart"]' ).length ) {
+                       jQuery( 'button[name="update_cart"]' ).attr('aria-disabled', false).removeAttr('disabled').trigger('click');
+                   }
                    jQuery('.woocommerce').unblock();
                    jQuery('.woo_order_tip_remove').show();
                    jQuery('.woo_order_tip_apply').hide();
@@ -113,30 +113,42 @@ function woo_order_apply_tip( trigger ) {
 
 function woo_order_remove_tip() {
 
-   if( confirm( wootip.s.rtc ) === true ) {
+    if( wootip.eart == '1' ) {
 
-       jQuery('.woocommerce').block({message: ''});
+        if( confirm( wootip.s.rtc ) === true ) {
+            do_woo_order_remove_tip();
+        }
 
-       jQuery.ajax({
-           type: "POST",
-           url: wootip.au,
-           dataType: 'html',
-           data: ({action: 'remove_tip', security: wootip.n2}),
-           success: function (tipRemoved) {
+    } else {
 
-               if( tipRemoved == 'success' ) {
-                   //location.reload(true);
-                   jQuery('.woo_order_tip[data-tip="custom"]').text( wootip.s.cut );
-                   jQuery('body').trigger( 'update_checkout' );
-                   jQuery('[name="update_cart"]').attr('aria-disabled', false).removeAttr('disabled').trigger('click');
-                   jQuery('.woocommerce').unblock();
-                   jQuery('.woo_order_tip_remove').hide();
-                   jQuery('.woo_order_tip').removeClass('active');
-               }
+        do_woo_order_remove_tip();
 
-           }
-       });
+    }
 
-   }
+}
+
+function do_woo_order_remove_tip() {
+
+    jQuery('.woocommerce').block({message: ''});
+
+    jQuery.ajax({
+        type: "POST",
+        url: wootip.au,
+        dataType: 'html',
+        data: ({action: 'remove_tip', security: wootip.n2}),
+        success: function (tipRemoved) {
+
+            if( tipRemoved == 'success' ) {
+                //location.reload(true);
+                jQuery('.woo_order_tip[data-tip="custom"]').text( wootip.s.cut );
+                jQuery('body').trigger( 'update_checkout' );
+                jQuery('[name="update_cart"]').attr('aria-disabled', false).removeAttr('disabled').trigger('click');
+                jQuery('.woocommerce').unblock();
+                jQuery('.woo_order_tip_remove').hide();
+                jQuery('.woo_order_tip').removeClass('active');
+            }
+
+        }
+    });
 
 }

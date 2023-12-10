@@ -25,6 +25,7 @@ class WOO_Order_Tip_Main_Views {
         $tip_rates  = apply_filters( 'wc_order_tip_rates', $settings['wc_order_tip_rates'] );
         $wc_session = WC()->session;
         $active_tip = $wc_session->get('tip');
+        $active_class = '';
 
 ?>
     <div id="wooot_order_tip_form">
@@ -67,11 +68,14 @@ class WOO_Order_Tip_Main_Views {
 
         <?php
             if( $settings[ 'wc_order_tip_custom' ] ) {
-                $custom_tip_suffix = isset( $active_tip['tip_custom'] ) && $active_tip['tip_custom'] == 1 ? ' (' . get_woocommerce_currency_symbol() . $active_tip['tip'] . ')' : '';
+                $ds = get_option( 'woocommerce_price_decimal_sep' );
+                $ds ? $ds : '.';
+                $active_tip_amount = isset( $active_tip['tip'] ) && $active_tip['tip'] ? str_replace( ',', $ds, str_replace( '.', $ds, $active_tip['tip'] ) ) : '';
+                $custom_tip_suffix = isset( $active_tip['tip_custom'] ) && $active_tip['tip_custom'] == 1 ? ' (' . get_woocommerce_currency_symbol() . $active_tip_amount . ')' : '';
                 $active_class      = isset( $active_tip['tip_custom'] ) && $active_tip['tip_custom'] == 1 ? 'active' : '';
         ?>
 
-        <button id="woo_order_tip_custom" class="woo_order_tip <?php echo $active_class; ?>" data-tip="custom" data-tip-type="2" data-tip-custom="1"  data-tip-cash="0">
+        <button id="woo_order_tip_custom" class="woo_order_tip <?php echo $active_class; ?>" data-tip="custom" data-tip-type="2" data-tip-custom="1" data-tip-cash="0">
             <?php echo apply_filters( 'wc_order_tip_custom_label', $settings['wc_order_tip_custom_label'] ); ?><?php echo $custom_tip_suffix; ?>
         </button>
 

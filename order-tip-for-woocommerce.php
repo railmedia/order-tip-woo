@@ -3,11 +3,13 @@
 * Plugin Name: Order Tip for WooCommerce
 * Plugin URI: https://order-tip-for-woocommerce.tudorache.me/
 * Description: Adds a form to the cart and checkout pages where customer can add tips to the WooCommerce orders.
-* Version: 1.1.2
+* Version: 1.2.0
 * Author: Adrian Emil Tudorache
 * Author URI: https://www.tudorache.me
 * Text Domain: order-tip-woo
 * Domain Path: /languages
+* WC requires at least: 3.0.0
+* WC tested up to: 6.2.1
 * License: GPLv2 or later
 */
 

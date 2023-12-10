@@ -47,11 +47,13 @@ class WOO_Order_Tip_Main {
             'wc_order_tip_rates',
             'wc_order_tip_custom',
             'wc_order_tip_custom_label',
+            'wc_order_tip_display_custom_tip_label_in_tip_name',
             'wc_order_tip_custom_apply_label',
             'wc_order_tip_enter_placeholder',
             'wc_order_tip_custom_remove_label',
             'wc_order_tip_cash',
             'wc_order_tip_cash_label',
+            'wc_order_tip_enable_alert_remove_tip',
             'wc_order_tip_remove_new_order'
         );
         foreach( $settings as $setting ) {
@@ -102,11 +104,22 @@ class WOO_Order_Tip_Main {
         add_action( 'wp_ajax_remove_tip', array( $this, 'remove_tip_from_session' ) );
         add_action( 'wp_ajax_nopriv_remove_tip', array( $this, 'remove_tip_from_session' ) );
 
+        add_action( 'init', array( $this, 'init_session' ) );
+        add_action( 'wp', array( $this, 'do_add_tip' ) );
         add_action( 'woocommerce_cart_calculate_fees', array( $this, 'do_add_tip' ) );
         add_action( 'woocommerce_new_order', array( $this, 'remove_tip_on_order_placed' ) );
 
         add_shortcode( 'order_tip_form', array( $this, 'tip_form_shortcode' ) );
 
+    }
+
+    /**
+    * Initialize the classic PHP session. The tip is stored in both PHP session and Woo session.
+    **/
+    function init_session() {
+        if( ! session_id() && WC()->session ) {
+            session_start();
+        }
     }
 
     /**
@@ -117,15 +130,25 @@ class WOO_Order_Tip_Main {
         check_ajax_referer( 'apply_order_tip', 'security' );
 
         $tip = array(
-            'tip'       => floatval( sanitize_text_field( $_POST['tip'] ) ),
-            'tip_type'  => intval( sanitize_text_field( $_POST['tip_type'] ) ),
+            'tip'       => floatval( sanitize_text_field( str_replace( ',', '.', $_POST['tip'] ) ) ),
+            'tip_type'  => intval( $_POST['tip_type'] ),
             'tip_label' => sanitize_text_field( $_POST['tip_label'] ),
-            'tip_cash'  => intval( sanitize_text_field( $_POST['tip_cash'] ) ),
-            'tip_custom'=> intval( sanitize_text_field( $_POST['tip_custom'] ) )
+            'tip_cash'  => intval( $_POST['tip_cash'] ),
+            'tip_custom'=> intval( $_POST['tip_custom'] )
         );
 
+        if( $tip['tip_type'] == 2 && ! $tip['tip_cash'] ) {
+            $tip['tip_label'] = get_option( 'wc_order_tip_custom_label' );
+        }
+
+        $_SESSION['tip'] = serialize( $tip );
+
         $wc_session = WC()->session;
-        $wc_session->set( 'tip', $tip );
+        $sess_customer = $wc_session->get('customer');
+        if( $sess_customer ) {
+            $sess_customer['tip'] = $tip;
+            $wc_session->set( 'tip', $tip );
+        }
 
         echo 'success';
 
@@ -142,6 +165,8 @@ class WOO_Order_Tip_Main {
 
         $wc_session = WC()->session;
         $wc_session->__unset( 'tip' );
+
+        unset( $_SESSION['tip'] );
 
         echo 'success';
 
@@ -176,7 +201,12 @@ class WOO_Order_Tip_Main {
     function do_add_tip() {
 
         $wc_session = WC()->session;
-        $tip = $wc_session->get('tip');
+        $tip = $wc_session ? $wc_session->get('tip') : array();
+        if( ! $tip ) {
+            if( isset( $_SESSION ) && isset( $_SESSION['tip'] ) && $_SESSION['tip'] ) {
+                $tip = unserialize( $_SESSION['tip'] );
+            }
+        }
 
         if( $tip ) {
 
@@ -200,7 +230,12 @@ class WOO_Order_Tip_Main {
             }
 
             $is_taxable = isset( $this->settings['wc_order_tip_is_taxable'] ) && $this->settings['wc_order_tip_is_taxable'] == 'yes' ? true : false;
-            $tip_label = sprintf( '%s (%s)', esc_html( $this->settings['wc_order_tip_fee_name'] ), esc_html( $tip['tip_label'] ) );
+
+            if( $this->settings['wc_order_tip_display_custom_tip_label_in_tip_name'] ) {
+                $tip_label = sprintf( '%s (%s)', esc_html( $this->settings['wc_order_tip_fee_name'] ), esc_html( $tip['tip_label'] ) );
+            } else {
+                $tip_label = sprintf( '%s', esc_html( $this->settings['wc_order_tip_fee_name'] ) );
+            }
 
             WC()->cart->add_fee( $tip_label, $tip_amount, $is_taxable, '' );
 
@@ -214,8 +249,16 @@ class WOO_Order_Tip_Main {
     function remove_tip_on_order_placed( $orderid ) {
 
         if( $this->settings['wc_order_tip_remove_new_order'] && ! is_admin() ) {
+
             $wc_session = WC()->session;
-            $wc_session->__unset( 'tip' );
+            if( $wc_session && $wc_session->get( 'tip' ) ) {
+                $wc_session->__unset( 'tip' );
+            }
+
+            if( isset( $_SESSION ) && isset( $_SESSION['tip'] ) && $_SESSION['tip'] ) {
+                unset( $_SESSION['tip'] );
+            }
+
         }
 
     }

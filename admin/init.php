@@ -15,7 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $files = array(
     'controllers/config.class.php'   => 'WOO_Order_Tip_Admin_Config',
-    'controllers/settings.class.php' => 'WOO_Order_Tip_Admin_Settings',
+    //'controllers/settings.class.php' => 'WOO_Order_Tip_Admin_Settings',
+    'controllers/settings.class.php' => '',
+    'views/reports.views.class.php'  => '',
     'controllers/reports.class.php'  => 'WOO_Order_Tip_Admin_Reports',
     'controllers/notices.class.php'  => 'WOO_Order_Tip_Admin_Notices'
 );

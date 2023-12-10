@@ -4,12 +4,13 @@ jQuery(document).ready(function(){
         dateFormat: 'yy-mm-dd'
     });
 
-    jQuery('body').on('click', '#wot-set-date-range', function(e){
+    jQuery('body').on('click', '#wot-set-filters', function(e){
 
         e.preventDefault();
 
         var dateFrom = jQuery('#wot-reports-date-from'),
             dateTo   = jQuery('#wot-reports-date-to'),
+            status   = jQuery('#wot-reports-order-status'),
             errormsg = jQuery('#woo-order-tip-reports-errors'),
             containerRes = jQuery('#woo-order-tip-reports-table tbody'),
             totalRes = jQuery('#woo-order-tip-reports-table tfoot #woo-order-tip-reports-total'),
@@ -32,7 +33,7 @@ jQuery(document).ready(function(){
                 type: "POST",
                 url: wootipar.aju,
                 dataType: 'json',
-                data: ({action: 'display_orders_list_customers_ajax', from: dateFrom.val(), to: dateTo.val(), security: wootipar.ajn}),
+                data: ({action: 'display_orders_list_reports_ajax', from: dateFrom.val(), to: dateTo.val(), status: status.val(), security: wootipar.ajn}),
                 success: function(data) {
 
                     if( data.status == 'error' ) {

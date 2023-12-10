@@ -23,7 +23,8 @@ class WOO_Order_Tip_Admin_Notices {
     }
 
     /**
-    * Add a notification if settings are not saved after update to version 1.1
+    * Adds a notification if settings are not saved after update to version 1.1
+    * @since 1.0.0
     **/
     function save_options_notif() {
 
