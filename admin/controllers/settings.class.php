@@ -81,22 +81,22 @@ function woo_order_tip_admin_add_settings( $settings ) {
 
                 case 'settings': default:
 
-                    $settings = apply_filters( 'wc_order_tip_settings', array(
-
+                    $settings_open = array(
                         array(
                             'name'     => __( 'Order Tip Settings', 'order-tip-woo' ),
                             'type'     => 'title',
                             'desc'     => '',
                             'id'       => 'wc_order_tip_section_title'
                         ),
-
                         array(
                             'name'     => __( 'Shortcode', 'order-tip-woo' ),
                             'type'     => 'title',
                             'desc'     => sprintf( __( 'You can use the %1$s[order_tip_form]%2$s shortcode in any page, post or widget. It will automatically take the settings below. However, we %1$sdo not%2$s recommend to use the shortcode on the cart or checkout pages if you enable the tip form using the checkboxes below.', 'order-tip-woo' ), '<strong>', '</strong>' ),
                             'id'       => 'wc_order_tip_shortcode'
                         ),
+                    );
 
+                    $settings_display = array(
                         array(
                             'name'     => __( 'Enabled on Cart page', 'order-tip-woo' ),
                             'type'     => 'select',
@@ -188,8 +188,10 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             ),
                             'label'    => __( 'Enable', 'order-tip-woo' ),
                             'id'       => 'wc_order_tip_is_taxable'
-                        ),
+                        )
+                    );
 
+                    $settings_tip = array(
                         array(
                             'name'     => __( 'Tip fee name', 'order-tip-woo' ),
                             'type'     => 'text',
@@ -238,6 +240,20 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'desc_tip' => true
                         ),
 
+                        array(
+                            'name'     => __( 'Display tip total for percentage amount', 'order-tip-woo' ),
+                            'type'     => 'select',
+                            'options'  => array(
+                                '1'    => __( 'Yes', 'order-tip-woo' ),
+                                '2'    => __( 'No', 'order-tip-woo' )
+                            ),
+                            'id'       => 'wc_order_tip_percentage_total',
+                            'desc'     => __( 'If Tip type is set to Percentage of the order total, this setting adds the tip amount below the tip percent.', 'order-tip-woo' ),
+                            'desc_tip' => true
+                        )
+                    );
+
+                    $settings_custom = array(
                         array(
                             'name'     => __( 'Enable custom tip field', 'order-tip-woo' ),
                             'type'     => 'select',
@@ -296,8 +312,10 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'desc'     => __( 'Set a label of your choice for the custom tip remove button. The default label is "Remove tip"', 'order-tip-woo' ),
                             'desc_tip' => true,
                             'default'  => __( 'Remove tip', 'order-tip-woo' )
-                        ),
+                        )
+                    );
 
+                    $settings_cash = array(
                         array(
                             'name'     => __( 'Enable cash tip', 'order-tip-woo' ),
                             'type'     => 'select',
@@ -317,8 +335,10 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'desc'     => __( 'Set a label of your choice for the cash tip button. The default label is "Cash"', 'order-tip-woo' ),
                             'desc_tip' => true,
                             'default'  => __( 'Cash', 'order-tip-woo' )
-                        ),
+                        )
+                    );
 
+                    $settings_ui = array(
                         array(
                             'name'     => __( 'Clear tip after the order has been placed', 'order-tip-woo' ),
                             'type'     => 'select',
@@ -357,20 +377,39 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'type'     => 'text',
                             'id'       => 'wc_order_tip_updated_1_1',
                             'default'  => '1'
-                        ),
+                        )
+                    );
 
+                    $settings_woo_subscriptions = WOOOTIPSUB ? array(
+                        array(
+                            'name'     => __( 'Woo Subscriptions workflow', 'order-tip-woo' ),
+                            'type'     => 'select',
+                            'desc'     => __( 'Choose one of the workflows in the dropdown. The setting will apply only on subscription products.', 'order-tip-woo' ),
+                            'desc_tip' => true,
+                            'options'  => array(
+                                '1'    => __( 'Disabled', 'order-tip-woo' ),
+                                '2'    => __( 'Allow tips only on the initial order', 'order-tip-woo' ),
+                                '3'    => __( 'Force recurring tips', 'order-tip-woo' ),
+                                '4'    => __( 'Allow users to choose using recurring tips or not', 'order-tip-woo' )
+                            ),
+                            'id'       => 'wc_order_tip_woo_subscriptions'
+                        )
+                    ) : array();
+
+                    $settings_closed = array(
                         array(
                             'type' => 'sectionend',
                             'id'   => 'general_settings'
-                        ),
+                        )
+                    );
 
-                    ) );
+                    $settings = apply_filters( 'wc_order_tip_settings', array_merge( $settings_open, $settings_display, $settings_tip, $settings_custom, $settings_cash, $settings_ui, $settings_woo_subscriptions, $settings_closed ) );
 
                 break;
 
                 case 'reports':
 
-                    $settings = apply_filters( 'cw_vidaxl_ds_sync_products_settings', array(
+                    $settings = apply_filters( 'wc_order_tip_reports', array(
 
 						array(
                             'name' => __( 'Reports', 'order-tip-woo' ),

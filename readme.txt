@@ -2,8 +2,8 @@
 Contributors: railmedia
 Tags: Woocommerce, Ecommerce, Order, Tip, Donation
 Requires at least: 3.0
-Stable tag: 1.3.0
-Tested up to: 6.1.1
+Stable tag: 1.3.1
+Tested up to: 6.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,17 @@ And one filter for the backend:
 
 * wc_order_tip_reports_date_time_format - allows changing the date format of the reports order created date/time. The format needs to comply with the PHP date format. See more [here](https://www.php.net/manual/en/function.date.php)
 
+CSS classes and IDs that allow customization:
+
+* #wooot_order_tip_form - main form container
+* #wooot_order_tip_form button.woo_order_tip - regular tip buttons
+* #wooot_order_tip_form button#woo_order_tip_cash - cash tip button
+* #wooot_order_tip_form button#woo_order_tip_custom - custom tip button
+* #wooot_order_tip_form p.woo_order_tip_custom_text_field - row for the custom tip input box
+* #wooot_order_tip_form input.woo_order_tip_custom_text - custom tip input box
+* #wooot_order_tip_form button.woo_order_tip_apply - tip apply button
+* #wooot_order_tip_form button.woo_order_tip_remove - tip remove button
+
 == Installation ==
 
 1. Upload and activate plugin in your WP installation
@@ -80,6 +91,14 @@ And one filter for the backend:
 6. Backend Order displaying tip
 
 == Changelog ==
+
+= 1.3.1 =
+*Released 11 December 2023*
+
+* Changed id="woo_order_tip_custom" to id="woo_order_tip_cash" for the Cash tip button to allow custom styling
+* Added support for [WooCommerce Subscriptions](https://woo.com/products/woocommerce-subscriptions/) by allowing tips to be set as recurring
+* Added a new option that allows to choose the WooCommerce Subscriptions functionality
+* Added a new option labelled **Display tip total for percentage amount** that allows displaying the tip total for the percentage amount
 
 = 1.3.0 =
 *Released 27 March 2023*

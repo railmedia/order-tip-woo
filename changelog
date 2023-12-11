@@ -1,0 +1,81 @@
+== Changelog ==
+
+= 1.3.1 =
+*Released 11 December 2023*
+
+* Changed id="woo_order_tip_custom" to id="woo_order_tip_cash" for the Cash tip button
+* Added support for [WooCommerce Subscriptions](https://woo.com/products/woocommerce-subscriptions/)
+* Added a new option that allows to choose the WooCommerce Subscriptions functionality
+* Added a new option labelled **Display tip total for percentage amount** that allows displaying the tip total for the percentage amount
+
+= 1.3.0 =
+*Released 27 March 2023*
+
+* Fixed tips not displaying in Reports
+* Added new feature to apply fee filter in the Reports section in order to display tips. All fees will appear in the panel so you will need to apply the corresponding fee filters to see all the related reports
+* Fixed tip being taxed when Is taxable setting is set to No
+* Fixed Fatal error appearing on Coupon Management page (frontend/controllers/main.class.php line 248 - Uncaught Error: Call to a member function add_fee() on null)
+* Fixed Fatal error preventing navigation to Orders page
+* Tested WooCommerce 7.5.1 & PHP 8.1
+
+= 1.2.2 =
+*Released 10 March 2022*
+
+* Added type attribute to <button> tags for the tip. This fixes issues on some websites which were experimenting them especially on the checkout page
+* Added wc_order_tip_display_form filter which prevents the tip form from being displayed on the page
+* Tested PHP 8.1.3
+* Tested WooCommerce 6.3.0
+
+= 1.2.1 =
+*Released 08 March 2022*
+
+* Fixed plugin breaking backend of site
+
+= 1.2.0 =
+*Released 08 March 2022*
+
+* Added possibility of adding a label for the custom field tip in order to avoid displaying the label in paranthesis such as Tip (Add a tip). Admin is able to set their own custom label
+* Fixed wrong label in checkout summary problem. The value in the label was being set one step behind the current custom tip
+* Fixed order fail on checkout page clearing the tip. If an order failed for any reason (credit card issue or otherwise), the tip would disappear from the order total. The issue has been fixed
+* Added new options to enable/disable the alert when the tip is removed and to set a custom message if the alert is enabled
+* The custom tip field used to allow only numbers and . (dot, for decimal) characters in it. Some users prefer to use the , (comma, for decimal) symbol. This feature has been added
+* Since WooCommerce announces the WooCommerce -> Reports will be removed in the future, the order tips reports have been made available also in the WooCommerce -> Settings -> Order Tip tab -> Tip Reports subtab
+* In the Reports filters, a new field has been added for Order Status. Selecting a specific order status from this field will display orders having said status only after pressing the Filter button
+* Export to CSV was displaying the order date in the tip name column. This has been fixed
+* On certain hosting plans and on various server configurations, some of the WooCommerce session functionality was failing on the __unset methods. Added a fix to detect if there is any data set in the session before unsetting it
+
+= 1.1.2 =
+*Released 07 February 2021*
+
+* Added a fix for creating an order from the backend. The plugin was crashing the website when a new order was added manually from the backend
+* Added capability for decimal tip amount
+* Added a filter to allow changing the reports order creation date/time in the Reports section in the backend
+* Renamed the reports Name column to Type. It refers to the type of tip
+* Added the customer name in the reports
+
+= 1.1.1 =
+* Added backward compatibility with 1.0.1 to display tips in the reports for the orders placed before v. 1.1
+* Added functionality for CSV exports of tip reports
+* Added version 1.1 for Dutch translations
+* Fixed dates not being updated when a search is performed on the Reports page and a custom date (From/To) is selected
+
+= 1.1 =
+* Added a new option for selecting more than one position of the tip form on the cart page
+* Added a new option for selecting more than one position of the tip form on the checkout page
+* Added a new option to change the Tip name. You can use Donation or any other name
+* Added a new option to set the label of the Custom Tip button
+* Added a new option to set the label of the Custom Tip Apply Tip button
+* Added a new option to set the placeholder of the Custom Tip field
+* Added a new option to set the label of the Custom Tip Remove Tip button
+* Added a new option to set the label of the Cash Tip button label
+* Added a new option to set the prompt message for when a tip is removed
+* Added a shortcode [order_tip_form] that would enable displaying the tip form on any post, page, sidebar, etc.
+* Added reports under WooCommerce -> Reports -> tab Order Tip. Reports can be filtered by date range
+* Change the process of applying the tip. It no longer refreshes the page. It uses the update_checkout jQuery trigger instead
+* Added partial Dutch translations thanks to Roel Mehlkopf (mhlkpf)
+
+= 1.0.1 =
+* Applied fix for calculating the tip amount
+
+= 1.0.0 =
+* First stable version

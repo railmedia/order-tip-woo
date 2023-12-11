@@ -12,3 +12,7 @@
 #wooot_order_tip_form .order_tip_title {
     font-size: 18px;
 }
+#wooot_order_tip_form button span.tip-label-suffix {
+    display: block;
+    font-size: 75%;
+}

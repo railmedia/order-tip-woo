@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Woo Order Tip\n"
-"POT-Creation-Date: 2023-03-27 07:26+0200\n"
-"PO-Revision-Date: 2023-03-27 07:27+0200\n"
+"POT-Creation-Date: 2023-12-11 17:20+0100\n"
+"PO-Revision-Date: 2023-12-11 17:22+0100\n"
 "Last-Translator: Adrian Emil Tudorache <adrian@railmedia.es>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -84,15 +84,15 @@ msgstr "Moneda"
 msgid "Order Tip"
 msgstr "Propina Pedido"
 
-#: admin/controllers/settings.class.php:87
+#: admin/controllers/settings.class.php:86
 msgid "Order Tip Settings"
 msgstr "Ajustes Propina Pedido"
 
-#: admin/controllers/settings.class.php:94
+#: admin/controllers/settings.class.php:92
 msgid "Shortcode"
 msgstr "Shortcode"
 
-#: admin/controllers/settings.class.php:96
+#: admin/controllers/settings.class.php:94
 #, php-format
 msgid ""
 "You can use the %1$s[order_tip_form]%2$s shortcode in any page, post or "
@@ -123,11 +123,12 @@ msgstr ""
 #: admin/controllers/settings.class.php:146
 #: admin/controllers/settings.class.php:174
 #: admin/controllers/settings.class.php:186
-#: admin/controllers/settings.class.php:245
-#: admin/controllers/settings.class.php:266
-#: admin/controllers/settings.class.php:305
-#: admin/controllers/settings.class.php:326
-#: admin/controllers/settings.class.php:338
+#: admin/controllers/settings.class.php:247
+#: admin/controllers/settings.class.php:261
+#: admin/controllers/settings.class.php:282
+#: admin/controllers/settings.class.php:323
+#: admin/controllers/settings.class.php:346
+#: admin/controllers/settings.class.php:358
 msgid "Yes"
 msgstr "Si"
 
@@ -136,19 +137,20 @@ msgstr "Si"
 #: admin/controllers/settings.class.php:147
 #: admin/controllers/settings.class.php:175
 #: admin/controllers/settings.class.php:187
-#: admin/controllers/settings.class.php:246
-#: admin/controllers/settings.class.php:267
-#: admin/controllers/settings.class.php:306
-#: admin/controllers/settings.class.php:327
-#: admin/controllers/settings.class.php:339
+#: admin/controllers/settings.class.php:248
+#: admin/controllers/settings.class.php:262
+#: admin/controllers/settings.class.php:283
+#: admin/controllers/settings.class.php:324
+#: admin/controllers/settings.class.php:347
+#: admin/controllers/settings.class.php:359
 msgid "No"
 msgstr "No"
 
 #: admin/controllers/settings.class.php:109
 #: admin/controllers/settings.class.php:149
 #: admin/controllers/settings.class.php:189
-#: admin/controllers/settings.class.php:199
-#: admin/controllers/settings.class.php:208
+#: admin/controllers/settings.class.php:201
+#: admin/controllers/settings.class.php:210
 msgid "Enable"
 msgstr "Activar"
 
@@ -264,11 +266,11 @@ msgstr ""
 "Si está marcado, el la propina se gravará según la configuración de "
 "impuestos de WooCommerce."
 
-#: admin/controllers/settings.class.php:194
+#: admin/controllers/settings.class.php:196
 msgid "Tip fee name"
 msgstr "Nombre de la propina"
 
-#: admin/controllers/settings.class.php:196
+#: admin/controllers/settings.class.php:198
 msgid ""
 "The tip fee name will appear before the order total. It will always be "
 "followed by the tip amount. Default format is \"Tip (AMOUNT)\""
@@ -277,55 +279,68 @@ msgstr ""
 "seguido del importe de la propina. El formato por defecto es \"Tip "
 "(IMPORTE)\""
 
-#: admin/controllers/settings.class.php:204
+#: admin/controllers/settings.class.php:206
 msgid "Tip form title"
 msgstr "Título de la forma de la propina"
 
-#: admin/controllers/settings.class.php:206
+#: admin/controllers/settings.class.php:208
 msgid "The tip form title will appear before the tip form"
 msgstr "El título aparecerá antes de la forma de propina"
 
-#: admin/controllers/settings.class.php:213
+#: admin/controllers/settings.class.php:215
 msgid "Tip Type"
 msgstr "Tipo de propina"
 
-#: admin/controllers/settings.class.php:216
+#: admin/controllers/settings.class.php:218
 msgid "Percent of the order total"
 msgstr "Porcentaje del total del pedido"
 
-#: admin/controllers/settings.class.php:217
+#: admin/controllers/settings.class.php:219
 msgid "Fixed amount"
 msgstr "Cuantía fija"
 
-#: admin/controllers/settings.class.php:220
+#: admin/controllers/settings.class.php:222
 msgid "Select the type of tip you would like to use."
 msgstr "Selecciona el tipo de propina que te gustaría usar."
 
-#: admin/controllers/settings.class.php:225
+#: admin/controllers/settings.class.php:227
 msgid "Tip Rates"
 msgstr "Tasas de propina"
 
-#: admin/controllers/settings.class.php:237
+#: admin/controllers/settings.class.php:239
 msgid "Enable various tip rates. Keep CTRL or CMD key pressed while selecting."
 msgstr ""
 "Activa varias tasas de propina. Mantén presionada la tecla CTRL o CMD "
 "mientras seleccionas."
 
-#: admin/controllers/settings.class.php:242
+#: admin/controllers/settings.class.php:244
+msgid "Display tip total for percentage amount"
+msgstr "Mostrar el total de la propina para el importe porcentual"
+
+#: admin/controllers/settings.class.php:251
+msgid ""
+"If Tip type is set to Percentage of the order total, this setting adds the "
+"tip amount below the tip percent."
+msgstr ""
+"Si el tipo de propina está configurado como Porcentaje del total del pedido, "
+"este ajuste añade el importe de la propina debajo del porcentaje de la "
+"propina."
+
+#: admin/controllers/settings.class.php:258
 msgid "Enable custom tip field"
 msgstr "Activar campo de propina personalizada"
 
-#: admin/controllers/settings.class.php:249
+#: admin/controllers/settings.class.php:265
 msgid ""
 "If enabled, the customer will be able to add their own fixed amount tip."
 msgstr ""
 "Si se activa, el cliente podrá añadir su propia propina de cantidad fija."
 
-#: admin/controllers/settings.class.php:254
+#: admin/controllers/settings.class.php:270
 msgid "Custom tip field label"
 msgstr "Etiqueta del campo de propina personalizada"
 
-#: admin/controllers/settings.class.php:257
+#: admin/controllers/settings.class.php:273
 msgid ""
 "Set a label of your choice for the custom tip button. The default label is "
 "\"Custom Tip\""
@@ -333,17 +348,17 @@ msgstr ""
 "Establece una etiqueta de tu elección para el botón de propina "
 "personalizada. La etiqueta por defecto es \"Custom Tip\""
 
-#: admin/controllers/settings.class.php:259
+#: admin/controllers/settings.class.php:275
 msgid "Custom Tip"
 msgstr "Propina personalizada"
 
-#: admin/controllers/settings.class.php:263
+#: admin/controllers/settings.class.php:279
 msgid "Display custom tip field label in tip name"
 msgstr ""
 "Mostrar la etiqueta del campo de la propina personalizada en el nombre de la "
 "propina"
 
-#: admin/controllers/settings.class.php:270
+#: admin/controllers/settings.class.php:286
 msgid ""
 "Display the custom tip field label in the tip fee name in paranthesis. Eg.: "
 "Tip (Add your own amount). If set to \"Yes\", this will appear on the cart "
@@ -354,11 +369,11 @@ msgstr ""
 "Si se configura como \"Sí\", aparecerá en la página del carrito, en la "
 "página de totales y en los correos electrónicos del pedido."
 
-#: admin/controllers/settings.class.php:275
+#: admin/controllers/settings.class.php:291
 msgid "Custom tip apply tip button label"
 msgstr "Etiqueta del botón de aplicar la propina personalizada"
 
-#: admin/controllers/settings.class.php:278
+#: admin/controllers/settings.class.php:294
 msgid ""
 "Set a label of your choice for the custom tip apply button. The default "
 "label is \"Add tip to order\""
@@ -366,15 +381,15 @@ msgstr ""
 "Establece una etiqueta de tu elección para el botón de aplicación de la "
 "propina personalizada. La etiqueta por defecto es \"Add tip to order\""
 
-#: admin/controllers/settings.class.php:280
+#: admin/controllers/settings.class.php:296
 msgid "Add tip to order"
 msgstr "Añadir propina al pedido"
 
-#: admin/controllers/settings.class.php:284
+#: admin/controllers/settings.class.php:300
 msgid "Custom tip enter tip input placeholder label"
 msgstr "Etiqueta campo de ingresar propina personalizada"
 
-#: admin/controllers/settings.class.php:287
+#: admin/controllers/settings.class.php:303
 msgid ""
 "Set a placeholder of your choice for the custom enter tip input field. The "
 "default label is \"Enter tip amount\""
@@ -382,15 +397,15 @@ msgstr ""
 "Establece un un mensaje de tu elección para el campo de entrada de propina "
 "personalizada. La etiqueta por defecto es \"Enter tip amount\""
 
-#: admin/controllers/settings.class.php:289
+#: admin/controllers/settings.class.php:305
 msgid "Enter tip amount"
 msgstr "Introduce la cuantía de la propina"
 
-#: admin/controllers/settings.class.php:293
+#: admin/controllers/settings.class.php:309
 msgid "Custom tip remove tip button label"
 msgstr "Etiqueta del botón de eliminación de propina personalizada"
 
-#: admin/controllers/settings.class.php:296
+#: admin/controllers/settings.class.php:312
 msgid ""
 "Set a label of your choice for the custom tip remove button. The default "
 "label is \"Remove tip\""
@@ -398,15 +413,15 @@ msgstr ""
 "Establece una etiqueta de tu elección para el botón de eliminación de la "
 "propina personalizada. La etiqueta por defecto es \"Remove tip\""
 
-#: admin/controllers/settings.class.php:298
+#: admin/controllers/settings.class.php:314
 msgid "Remove tip"
 msgstr "Borrar propina"
 
-#: admin/controllers/settings.class.php:302
+#: admin/controllers/settings.class.php:320
 msgid "Enable cash tip"
 msgstr "Activar la propina en efectivo"
 
-#: admin/controllers/settings.class.php:309
+#: admin/controllers/settings.class.php:327
 msgid ""
 "If enabled, customers will be able to choose to tip by cash (on delivery or "
 "local pickup)."
@@ -414,11 +429,11 @@ msgstr ""
 "Si está habilitado, los clientes podrán elegir dar una propina en efectivo "
 "(en la entrega o en la recogida local)."
 
-#: admin/controllers/settings.class.php:314
+#: admin/controllers/settings.class.php:332
 msgid "Cash tip field label"
 msgstr "Etiqueta del campo de propina en efectivo"
 
-#: admin/controllers/settings.class.php:317
+#: admin/controllers/settings.class.php:335
 msgid ""
 "Set a label of your choice for the cash tip button. The default label is "
 "\"Cash\""
@@ -426,15 +441,15 @@ msgstr ""
 "Establece una etiqueta de tu elección para el botón de propina en efectivo. "
 "La etiqueta por defecto es \"Cash\""
 
-#: admin/controllers/settings.class.php:319
+#: admin/controllers/settings.class.php:337
 msgid "Cash"
 msgstr "Efectivo"
 
-#: admin/controllers/settings.class.php:323
+#: admin/controllers/settings.class.php:343
 msgid "Clear tip after the order has been placed"
 msgstr "Borrar la propina después de hacer el pedido"
 
-#: admin/controllers/settings.class.php:330
+#: admin/controllers/settings.class.php:350
 msgid ""
 "If enabled, the tip that may be added to the cart, will be removed. "
 "Otherwise, it will be preserved on future orders in the current session."
@@ -442,35 +457,63 @@ msgstr ""
 "Si se activa, la punta que puede ser añadida al carro, será eliminada. De lo "
 "contrario, se conservará en futuros pedidos en la sesión actual."
 
-#: admin/controllers/settings.class.php:335
+#: admin/controllers/settings.class.php:355
 msgid "Enable alert when removing the tip"
 msgstr "Activar una alerta al eliminar la propina"
 
-#: admin/controllers/settings.class.php:342
+#: admin/controllers/settings.class.php:362
 msgid "If enabled, an alert will pop up when the Remove Tip button is clicked."
 msgstr ""
 "Si la opción está activada, aparecerá una alerta cuando se haga clic en el "
 "botón Eliminar propina."
 
-#: admin/controllers/settings.class.php:347
+#: admin/controllers/settings.class.php:367
 msgid "Remove tip confirmation message"
 msgstr "Mensaje de confirmación de eliminación la propina"
 
-#: admin/controllers/settings.class.php:350
+#: admin/controllers/settings.class.php:370
 msgid "Set a message of your choice for the tip removal confirmation message."
 msgstr ""
 "Establece un mensaje de tu elección para el mensaje de confirmación de la "
 "eliminación de la propina."
 
-#: admin/controllers/settings.class.php:352
+#: admin/controllers/settings.class.php:372
 msgid "Are you sure you wish to remove the tip?"
 msgstr "¿Está seguro de que desea quitar la punta?"
 
-#: admin/controllers/settings.class.php:356
+#: admin/controllers/settings.class.php:376
 msgid "Updated to 1.1"
 msgstr "Actualizado a 1.1"
 
-#: admin/controllers/settings.class.php:376
+#: admin/controllers/settings.class.php:385
+msgid "Woo Subscriptions workflow"
+msgstr "Flujo de trabajo de Woo Subscriptions"
+
+#: admin/controllers/settings.class.php:387
+msgid ""
+"Choose one of the workflows in the dropdown. The setting will apply only on "
+"subscription products."
+msgstr ""
+"Elije uno de los flujos de trabajo en el menú desplegable. La configuración "
+"sólo se aplicará a los productos de suscripción."
+
+#: admin/controllers/settings.class.php:390
+msgid "Disabled"
+msgstr "Desactivado"
+
+#: admin/controllers/settings.class.php:391
+msgid "Allow tips only on the initial order"
+msgstr "Permitir propina solo en el pedido inicial"
+
+#: admin/controllers/settings.class.php:392
+msgid "Force recurring tips"
+msgstr "Forzar propina recurrente"
+
+#: admin/controllers/settings.class.php:393
+msgid "Allow users to choose using recurring tips or not"
+msgstr "Permitir a los usuarios elegir entre utilizar o no propina recurrente"
+
+#: admin/controllers/settings.class.php:726
 msgid "Reports"
 msgstr "Informes"
 
@@ -527,6 +570,10 @@ msgstr "Valor"
 #: admin/views/reports.views.class.php:105
 msgid "Date/Time"
 msgstr "Fecha/Hora"
+
+#: frontend/views/main.views.class.php:105
+msgid "Recurring tip"
+msgstr "Propina recurrente"
 
 #~ msgid "Name"
 #~ msgstr "Nombre"

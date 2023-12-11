@@ -9,6 +9,11 @@ jQuery(document).ready(function() {
        woo_order_apply_tip( jQuery(this) );
    });
 
+   jQuery('body').on('change', '#woo_recurring_tip', function(e){
+        e.preventDefault();
+        woo_order_apply_tip( jQuery(this) );
+   });
+
    jQuery('body').on('click', '.woo_order_tip_remove', function(e){
        e.preventDefault();
        woo_order_remove_tip();
@@ -56,12 +61,14 @@ function woo_order_select_tip() {
 
 function woo_order_apply_tip( trigger ) {
 
-   var container = trigger.parent(),
+   var container = trigger.parents('#wooot_order_tip_form'),
        tip       = container.find('.woo_order_tip.active').data('tip'),
        tip_type  = container.find('.woo_order_tip.active').data('tip-type'),
+       tip_type_symbol = tip_type == '1' ? '%' : wootip.cs,
        tip_custom= container.find('.woo_order_tip.active').data('tip-custom'),
        tip_cash  = container.find('.woo_order_tip.active').data('tip-cash'),
-       tip_label = container.find('.woo_order_tip.active').text(),
+       tip_recurring = container.find('#woo_recurring_tip').is(':checked'),
+       tip_label = tip + tip_type_symbol,
        errors    = 0;
 
    if( tip == 'custom' ) {
@@ -79,6 +86,8 @@ function woo_order_apply_tip( trigger ) {
 
    }
 
+//    console.log(errors);
+
    if( ! errors ) {
 
        jQuery('.woocommerce').block({message: ''});
@@ -87,7 +96,16 @@ function woo_order_apply_tip( trigger ) {
            type: "POST",
            url: wootip.au,
            dataType: 'html',
-           data: ({action: 'apply_tip', tip: tip, tip_type: tip_type, tip_label: tip_label, tip_custom: tip_custom, tip_cash: tip_cash, security: wootip.n}),
+           data: ({
+                action: 'apply_tip', 
+                tip: tip, 
+                tip_type: tip_type, 
+                tip_label: tip_label, 
+                tip_custom: tip_custom, 
+                tip_cash: tip_cash, 
+                tip_recurring: tip_recurring, 
+                security: wootip.n
+           }),
            success: function (tipApplied) {
 
                if( tipApplied == 'success' ) {
@@ -139,7 +157,6 @@ function do_woo_order_remove_tip() {
         success: function (tipRemoved) {
 
             if( tipRemoved == 'success' ) {
-                //location.reload(true);
                 jQuery('.woo_order_tip[data-tip="custom"]').text( wootip.s.cut );
                 jQuery('body').trigger( 'update_checkout' );
                 jQuery('[name="update_cart"]').attr('aria-disabled', false).removeAttr('disabled').trigger('click');

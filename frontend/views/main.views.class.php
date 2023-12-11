@@ -20,23 +20,37 @@ class WOO_Order_Tip_Main_Views {
     **/
     function tip_form( $data ) {
 
-        $settings   = $data['settings'];
-        $tip_type   = $settings['wc_order_tip_type'] == '1' ? '%' : get_woocommerce_currency_symbol();
-        $tip_rates  = apply_filters( 'wc_order_tip_rates', $settings['wc_order_tip_rates'] );
-        $wc_session = WC()->session;
-        $active_tip = $wc_session->get('tip');
-        $active_class = '';
+        $settings        = $data['settings'];
+        $currency_symbol = get_woocommerce_currency_symbol();
+        $tip_type        = $settings['wc_order_tip_type'] == '1' ? '%' : $currency_symbol;
+        $tip_rates       = apply_filters( 'wc_order_tip_rates', $settings['wc_order_tip_rates'] );
+        $subtotal        = WC()->cart ? WC()->cart->get_subtotal() : 0;
+        $wc_session      = WC()->session;
+        $active_tip      = $wc_session->get('tip');
+        $custom_cash_val = $active_tip && isset( $active_tip['tip_custom'] ) && $active_tip['tip_custom'] ? $active_tip['tip'] : '';
+        $recurring_tip   = $active_tip ? $active_tip['tip_recurring'] : false;
+        $active_class    = '';
+
+        // var_dump( WC()->cart, WC()->cart->recurring_cart_key );
+        // var_dump( WC()->cart->recurring_cart_key );
 
 ?>
     <div id="wooot_order_tip_form">
-
+        <?php if( isset( $settings['wc_order_tip_title'] ) && $settings['wc_order_tip_title'] ) { ?>
         <div class="order_tip_title"><?php echo apply_filters( 'wc_order_tip_title', $settings['wc_order_tip_title'] ); ?></div>
+        <?php } ?>
 
         <?php
             foreach( $tip_rates as $tip_rate ) {
+
+                $tip_label_suffix = '';
+
                 switch( $settings['wc_order_tip_type'] ) {
                     case '1':
                         $tip_label = $tip_rate . $tip_type;
+                        if( $subtotal && $settings['wc_order_tip_percentage_total'] ) {
+                            $tip_label_suffix = wc_price( ( $tip_rate / 100 ) * $subtotal );
+                        }
                     break;
                     case '2':
                         $tip_label = $tip_type . ' ' . $tip_rate;
@@ -48,7 +62,14 @@ class WOO_Order_Tip_Main_Views {
                 }
         ?>
 
-        <button id="woo_order_tip_<?php echo $tip_rate; ?>" type="button" class="woo_order_tip <?php echo isset( $active_class ) ? $active_class : ''; ?>" data-tip="<?php echo $tip_rate; ?>" data-tip-type="<?php echo $settings['wc_order_tip_type'] ?>" data-tip-custom="0" data-tip-cash="0"><?php echo $tip_label; ?></button>
+        <button id="woo_order_tip_<?php echo $tip_rate; ?>" type="button" class="woo_order_tip <?php echo isset( $active_class ) ? $active_class : ''; ?>" data-tip="<?php echo $tip_rate; ?>" data-tip-type="<?php echo $settings['wc_order_tip_type'] ?>" data-tip-custom="0" data-tip-cash="0">
+            <?php echo $tip_label; ?>
+            <?php if( $tip_label_suffix ) { ?>
+            <span class="tip-label-suffix">
+                <?php echo $tip_label_suffix; ?>
+            </span>
+            <?php } ?>
+        </button>
 
         <?php } ?>
 
@@ -60,7 +81,7 @@ class WOO_Order_Tip_Main_Views {
                 }
         ?>
 
-        <button id="woo_order_tip_custom" type="button" class="woo_order_tip <?php echo $active_class; ?>" data-tip="0" data-tip-type="2" data-tip-custom="0"  data-tip-cash="1">
+        <button id="woo_order_tip_cash" type="button" class="woo_order_tip <?php echo $active_class; ?>" data-tip="0" data-tip-type="2" data-tip-custom="0"  data-tip-cash="1">
             <?php echo apply_filters( 'wc_order_tip_cash_label', $settings['wc_order_tip_cash_label'] ); ?>
         </button>
 
@@ -78,9 +99,23 @@ class WOO_Order_Tip_Main_Views {
         <button id="woo_order_tip_custom" type="button" class="woo_order_tip <?php echo $active_class; ?>" data-tip="custom" data-tip-type="2" data-tip-custom="1" data-tip-cash="0">
             <?php echo apply_filters( 'wc_order_tip_custom_label', $settings['wc_order_tip_custom_label'] ); ?><?php echo $custom_tip_suffix; ?>
         </button>
-
+        
+        <?php if( WOOOTIPSUB && isset( $settings['wc_order_tip_woo_subscriptions'] ) && $settings['wc_order_tip_woo_subscriptions'] == '4' ) { ?>
+        <p class="woo_order_tip_recurring_tip_field">
+            <input id="woo_recurring_tip" type="checkbox" <?php echo $recurring_tip === true ? 'checked="checked"' : ''; ?> /> <label for="woo_recurring_tip"><?php _e( 'Recurring tip', 'order-tip-woo' ); ?></label>
+        </p>
+        <?php } ?>
+        
         <p class="form-row woo_order_tip_custom_text_field">
-            <input style="display:none;" type="text" class="input-text woo_order_tip_custom_text" data-tip-type="<?php echo esc_html( $settings['wc_order_tip_type'] ); ?>" data-currency="<?php echo get_woocommerce_currency_symbol(); ?>" placeholder="<?php echo apply_filters( 'wc_order_tip_custom_enter_tip_placeholder', $settings['wc_order_tip_enter_placeholder'] ); ?>" />
+            <input 
+                style="display:none;" 
+                type="text" 
+                class="input-text woo_order_tip_custom_text" 
+                data-tip-type="<?php echo esc_html( $settings['wc_order_tip_type'] ); ?>" 
+                data-currency="<?php echo get_woocommerce_currency_symbol(); ?>" 
+                placeholder="<?php echo apply_filters( 'wc_order_tip_custom_enter_tip_placeholder', $settings['wc_order_tip_enter_placeholder'] ); ?>" 
+                value="<?php echo $custom_cash_val; ?>"
+            />
         </p>
 
         <?php } ?>
