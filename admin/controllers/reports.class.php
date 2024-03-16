@@ -38,14 +38,13 @@ class WOO_Order_Tip_Admin_Reports {
     **/
     function __construct() {
 
-        $this->views = new WOO_Order_Tip_Admin_Reports_Views();
-
         $this->date_format = get_option( 'date_format' );
 
         $this->fee_names = $this->get_fee_names();
 
         add_filter( 'woocommerce_admin_reports', array( $this, 'tip_reports' ) );
         add_action( 'order_tip_settings_reports', array( $this, 'display_orders_list_reports' ) );
+        add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'purge_fee_names' ) );
 
         $ajax = array(
             'display_orders_list_reports_ajax',
@@ -65,20 +64,41 @@ class WOO_Order_Tip_Admin_Reports {
     **/
     function get_fee_names() {
 
-        global $wpdb;
+        $fees = wp_cache_get( 'woot_fee_names' );
 
-        $fees = array();
-        $order_fees = $wpdb->get_results("SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type='fee'");
+        if( false === $fees ) {
 
-        if( $order_fees ) {
-            foreach( $order_fees as $order_fee_name ) {
-                if( ! in_array( $order_fee_name->order_item_name, $fees ) ) {
-                    $fees[] = $order_fee_name->order_item_name;
+            global $wpdb;
+
+            $fees = array();
+            // Even if using a $wpdb call, this is probably the most efficient way to retrieve the fee names. Looking forward to receiving other suggestions of how to achieve the same
+            $order_fees = $wpdb->get_results("SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type='fee'"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+
+            if( $order_fees ) {
+                foreach( $order_fees as $order_fee_name ) {
+                    if( ! isset( $fees[ $order_fee_name->order_item_name ] ) ) {
+                        $fees[ $order_fee_name->order_item_name ] = true;
+                    }
                 }
             }
+
+            wp_cache_set( 'woot_fee_names', $fees );
+
+            return $fees;
+
         }
 
         return $fees;
+
+    }
+
+    function purge_fee_names() {
+
+        $fees = wp_cache_get( 'woot_fee_names' );
+
+        if( $fees ) {
+            wp_cache_delete( 'woot_fee_names' );
+        }
 
     }
 
@@ -141,7 +161,7 @@ class WOO_Order_Tip_Admin_Reports {
             wp_enqueue_script( 'woo-order-tip-admin-blockui' );
             wp_enqueue_script( 'woo-order-tip-admin-reports' );
 
-            $after_date = date( 'Y-m-d', strtotime('-30 days') );
+            $after_date = gmdate( 'Y-m-d', strtotime('-30 days') );
             $after_date = explode( '-', $after_date );
 
             $order_ids = array();
@@ -180,9 +200,7 @@ class WOO_Order_Tip_Admin_Reports {
 
                     foreach( $fees as $fee ) {
                         $fee_name = $fee->get_name();
-                        // $fee_name = explode( ' ', $fee_name );
-                        // $fee_name = $fee_name[0];
-                        if( ! isset( $order_ids[ $order->get_id() ] ) && in_array( $fee_name, $this->fee_names ) ) {
+                        if( ! isset( $order_ids[ $order->get_id() ] ) && isset( $this->fee_names[ $fee_name ] ) ) {
                             $order_ids[ $order->get_id() ] = array(
                                 'date'     => $order->get_date_created(),
                                 'customer' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
@@ -203,11 +221,11 @@ class WOO_Order_Tip_Admin_Reports {
                 'fee_names'   => $this->fee_names
             );
 
-            echo $this->views->display_orders_list_reports( $data );
+            include( WOOOTIPPATH . 'admin/views/reports-orders-list.php' );
 
         } else {
 ?>
-        <h3><?php _e( 'There are no orders with tips in the database just yet', 'order-tip-woo' ); ?></h3>
+        <h3><?php esc_html_e( 'There are no orders with tips in the database just yet', 'order-tip-woo' ); ?></h3>
 <?php
         }
 
@@ -248,7 +266,7 @@ class WOO_Order_Tip_Admin_Reports {
                         $date_format = apply_filters( 'wc_order_tip_reports_date_time_format', implode( '', $date_format ) . ' H:i:s' );
                     }
 
-                    $row_data = array(
+                    $data = array(
                         'order_id'     => $order_id,
                         'av_statuses'  => $av_statuses,
                         'order_status' => $order_status,
@@ -259,7 +277,7 @@ class WOO_Order_Tip_Admin_Reports {
                         'date_format'  => $date_format
                     );
 
-                    echo $this->views->display_orders_list_reports_row( $row_data );
+                    include( WOOOTIPPATH . 'admin/views/reports-orders-list-row.php' );
 
                 }
 
@@ -273,11 +291,11 @@ class WOO_Order_Tip_Admin_Reports {
 
         }
 
-        echo wp_send_json( array(
+        wp_send_json( array(
             'after_date_raw'  => $after_date,
             'before_date_raw' => $before_date,
-            'after_date'      => date( $this->date_format, strtotime( $after_date ) ),
-            'before_date'     => date( $this->date_format, strtotime( $before_date ) ),
+            'after_date'      => gmdate( $this->date_format, strtotime( $after_date ) ),
+            'before_date'     => gmdate( $this->date_format, strtotime( $before_date ) ),
             'status'          => $errors ? 'error' : 'success',
             'total'           => isset( $total ) ? number_format( $total, 2 ) : 0,
             'result'          => $result,
@@ -359,7 +377,11 @@ class WOO_Order_Tip_Admin_Reports {
     function export_tips_to_csv() {
 
         if(
-            isset( $_GET['a'] ) && $_GET['a'] == 'export' &&
+            wp_verify_nonce( $_GET['wootip_export_nonce'], 'export-report-to-csv' ) && 
+            is_user_logged_in() && current_user_can( 'manage_woocommerce' ) && 
+            isset( $_GET['page'] ) && ( 'wc-reports' === $_GET['page'] || 'wc-settings' === $_GET['page'] ) && 
+            isset( $_GET['tab'] ) && 'order_tip' === $_GET['tab'] && 
+            isset( $_GET['a'] ) && 'export' === $_GET['a'] &&
             isset( $_GET['from'] ) && $_GET['from'] &&
             isset( $_GET['to'] ) && $_GET['to']
         ) {
@@ -367,9 +389,12 @@ class WOO_Order_Tip_Admin_Reports {
             $date_from = $_GET['from'];
             $date_to   = $_GET['to'];
 
+            // @codingStandardsIgnoreStart
     		$fp = $this->get_tips_csv_header( $date_from, $date_to );
     		$this->create_tips_csv_lines( $fp, $date_from, $date_to, $_GET['fees'] );
-    		fclose($fp);
+    		fclose($fp); // No need to use WP_Filesystem for files generated on the fly and not stored on the server
+            // @codingStandardsIgnoreEnd
+
             exit;
 
         }
@@ -453,7 +478,7 @@ class WOO_Order_Tip_Admin_Reports {
                             $order->get_id(),
                             $fee_name,
                             floatval( $fee->get_total() ),
-                            date( $this->date_format, strtotime( $order->get_date_created() ) )
+                            gmdate( $this->date_format, strtotime( $order->get_date_created() ) )
                         ), ',');
                     }
                 }

@@ -35,10 +35,11 @@ class WOO_Order_Tip_Admin_Notices {
         <p>
             <?php
                 printf(
-                    __( "To ensure full compatibility of the %sOrder Tip for WooCommerce%s plugin, please navigate to the plugin's %s, review the settings and save before proceeding.", 'order-tip-woo' ),
+                    /* translators: 1: <strong> tag, 2: </strong> strong close tag, 3: Settings page link including <a></a> */
+                    wp_kses_post( __( 'To ensure full compatibility of the %1$sOrder Tip for WooCommerce%2$s plugin, please navigate to the plugin\'s %3$s, review the settings and save before proceeding.', 'order-tip-woo' ) ),
                     '<strong>',
                     '</strong>',
-                    '<a href="' . esc_url( admin_url() ) . 'admin.php?page=wc-settings&tab=order_tip"><strong>' . __( 'settings page', 'order-tip-woo' ) . '</strong></a>'
+                    '<a href="' . esc_url( admin_url() ) . 'admin.php?page=wc-settings&tab=order_tip"><strong>' . esc_html( __( 'settings page', 'order-tip-woo' ) ) . '</strong></a>'
                 );
             ?>
         </p>

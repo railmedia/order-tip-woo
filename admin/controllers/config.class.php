@@ -29,39 +29,20 @@ class WOO_Order_Tip_Admin_Config {
     **/
     function scripts() {
 
-        add_action( 'admin_body_class', array( $this, 'admin_body_class' ) );
-
-        wp_register_style( 'woo-order-tip-jqueryui', WOOOTIPURL . 'admin/assets/css/jqueryui-1.12.1/jquery-ui.min.css' );
-        wp_register_style( 'woo-order-tip-admin-reports', WOOOTIPURL . 'admin/assets/css/woo-order-tip-admin-reports.css' );
-        wp_register_script( 'woo-order-tip-admin-blockui', WOOOTIPURL . 'admin/assets/js/jquery.blockUI.js', array('jquery'), null, true );
-        wp_register_script( 'woo-order-tip-admin-reports', WOOOTIPURL . 'admin/assets/js/woo-order-tip-admin-reports.js', array('jquery'), null, true );
+        wp_register_style( 'woo-order-tip-jqueryui', WOOOTIPURL . 'admin/assets/css/jqueryui-1.12.1/jquery-ui.min.css', array(), WOOTIPVER );
+        wp_register_style( 'woo-order-tip-admin-reports', WOOOTIPURL . 'admin/assets/css/woo-order-tip-admin-reports.css', array(), WOOTIPVER );
+        wp_register_script( 'woo-order-tip-admin-blockui', WOOOTIPURL . 'admin/assets/js/jquery.blockUI.js', array('jquery'), WOOTIPVER, true );
+        wp_register_script( 'woo-order-tip-admin-reports', WOOOTIPURL . 'admin/assets/js/woo-order-tip-admin-reports.js', array('jquery'), WOOTIPVER, true );
         wp_localize_script( 'woo-order-tip-admin-reports', 'wootipar', array(
-            'au'  => admin_url(),
             'aju' => admin_url( 'admin-ajax.php' ),
-            'ajn' => wp_create_nonce('reps')
+            'ajn' => wp_create_nonce('reps'),
+            'exn' => esc_url( wp_nonce_url( admin_url( 'admin.php?page=wc-reports&tab=order_tip&a=export&from=fromDate&to=toDate&fees=Fees' ), 'export-report-to-csv', 'wootip_export_nonce' ) )
         ) );
 
-        if(
-            isset( $_GET['page'] ) && $_GET['page'] == 'wc-settings' &&
-            isset( $_GET['tab'] ) && $_GET['tab'] == 'order_tip'
-        ) {
-            wp_enqueue_script( 'woo-order-tip-admin', WOOOTIPURL . 'admin/assets/js/woo-order-tip-admin.js', array('jquery'), null, true );
-        }
+        global $current_screen;
 
-    }
-
-    /**
-    * Add specific class on the body tag on the reports page under WooCommerce -> Order Tip -> Tip Reports in order to hide the submit button which is irrelevant on this page
-    * @since 1.2.0
-    **/
-    function admin_body_class( $classes ) {
-
-        if(
-            isset( $_GET['page'] ) && $_GET['page'] == 'wc-settings' &&
-            isset( $_GET['tab'] ) && $_GET['tab'] == 'order_tip' &&
-            isset( $_GET['section'] ) && $_GET['section'] == 'reports'
-        ) {
-            return $classes . ' order-tip-reports-settings';
+        if( $current_screen && ( 'woocommerce_page_wc-reports' === $current_screen->id || 'woocommerce_page_wc-settings' === $current_screen->id ) ) {
+            wp_enqueue_script( 'woo-order-tip-admin', WOOOTIPURL . 'admin/assets/js/woo-order-tip-admin.js', array('jquery'), WOOTIPVER, true );
         }
 
     }

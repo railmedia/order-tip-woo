@@ -91,6 +91,7 @@ function woo_order_tip_admin_add_settings( $settings ) {
                         array(
                             'name'     => __( 'Shortcode', 'order-tip-woo' ),
                             'type'     => 'title',
+                            /* translators: 1: <strong> tag, 2: </strong> strong close tag */
                             'desc'     => sprintf( __( 'You can use the %1$s[order_tip_form]%2$s shortcode in any page, post or widget. It will automatically take the settings below. However, we %1$sdo not%2$s recommend to use the shortcode on the cart or checkout pages if you enable the tip form using the checkboxes below.', 'order-tip-woo' ), '<strong>', '</strong>' ),
                             'id'       => 'wc_order_tip_shortcode'
                         ),

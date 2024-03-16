@@ -32,8 +32,6 @@ class WOO_Order_Tip_Main {
     **/
     function __construct() {
 
-        $this->views = new WOO_Order_Tip_Main_Views;
-
         $this->settings = array();
         $settings = array(
             'wc_order_tip_enabled_cart',
@@ -199,12 +197,14 @@ class WOO_Order_Tip_Main {
         $display_form = apply_filters( 'wc_order_tip_display_form', 1 );
 
         if( $display_form ) {
+
             wp_enqueue_style( 'woo-order-tip-css' );
             wp_enqueue_script( 'woo-order-tip-js' );
-            $data = array(
-                'settings' => $this->settings
-            );
-            echo $this->views->tip_form( $data );
+
+            $settings = $this->settings;
+
+            include( WOOOTIPPATH . 'frontend/views/tip-form.php' );
+
         }
 
     }

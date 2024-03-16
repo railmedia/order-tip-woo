@@ -3,13 +3,13 @@
 * Plugin Name: Order Tip for WooCommerce
 * Plugin URI: https://order-tip-for-woocommerce.tudorache.me/
 * Description: Adds a form to the cart and checkout pages where customer can add tips to the WooCommerce orders.
-* Version: 1.3.1
+* Version: 1.4.0
 * Author: Adrian Emil Tudorache
 * Author URI: https://www.tudorache.me
 * Text Domain: order-tip-woo
 * Domain Path: /languages
 * WC requires at least: 3.0.0
-* WC tested up to: 8.3.1
+* WC tested up to: 8.6.1
 * License: GPLv2 or later
 */
 
@@ -25,7 +25,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'WOOTIPVER', '1.3.0' );
+$plugin_data = get_file_data(__FILE__, array('Version' => 'Version'), false);
+
+define( 'WOOTIPVER', $plugin_data['Version'] );
 define( 'WOOOTIPPATH', plugin_dir_path( __FILE__ ) );
 define( 'WOOOTIPBASE', plugin_basename( __FILE__ ) );
 define( 'WOOOTIPURL', plugin_dir_url( __FILE__ ) );
@@ -47,4 +49,10 @@ function woootip_deactivate_uninstall() {
     flush_rewrite_rules();
 }
 register_uninstall_hook( __FILE__, 'woootip_deactivate_uninstall' );
+
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );
 ?>
