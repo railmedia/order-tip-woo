@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 1.4.1 =
+*Released 22 March 2024*
+
+* fixed wootip_export_nonce warning in admin\controllers\reports.class.php on line 380
+* prevents custom tip from being added if the value is 0
+
 = 1.4.0 =
 *Released 16 March 2024*
 

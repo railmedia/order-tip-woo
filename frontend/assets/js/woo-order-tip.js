@@ -32,12 +32,12 @@
                 tip_recurring   = container.find('#woo_recurring_tip').is(':checked'),
                 tip_label       = tip + tip_type_symbol,
                 errors          = 0;
-
+            
             if( tip == 'custom' ) {
 
                 tip = container.find('.woo_order_tip_custom_text').val();
 
-                if( ! tip ) {
+                if( ! tip || parseInt( tip ) == 0 ) {
                     container.find('.woo_order_tip_custom_text').css('border', '1px solid red').focus();
                     errors = 1;
                     return false;

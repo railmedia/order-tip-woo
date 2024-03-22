@@ -2,7 +2,7 @@
 Contributors: railmedia
 Tags: Woocommerce, Ecommerce, Order, Tip, Donation
 Requires at least: 3.0
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 Tested up to: 6.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -91,6 +91,27 @@ CSS classes and IDs that allow customization:
 6. Backend Order displaying tip
 
 == Changelog ==
+
+= 1.4.1 =
+*Released 22 March 2024*
+
+* fixed wootip_export_nonce warning in admin\controllers\reports.class.php on line 380
+* prevents custom tip from being added if the value is 0
+
+= 1.4.0 =
+*Released 16 March 2024*
+
+* secured the export_tips_to_csv() method by checking the current user's capabilities and by implementing an nonce by using the wp_nonce_url() function
+* the export_tips_to_csv() method has been introduced starting with version 1.1.1 of the plugin. I have updated all versions starting with 1.1.1 to reflect the same functionality as version 1.4.0 in an attempt to preserver backward compatibility
+* added translator comments for placeholders in printf() and sprintf() functions
+* replaced reports views class with included individual php files
+* replaced date() function with gmdate() function
+* escaped all displayed strings
+* added versions to wp_register_script / wp_register_style / wp_enqueue_script / wp_enqueue_style functions
+* revised and refactored JS files
+* removed admin_body_class() function that impacted the admin body tag classes
+* the plugin is now HPOS compatible
+* cleared all errors and warnings in the Plugin check WP plugin
 
 = 1.3.1 =
 *Released 11 December 2023*

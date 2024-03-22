@@ -377,6 +377,7 @@ class WOO_Order_Tip_Admin_Reports {
     function export_tips_to_csv() {
 
         if(
+            isset( $_GET['wootip_export_nonce'] ) && 
             wp_verify_nonce( $_GET['wootip_export_nonce'], 'export-report-to-csv' ) && 
             is_user_logged_in() && current_user_can( 'manage_woocommerce' ) && 
             isset( $_GET['page'] ) && ( 'wc-reports' === $_GET['page'] || 'wc-settings' === $_GET['page'] ) && 
