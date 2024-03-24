@@ -160,7 +160,7 @@
      
         jQuery('body').on('click', '.woo_order_tip_remove', function(evt){
             evt.preventDefault();
-            WooOrderTip.doRemoveTip();
+            WooOrderTip.removeTip();
         });
         
     });
