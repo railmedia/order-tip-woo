@@ -16,24 +16,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
 * @since 1.4.0
 */
+
+$idx          = esc_html( $i );
+$order_id     = esc_html( $row_data['order_id'] );
+$order_status = esc_html( $row_data['av_statuses'] ? $row_data['av_statuses'][ 'wc-' . $row_data['order_status'] ] : ucfirst( $row_data['order_status'] ) );
+$customer     = esc_html( $row_data['customer'] );
+$fee_type     = esc_html( $row_data['type'] );
+$fee_value    = esc_html( $row_data['value'] );
+$date         = new DateTime( $row_data['date'] );
+$date         = esc_html( $date->format( $row_data['date_format'] ) )
 ?>
 <tr>
-    <td>
-        <a href="<?php echo esc_url( admin_url() ); ?>post.php?post=<?php echo esc_html( $data['order_id'] ); ?>&action=edit" target="_blank"><?php echo esc_html( $data['order_id'] ); ?></a>
+    <td style="width: 30px;">
+        <input title="<?php printf( /* translators: 1: Order ID */ esc_attr__( 'Select %d', 'order-tip-woo' ), esc_attr( $row_data['order_id'] ) ); ?>" class="select-order" type="checkbox" />
     </td>
-    <td>
-        <?php echo esc_html( $data['av_statuses'] ? $data['av_statuses'][ 'wc-' . $data['order_status'] ] : ucfirst( $data['order_status'] ) ); ?>
+    <td class="row-count" data-value="<?php echo esc_attr( $idx ); ?>">
+        <?php echo esc_html( $idx ); ?>
     </td>
-    <td>
-        <?php echo esc_html( $data['customer'] ); ?>
+    <td class="order-id" data-value="<?php echo esc_attr( $order_id ); ?>">
+        <a href="<?php echo esc_url( admin_url('post.php?post=' . $order_id . '&action=edit') ); ?>" target="_blank"><?php echo esc_html( $order_id ); ?></a>
     </td>
-    <td>
-        <?php echo esc_html( $data['type'] ); ?>
+    <td class="order-status-col" data-value="<?php echo esc_attr( $order_status ); ?>">
+        <?php echo esc_html( $order_status ); ?>
     </td>
-    <td>
-        <?php echo esc_html( get_woocommerce_currency_symbol() . esc_html( number_format( $data['value'], 2 ) ) ); ?>
+    <td class="customer-name" data-value="<?php echo esc_attr( $customer ); ?>">
+        <?php echo esc_html( $customer ); ?>
     </td>
-    <td>
-        <?php echo esc_html( gmdate( $data['date_format'], strtotime( $data['date'] ) ) ); ?>
+    <td class="fee-type" data-value="<?php echo esc_attr( $fee_type ); ?>">
+    <?php echo esc_html( $fee_type ); ?>
+    </td>
+    <td class="order-value" data-value="<?php echo esc_attr( $fee_value ); ?>">
+        <?php echo esc_html( get_woocommerce_currency_symbol() . number_format( $fee_value, 2 ) ); ?>
+    </td>
+    <td class="order-date" data-value="<?php echo esc_attr( $date ); ?>">
+        <?php echo esc_html( $date ); ?>
     </td>
 </tr>

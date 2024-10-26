@@ -3,7 +3,7 @@ Contributors: railmedia
 Tags: Woocommerce, Ecommerce, Order, Tip, Donation
 Requires at least: 3.0
 Stable tag: 1.4.2
-Tested up to: 6.4.3
+Tested up to: 6.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,10 @@ CSS classes and IDs that allow customization:
 6. Backend Order displaying tip
 
 == Changelog ==
+
+= 1.4.3 =
+
+* replaced gmdate() with DateTime object for dates in reports
 
 = 1.4.2 =
 *Released 24 March 2024*

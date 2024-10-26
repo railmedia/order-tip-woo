@@ -29,13 +29,18 @@ class WOO_Order_Tip_Admin_Config {
     **/
     function scripts() {
 
-        wp_register_style( 'woo-order-tip-jqueryui', WOOOTIPURL . 'admin/assets/css/jqueryui-1.12.1/jquery-ui.min.css', array(), WOOTIPVER );
-        wp_register_style( 'woo-order-tip-admin-reports', WOOOTIPURL . 'admin/assets/css/woo-order-tip-admin-reports.css', array(), WOOTIPVER );
-        wp_register_script( 'woo-order-tip-admin-blockui', WOOOTIPURL . 'admin/assets/js/jquery.blockUI.js', array('jquery'), WOOTIPVER, true );
-        wp_register_script( 'woo-order-tip-admin-reports', WOOOTIPURL . 'admin/assets/js/woo-order-tip-admin-reports.js', array('jquery'), WOOTIPVER, true );
+        $first_order_date = WOO_Order_Tip_Service::get_first_order_date();
+        $date             = new DateTime();
+
+        wp_register_style( 'woo-order-tip-admin-reports', WOOOTIPURL . 'assets/css/adminReports.css', array(), WOOTIPVER );
+        wp_register_script( 'woo-order-tip-admin-reports', WOOOTIPURL . 'assets/build/adminReports.bundle.js', array('jquery'), WOOTIPVER, true );
         wp_localize_script( 'woo-order-tip-admin-reports', 'wootipar', array(
             'aju' => admin_url( 'admin-ajax.php' ),
             'ajn' => wp_create_nonce('reps'),
+            'erc' => wp_create_nonce('export-report-to-csv'),
+            'def' => wp_create_nonce('delete-exported-file'),
+            'fod' => $first_order_date ? $first_order_date->format('Y') : '',
+            'cuy' => $date->format('Y'),
             'exn' => esc_url( wp_nonce_url( admin_url( 'admin.php?page=wc-reports&tab=order_tip&a=export&from=fromDate&to=toDate&fees=Fees' ), 'export-report-to-csv', 'wootip_export_nonce' ) )
         ) );
 

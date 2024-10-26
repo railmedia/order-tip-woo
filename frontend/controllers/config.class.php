@@ -30,8 +30,10 @@ class WOO_Order_Tip_Config {
         $eart = get_option( 'wc_order_tip_enable_alert_remove_tip' );
         $ds   = get_option( 'woocommerce_price_decimal_sep' );
 
-        wp_register_style( 'woo-order-tip-css', WOOOTIPURL . 'frontend/assets/css/woo-order-tip.css', array(), WOOTIPVER );
-        wp_register_script( 'woo-order-tip-js', WOOOTIPURL . 'frontend/assets/js/woo-order-tip.js', array('jquery'), WOOTIPVER, true );
+        // wp_register_style( 'woo-order-tip-css', WOOOTIPURL . 'frontend/assets/css/woo-order-tip.css', array(), WOOTIPVER );
+        // wp_register_script( 'woo-order-tip-js', WOOOTIPURL . 'frontend/assets/js/woo-order-tip.js', array('jquery'), WOOTIPVER, true );
+        wp_register_style( 'woo-order-tip-css', WOOOTIPURL . 'assets/css/front.css', array(), WOOTIPVER );
+        wp_register_script( 'woo-order-tip-js', WOOOTIPURL . 'assets/build/front.bundle.js', array('jquery'), WOOTIPVER, true );
         wp_localize_script( 'woo-order-tip-js', 'wootip', array(
             'n'    => wp_create_nonce('apply_order_tip'),
             'n2'   => wp_create_nonce('remove_order_tip'),

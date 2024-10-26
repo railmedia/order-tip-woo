@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $files = array(
+    'services/order-tip-woo.service.php' => '',
     'controllers/config.class.php' => 'WOO_Order_Tip_Config',
     'controllers/main.class.php'   => 'WOO_Order_Tip_Main'
 );

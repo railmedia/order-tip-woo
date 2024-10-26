@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$tip_type        = $settings['wc_order_tip_type'] == '1' ? '%' : get_woocommerce_currency_symbol();
+$tip_type        = $settings['wc_order_tip_type'] && '1' == $settings['wc_order_tip_type'] ? '%' : get_woocommerce_currency_symbol();
 $tip_rates       = apply_filters( 'wc_order_tip_rates', $settings['wc_order_tip_rates'] );
 $subtotal        = WC()->cart ? WC()->cart->get_subtotal() : 0;
 $wc_session      = WC()->session;
@@ -21,6 +21,8 @@ $active_tip      = $wc_session->get('tip');
 $custom_cash_val = $active_tip && isset( $active_tip['tip_custom'] ) && $active_tip['tip_custom'] ? $active_tip['tip'] : '';
 $recurring_tip   = $active_tip ? $active_tip['tip_recurring'] : false;
 $active_class    = '';
+$has_tip_label_suffix = $settings['wc_order_tip_percentage_total'] && '1' == $settings['wc_order_tip_percentage_total'] ? true : false;
+do_action( 'before_order_tip_form' );
 ?>
 <div id="wooot_order_tip_form">
     <?php if( isset( $settings['wc_order_tip_title'] ) && $settings['wc_order_tip_title'] ) { ?>
@@ -46,7 +48,7 @@ $active_class    = '';
     ?>
     <button id="woo_order_tip_<?php echo esc_attr( $tip_rate ); ?>" type="button" class="woo_order_tip <?php echo isset( $active_class ) ? esc_attr( $active_class ) : ''; ?>" data-tip="<?php echo esc_attr( $tip_rate ); ?>" data-tip-type="<?php echo esc_attr( $settings['wc_order_tip_type'] ); ?>" data-tip-custom="0" data-tip-cash="0">
         <?php echo esc_html( $tip_label ); ?>
-        <?php if( $tip_label_suffix ) { ?>
+        <?php if( $has_tip_label_suffix && $tip_label_suffix ) { ?>
         <span class="tip-label-suffix">
             <?php echo wp_kses_post( $tip_label_suffix ); ?>
         </span>
@@ -99,3 +101,4 @@ $active_class    = '';
     <button class="woo_order_tip_apply" type="button" name="woo_order_tip_apply" style="display:none;"><?php echo esc_html( $settings['wc_order_tip_custom_apply_label'] ); ?><span></span></button>
     <button class="woo_order_tip_remove" type="button" style="<?php echo ! $active_tip ? 'display:none;' : ''; ?>"><?php echo esc_html( $settings['wc_order_tip_custom_remove_label'] ); ?></button>
 </div>
+<?php do_action( 'after_order_tip_form' ); ?>

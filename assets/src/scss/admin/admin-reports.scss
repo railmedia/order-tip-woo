@@ -1,0 +1,79 @@
+#woo-order-tip-reports-filters {
+    padding: 1em;
+    background: white;
+    border: 1px solid #2271b1;
+    .row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    // label {
+    //     font-weight: bold;
+    //     font-size: 14px;
+    // }
+    .wot-reports-col {
+        margin-right: 2em;
+        width: 100%;
+        &:last-child {
+            margin-right: 0;
+        }
+        .wot-reports-filter-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .wot-reports-filter-value {
+            .filter-item {
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: space-between;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+                label {
+                    width: 20%;
+                }
+                input {
+                    width: 80%;
+                }
+            }
+        }
+    }
+}
+
+#displaying-from-to span {
+    font-weight: bold;
+}
+
+#woo-order-tip-reports-errors {
+    color: red;
+}
+
+#woo-order-tip-reports-status {
+    margin: 1em 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#woo-order-tip-loading {
+    margin: 1em 0; 
+    display: none;
+    span {
+        color: #0073aa;
+        animation: dashicons-spin 1s infinite;
+        animation-timing-function: linear;
+    }
+}
+
+@keyframes dashicons-spin {
+    0% {
+       transform: rotate( 0deg );
+    }
+    100% {
+       transform: rotate( 360deg );
+    }
+}
