@@ -94,6 +94,7 @@ class WOO_Order_Tip_Main {
     function init_session() {
         if( function_exists( 'WC' ) && ! session_id() && WC()->session ) {
             session_start();
+            var_dump(WC()->session);
         }
     }
 

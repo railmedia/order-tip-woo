@@ -2,7 +2,7 @@
 Contributors: railmedia
 Tags: Woocommerce, Ecommerce, Order, Tip, Donation
 Requires at least: 3.0
-Stable tag: 1.4.2
+Stable tag: 1.5.0
 Tested up to: 6.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -92,9 +92,18 @@ CSS classes and IDs that allow customization:
 
 == Changelog ==
 
-= 1.4.3 =
+= 1.5.0 =
+*Released 26 October 2024*
 
+* Replaced WOO_Order_Tip_Admin_Reports_Views admin class and WOO_Order_Tip_Main_Views front end class with functional components
+* Reports have been reengineered. In order to sustain big amounts of data, the reports are being displayed recursively, 100 at a time when filters are applied
+* Export to CSV is now performed via AJAX. export_tips_to_csv(), get_tips_csv_header() and create_tips_csv_lines() methods for class WOO_Order_Tip_Admin_Reports have been removed
+* Assets have been moved to their own top-level assets folder and webpack has been introduced for bundling assets into optimized chunks
+* Replaced views classes with PHP included templates
+* Reports converted to WC specific functions
+* Added two custom JS events **wootipplaced** and **wootipremove** that can be listened on - **wootipplaced** runs after the tip is added and **wootipremove** runs after the tip is removed
 * replaced gmdate() with DateTime object for dates in reports
+* Various other fixed and security patches
 
 = 1.4.2 =
 *Released 24 March 2024*

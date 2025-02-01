@@ -1,7 +1,7 @@
 == Changelog ==
 
 = 1.5.0 = 
-*Released soon*
+*Released 26 October 2024*
 
 * Replaced WOO_Order_Tip_Admin_Reports_Views admin class and WOO_Order_Tip_Main_Views front end class with functional components
 * Reports have been reengineered. In order to sustain big amounts of data, the reports are being displayed recursively, 100 at a time when filters are applied
