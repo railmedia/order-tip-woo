@@ -147,7 +147,7 @@ function woo_order_tip_admin_add_settings( $settings ) {
                         ),
 
                         array(
-                            'name'     => __( '', 'order-tip-woo' ),
+                            'name'     => '',
                             'type'     => 'title',
                             'desc'     => '',
                             'id'       => 'wc_order_tip_cart_separator'
@@ -199,7 +199,7 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'id'       => 'wc_order_tip_refresh_checkout'
                         ),
                         array(
-                            'name'     => __( '', 'order-tip-woo' ),
+                            'name'     => '',
                             'type'     => 'title',
                             'desc'     => '',
                             'id'       => 'wc_order_tip_settings_display_separator'
@@ -275,7 +275,7 @@ function woo_order_tip_admin_add_settings( $settings ) {
                         ),
 
                         array(
-                            'name'     => __( '', 'order-tip-woo' ),
+                            'name'     => '',
                             'type'     => 'title',
                             'desc'     => '',
                             'id'       => 'wc_order_tip_settings_tip_separator'
@@ -322,7 +322,7 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'id'       => 'wc_order_default_tip_value'
                         ),
                         array(
-                            'name'     => __( '', 'order-tip-woo' ),
+                            'name'     => '',
                             'type'     => 'title',
                             'desc'     => '',
                             'id'       => 'wc_order_tip_settings_default_tip_separator'
@@ -393,7 +393,7 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'default'  => __( 'Remove tip', 'order-tip-woo' )
                         ),
                         array(
-                            'name'     => __( '', 'order-tip-woo' ),
+                            'name'     => '',
                             'type'     => 'title',
                             'desc'     => '',
                             'id'       => 'wc_order_tip_settings_custom_tip_separator'
@@ -427,7 +427,7 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'default'  => __( 'Cash', 'order-tip-woo' )
                         ),
                         array(
-                            'name'     => __( '', 'order-tip-woo' ),
+                            'name'     => '',
                             'type'     => 'title',
                             'desc'     => '',
                             'id'       => 'wc_order_tip_settings_cash_tip_separator'
@@ -499,7 +499,7 @@ function woo_order_tip_admin_add_settings( $settings ) {
                         ),
 
                         array(
-                            'name'     => __( '', 'order-tip-woo' ),
+                            'name'     => '',
                             'type'     => 'title',
                             'desc'     => '',
                             'id'       => 'wc_order_tip_settings_misc_separator'

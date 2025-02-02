@@ -195,7 +195,7 @@ class WOO_Order_Tip_Main {
     * Tip form
     **/
     function tip_form() {
-        echo WOO_Order_Tip_Service::tip_form( $this->settings );
+        WOO_Order_Tip_Service::tip_form( $this->settings );
     }
 
     /**

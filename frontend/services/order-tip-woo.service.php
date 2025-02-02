@@ -62,9 +62,7 @@ class WOO_Order_Tip_Service {
 
             $settings = $settings ? $settings : self::get_settings();
 
-            ob_start();
             include( WOOOTIPPATH . 'frontend/views/tip-form.php' );
-            return ob_get_clean();
 
         }
 
@@ -206,7 +204,11 @@ class WOO_Order_Tip_Service {
             return false;
         }
 
-        $url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $req_scheme = isset( $_SERVER['REQUEST_SCHEME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_SCHEME'] ) ) : 'https';
+        $server_name = isset( $_SERVER['SERVER_NAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) : '';
+        $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+
+        $url = $req_scheme . '://' . $server_name . $request_uri;
 
         $post_id = url_to_postid( $url );
         $post = $post_id ? get_post( $post_id ) : false;
