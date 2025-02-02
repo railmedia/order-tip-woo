@@ -88,6 +88,10 @@ class WOO_Order_Tip_Main {
         add_action( 'woocommerce_new_order', array( $this, 'remove_tip_on_order_placed' ) );
         add_action( 'woocommerce_thankyou', array( $this, 'remove_tip_on_order_placed' ) );
 
+        add_action( 'wp', function(){
+            var_dump( WOO_Order_Tip_Service::get_tip_data() );
+        } );
+
         add_shortcode( 'order_tip_form', array( $this, 'tip_form_shortcode' ) );
 
     }
@@ -203,17 +207,17 @@ class WOO_Order_Tip_Main {
     **/
     function add_tip_to_cart( $cart ) {
 
-        $tip_data = WOO_Order_Tip_Service::get_tip_data( $cart );
+        $cart = $cart ? $cart : WC()->cart;
 
-        if( $tip_data && ( $cart || WC()->cart ) ) {
+        $tip_data = WOO_Order_Tip_Service::get_tip_data();
 
-            $object = $cart;
+        if( $tip_data && $cart ) {
 
             if( true != $tip_data['recurring']  ) {
-                $object = WC()->cart;
+                $cart = WC()->cart;
             }
 
-            $object->add_fee( $tip_data['tip_label'], $tip_data['tip_amount'], $tip_data['is_taxable'], '' );
+            $cart->add_fee( $tip_data['tip_label'], $tip_data['tip_amount'], $tip_data['is_taxable'], '' );
 
         }
 

@@ -44,12 +44,6 @@ class WOO_Order_Tip_Admin_Config {
             'exn' => esc_url( wp_nonce_url( admin_url( 'admin.php?page=wc-reports&tab=order_tip&a=export&from=fromDate&to=toDate&fees=Fees' ), 'export-report-to-csv', 'wootip_export_nonce' ) )
         ) );
 
-        global $current_screen;
-
-        if( $current_screen && ( 'woocommerce_page_wc-reports' === $current_screen->id || 'woocommerce_page_wc-settings' === $current_screen->id ) ) {
-            wp_enqueue_script( 'woo-order-tip-admin', WOOOTIPURL . 'admin/assets/js/woo-order-tip-admin.js', array('jquery'), WOOTIPVER, true );
-        }
-
     }
 
     /**

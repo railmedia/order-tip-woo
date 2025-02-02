@@ -73,8 +73,9 @@ class WOO_Order_Tip_Service {
     /**
     * Get tip data from session
     */
-    public static function get_tip_data( $selector ) {
+    public static function get_tip_data() {
 
+        $cart = WC()->cart;
         $settings = self::get_settings();
 
         $tip_data = array();
@@ -86,7 +87,7 @@ class WOO_Order_Tip_Service {
             $tip = isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
         }
 
-        if( $tip && $selector ) {
+        if( $tip && $cart ) {
 
             if( $tip == 'custom' ) {
 
@@ -97,7 +98,7 @@ class WOO_Order_Tip_Service {
                 switch( $tip['tip_type'] ) {
                     case '1':
                         //Get subtotal
-                        $subtotal = $selector->get_subtotal();
+                        $subtotal = $cart->get_subtotal();
                         $tip_amount = ( $tip['tip'] / 100 ) * $subtotal;
                     break;
                     case '2':
