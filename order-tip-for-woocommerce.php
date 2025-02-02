@@ -9,7 +9,7 @@
 * Text Domain: order-tip-woo
 * Domain Path: /languages
 * WC requires at least: 3.0.0
-* WC tested up to: 9.3.3
+* WC tested up to: 9.6.0
 * License: GPLv2 or later
 */
 

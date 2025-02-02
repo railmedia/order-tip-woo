@@ -92,6 +92,12 @@ CSS classes and IDs that allow customization:
 
 == Changelog ==
 
+= 1.5.1 =
+*Released 2 February 2025*
+
+* Added new option to select the type of session you would like to use for tip storage. On certain hosting platforms, such as Dreamhost, the usage of the PHPSESSID session, destroys the page cache and therefore, the shop should use WooCommerce only session, while on other hosters, you can use the PHP session as well.
+* Other small fixes and compatibility checks
+
 = 1.5.0 =
 *Released 26 October 2024*
 
