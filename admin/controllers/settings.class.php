@@ -374,6 +374,18 @@ function woo_order_tip_admin_add_settings( $settings ) {
                         ),
 
                         array(
+                            'name'     => __( 'PHP/WooCommerce session usage', 'order-tip-woo' ),
+                            'type'     => 'select',
+                            'options'  => array(
+                                '1'    => __( 'PHP and WooCommerce', 'order-tip-woo' ),
+                                '2'    => __( 'WooCommerce only', 'order-tip-woo' )
+                            ),
+                            'id'       => 'wc_order_tip_session_type',
+                            'desc'     => __( 'PHP and WooCommerce will use both types of sessions, in parallel. Activating any of the PHP sessions, will imply the usage of the PHPSESSID cookie which on certain servers may result in an impossibility of allows your server to use the caching systems properly.', 'order-tip-woo' ),
+                            'desc_tip' => true
+                        ),
+
+                        array(
                             'name'     => __( 'Updated to 1.1', 'order-tip-woo' ),
                             'type'     => 'text',
                             'id'       => 'wc_order_tip_updated_1_1',

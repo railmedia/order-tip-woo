@@ -62,7 +62,9 @@ class WOO_Order_Tip_Service {
 
             $settings = $settings ? $settings : self::get_settings();
 
+            ob_start();
             include( WOOOTIPPATH . 'frontend/views/tip-form.php' );
+            return ob_get_clean();
 
         }
 
@@ -80,7 +82,7 @@ class WOO_Order_Tip_Service {
         $wc_session = WC()->session;
         $tip = $wc_session ? $wc_session->get('tip') : array();
         
-        if( ! $tip && isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ) {
+        if( ! $tip && self::should_use_php_session() && isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ) {
             $tip = isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
         }
 
@@ -166,10 +168,12 @@ class WOO_Order_Tip_Service {
             $wc_session->__unset( 'tip' );
         }
 
-        $session_tip = isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
+        if( self::should_use_php_session() ) {
+            $session_tip = isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
 
-        if( $session_tip ) {
-            unset( $_SESSION['tip'] );
+            if( $session_tip ) {
+                unset( $_SESSION['tip'] );
+            }
         }
 
     }
@@ -187,6 +191,46 @@ class WOO_Order_Tip_Service {
         ) );
 
         return $orders ? $orders[0]->get_date_created() : '';
+
+    }
+
+    /**
+     * 
+     */
+    public static function should_use_php_session() {
+
+        $session_type = get_option( 'wc_order_tip_session_type' );
+
+        if( $session_type && '2' === $session_type ) {
+            return false;
+        }
+
+        $url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+
+        $post_id = url_to_postid( $url );
+        $post = $post_id ? get_post( $post_id ) : false;
+
+        $enabled_cart = get_option( 'wc_order_tip_enabled_cart' );
+        $enabled_checkout = get_option( 'wc_order_tip_enabled_checkout' );
+
+        $cart_page_id = get_option( 'woocommerce_cart_page_id' );
+        $checkout_page_id = get_option( 'woocommerce_checkout_page_id' );
+
+        $use_session = false;
+
+        if( 
+            ( 'yes' === $enabled_cart && $post_id && $cart_page_id == $post_id )
+            || ( 'yes' === $enabled_checkout && $post_id && $checkout_page_id == $post_id )
+            || (
+                $post_id 
+                && $post
+                && has_shortcode( $post->post_content, 'order_tip_form' )
+            )
+        ) {
+            $use_session = true;
+        }
+
+        return $use_session;
 
     }
 
