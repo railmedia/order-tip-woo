@@ -207,7 +207,7 @@ class WOO_Order_Tip_Admin_Reports {
     **/
     function display_orders_list_reports_ajax() {
 
-        check_ajax_referer( 'reps', 'security' );
+        check_ajax_referer( 'reps-' . date('Y-m-d H'), 'security' );
 
         $after_date  = isset( $_REQUEST['from'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['from'] ) ) : '';
         $before_date = isset( $_REQUEST['to'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['to'] ) ) : '';
@@ -223,7 +223,8 @@ class WOO_Order_Tip_Admin_Reports {
 
             if( $order_ids['order_ids'] && ! $order_ids['errors'] ) {
 
-                ob_start();
+                // ob_start();
+                $result = array();
 
                 $total = 0;
                 $i = 1;
@@ -237,26 +238,38 @@ class WOO_Order_Tip_Admin_Reports {
                     
                     $order_status = $data['status'];
                     $total += $data['value'];
-                    $date = $data['date'];
+                    $date = $data['date'];                    
 
-                    $row_data = array(
-                        'order_id'     => $order_id,
-                        'av_statuses'  => $av_statuses,
-                        'order_status' => $order_status,
-                        'customer'     => $data['customer'],
-                        'type'         => $data['type'],
-                        'value'        => $data['value'],
-                        'date'         => $data['date'],
-                        'date_format'  => $date_format
+                    // $row_data = array(
+                    //     'order_id'     => $order_id,
+                    //     'av_statuses'  => $av_statuses,
+                    //     'order_status' => $order_status,
+                    //     'customer'     => $data['customer'],
+                    //     'type'         => $data['type'],
+                    //     'value'        => $data['value'],
+                    //     'date'         => $data['date'],
+                    //     'date_format'  => $date_format
+                    // );
+
+                    // include( WOOOTIPPATH . 'admin/views/reports-orders-list-row.php' );
+
+                    $date = new DateTime( $data['date'] );
+
+                    $result[] = array(
+                        // 'idx'         => $i,
+                        'orderId'     => esc_html( $order_id ),
+                        'orderStatus' => $av_statuses[ 'wc-' . $order_status ],
+                        'customer'    => esc_html( $data['customer'] ),
+                        'feeType'     => esc_html( $data['type'] ),
+                        'feeValue'    => get_woocommerce_currency_symbol() . number_format( esc_html( $data['value'] ), 2 ),
+                        'orderDate'   => esc_html( $date->format( $date_format ) )
                     );
-
-                    include( WOOOTIPPATH . 'admin/views/reports-orders-list-row.php' );
 
                     $i++;
 
                 }
 
-                $result = ob_get_clean();
+                // $result = ob_get_clean();
 
             }
 
@@ -390,7 +403,7 @@ class WOO_Order_Tip_Admin_Reports {
     **/
     function export_tips_to_csv_ajax() {
 
-        check_ajax_referer( 'export-report-to-csv', 'security' );
+        check_ajax_referer( 'export-report-to-csv-' . date('Y-m-d H'), 'security' );
         
         global $wp_filesystem;
 
@@ -459,7 +472,7 @@ class WOO_Order_Tip_Admin_Reports {
     **/
     function delete_exported_csv_file_ajax() {
 
-        check_ajax_referer( 'delete-exported-file', 'security' );
+        check_ajax_referer( 'delete-exported-file-' . date('Y-m-d H'), 'security' );
 
         global $wp_filesystem;
 
@@ -508,7 +521,7 @@ class WOO_Order_Tip_Admin_Reports {
 
         if(
             $wootip_export_nonce
-            && wp_verify_nonce( $wootip_export_nonce, 'export-report-to-csv' )
+            && wp_verify_nonce( $wootip_export_nonce, 'export-report-to-csv-' . date('Y-m-d H') )
             && is_user_logged_in() && current_user_can( 'manage_woocommerce' ) 
             && $page && ( 'wc-reports' === $page || 'wc-settings' === $page )
             && $tab && 'order_tip' === $tab

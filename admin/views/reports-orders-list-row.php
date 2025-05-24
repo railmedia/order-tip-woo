@@ -26,7 +26,7 @@ $fee_value    = esc_html( $row_data['value'] );
 $date         = new DateTime( $row_data['date'] );
 $date         = esc_html( $date->format( $row_data['date_format'] ) )
 ?>
-<tr>
+<tr data-orderid="<?php echo $order_id; ?>">
     <td style="width: 30px;">
         <input title="<?php printf( /* translators: 1: Order ID */ esc_attr__( 'Select %d', 'order-tip-woo' ), esc_attr( $row_data['order_id'] ) ); ?>" class="select-order" type="checkbox" />
     </td>
