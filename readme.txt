@@ -2,7 +2,7 @@
 Contributors: railmedia
 Tags: Woocommerce, Ecommerce, Order, Tip, Donation
 Requires at least: 3.0
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 Tested up to: 6.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -91,6 +91,12 @@ CSS classes and IDs that allow customization:
 6. Backend Order displaying tip
 
 == Changelog ==
+
+= 1.5.3 =
+*Released 24 May 2025*
+
+* Fixed issue that triggered multiple tip reports to be duplicated
+* Small other UI changes
 
 = 1.5.2 =
 *Released 4 February 2025*

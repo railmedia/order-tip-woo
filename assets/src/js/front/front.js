@@ -9,7 +9,7 @@ import $ from 'jquery';
 
         selectTip: trigger => {
 
-            const applyTip = trigger.parent().find('button.woo_order_tip_apply');
+            const applyTip = trigger.parent().find('.woo_order_tip_custom_text_field');
      
             jQuery('.woo_order_tip').removeClass('active');
      
@@ -19,7 +19,7 @@ import $ from 'jquery';
      
             if( tip == 'custom' ) {
                 applyTip.toggle();
-                trigger.parent().find('.woo_order_tip_custom_text').toggle().focus();
+                jQuery('.woo_order_tip_apply').show();
             } else {
                 WooOrderTip.applyTip( trigger );
             }
@@ -86,7 +86,7 @@ import $ from 'jquery';
                             
                             jQuery('.woo_order_tip_remove').show();
                             jQuery('.woo_order_tip_apply').hide();
-                            jQuery('.woo_order_tip_custom_text').hide();
+                            jQuery('.woo_order_tip_custom_text_field').hide();
 
                             document.dispatchEvent(orderTipPlacedEvent);
 
@@ -152,7 +152,6 @@ import $ from 'jquery';
         });
 
         jQuery('.woo_order_tip_custom_text').on('keypress', function(evt){
-            console.log(evt);
             if( evt.which == 13 ) {
                 evt.preventDefault();
                 return false;

@@ -209,11 +209,11 @@ class WOO_Order_Tip_Admin_Reports {
 
         check_ajax_referer( 'reps-' . date('Y-m-d H'), 'security' );
 
-        $after_date  = isset( $_REQUEST['from'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['from'] ) ) : '';
-        $before_date = isset( $_REQUEST['to'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['to'] ) ) : '';
-        $paged       = isset( $_REQUEST['paged'] ) && ! empty( $_REQUEST['paged'] ) && is_numeric( $_REQUEST['paged'] ) ? intval( sanitize_text_field( wp_unslash( $_REQUEST['paged'] ) ) ) : 1;
-        $status      = isset( $_REQUEST['status'] ) && ! empty( $_REQUEST['status'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_REQUEST['status'] ) ) : 'all';
-        $fee_names   = isset( $_REQUEST['feeNames'] ) && ! empty( $_REQUEST['feeNames'] ) ? array_flip( array_map( 'sanitize_text_field', wp_unslash( $_REQUEST['feeNames'] ) ) ) : $this->fee_names;
+        $after_date  = isset( $_POST['from'] ) ? sanitize_text_field( wp_unslash( $_POST['from'] ) ) : '';
+        $before_date = isset( $_POST['to'] ) ? sanitize_text_field( wp_unslash( $_POST['to'] ) ) : '';
+        $paged       = isset( $_POST['paged'] ) && ! empty( $_POST['paged'] ) && is_numeric( $_POST['paged'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['paged'] ) ) ) : 1;
+        $status      = isset( $_POST['status'] ) && ! empty( $_POST['status'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['status'] ) ) : 'all';
+        $fee_names   = isset( $_POST['feeNames'] ) && ! empty( $_POST['feeNames'] ) ? array_flip( array_map( 'sanitize_text_field', wp_unslash( $_POST['feeNames'] ) ) ) : $this->fee_names;
         $av_statuses = wc_get_order_statuses();
         $order_statuses = $status == 'all' ? $this->get_order_statuses() : $status;
 
@@ -258,10 +258,12 @@ class WOO_Order_Tip_Admin_Reports {
                     $result[] = array(
                         // 'idx'         => $i,
                         'orderId'     => esc_html( $order_id ),
+                        'orderLink'   => esc_url( admin_url( 'post.php?post=' . $order_id . '&action=edit' ) ),
                         'orderStatus' => $av_statuses[ 'wc-' . $order_status ],
                         'customer'    => esc_html( $data['customer'] ),
                         'feeType'     => esc_html( $data['type'] ),
-                        'feeValue'    => get_woocommerce_currency_symbol() . number_format( esc_html( $data['value'] ), 2 ),
+                        'feePrice'    => wc_price( number_format( esc_html( $data['value'] ), 2 ) ),
+                        'feeValue'    => number_format( esc_html( $data['value'] ), 2 ),
                         'orderDate'   => esc_html( $date->format( $date_format ) )
                     );
 

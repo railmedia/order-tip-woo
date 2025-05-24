@@ -33,7 +33,7 @@ import '/node_modules/jquery-ui/dist/themes/base/jquery-ui.min.css';
                         ${ lastRow + 1 }
                     </td>
                     <td class="order-id" data-value="${ row['orderId'] }">
-                        <a href="#!" target="_blank">${ row['orderId'] }</a>
+                        <a href="${ row['orderLink'] }" target="_blank" rel="noopener noreferrer">${ row['orderId'] }</a>
                     </td>
                     <td class="order-status-col" data-value="${ row['orderStatus'] }">
                         ${ row['orderStatus'] }
@@ -44,8 +44,8 @@ import '/node_modules/jquery-ui/dist/themes/base/jquery-ui.min.css';
                     <td class="fee-type" data-value="${ row['feeType'] }">
                         ${ row['feeType'] }
                     </td>
-                    <td class="order-value" data-value="${ row['feeType'] }">
-                        ${ row['feeType'] }
+                    <td class="order-value" data-value="${ row['feeValue'] }">
+                        ${ row['feePrice'] }
                     </td>
                     <td class="order-date" data-value="${ row['orderDate'] }">
                         ${ row['orderDate'] }
