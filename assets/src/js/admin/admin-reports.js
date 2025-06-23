@@ -107,18 +107,14 @@ import '/node_modules/jquery-ui/dist/themes/base/jquery-ui.min.css';
                                 containerRes.empty().html( data.result );
                             }
 
-                            if( paged > 1 ) {
+                            if( paged >= 1 ) {
 
-                                // containerRes.append( data.result );
-
-                                console.log(data.result);
                                 for( const key in data.result ) {
 
                                     if( ! jQuery(`#woo-order-tip-reports-table tbody tr[data-orderid="${ data.result[key]['orderId'] }"]`).length ) {
                                         const rowData = WOOTAdminReports.getRowData( data.result[key] );
                                         containerRes.append( rowData );
                                     }
-                                    // containerRes.append( data.result[key] );
                                 }
                             }
 

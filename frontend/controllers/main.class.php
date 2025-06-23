@@ -118,12 +118,12 @@ class WOO_Order_Tip_Main {
         }
 
         $tip = array(
-            'tip'           => isset( $_REQUEST['tip'] ) && ! empty( $_REQUEST['tip'] ) ? floatval( str_replace( ',', '.', sanitize_text_field( wp_unslash( $_REQUEST['tip'] ) ) ) ) : 0,
-            'tip_type'      => isset( $_REQUEST['tip_type'] ) && ! empty( $_REQUEST['tip_type'] ) ? intval( sanitize_text_field( wp_unslash( $_REQUEST['tip_type'] ) ) ) : '',
-            'tip_label'     => isset( $_REQUEST['tip_label'] ) && ! empty( $_REQUEST['tip_label'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tip_label'] ) ) : '',
-            'tip_cash'      => isset( $_REQUEST['tip_cashe'] ) && ! empty( $_REQUEST['tip_cash'] ) ? intval( sanitize_text_field( wp_unslash( $_REQUEST['tip_cash'] ) ) ) : 0,
-            'tip_custom'    => isset( $_REQUEST['tip_custom'] ) && ! empty( $_REQUEST['tip_custom'] ) ? intval( sanitize_text_field( wp_unslash( $_REQUEST['tip_custom'] ) ) ) : 0,
-            'tip_recurring' => isset( $_REQUEST['tip_recurring'] ) && ! empty( $_REQUEST['tip_recurring'] ) && 'true' === sanitize_text_field( wp_unslash( $_REQUEST['tip_recurring'] ) ) ? true : false
+            'tip'           => isset( $_POST['tip'] ) && ! empty( $_POST['tip'] ) ? abs( floatval( str_replace( ',', '.', sanitize_text_field( wp_unslash( $_POST['tip'] ) ) ) ) ) : 0,
+            'tip_type'      => isset( $_POST['tip_type'] ) && ! empty( $_POST['tip_type'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['tip_type'] ) ) ) : '',
+            'tip_label'     => isset( $_POST['tip_label'] ) && ! empty( $_POST['tip_label'] ) ? sanitize_text_field( wp_unslash( $_POST['tip_label'] ) ) : '',
+            'tip_cash'      => isset( $_POST['tip_cash'] ) && ! empty( $_POST['tip_cash'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['tip_cash'] ) ) ) : 0,
+            'tip_custom'    => isset( $_POST['tip_custom'] ) && ! empty( $_POST['tip_custom'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['tip_custom'] ) ) ) : 0,
+            'tip_recurring' => isset( $_POST['tip_recurring'] ) && ! empty( $_POST['tip_recurring'] ) && 'true' === sanitize_text_field( wp_unslash( $_POST['tip_recurring'] ) ) ? true : false
         );
 
         if( $session_tip && isset( $session_tip['active_tip_id'] ) ) {
@@ -155,6 +155,7 @@ class WOO_Order_Tip_Main {
 
         wp_send_json( array(
             'tip' => $session_tip,
+            'tip_raw' => $tip,
             'status' => 'success'
         ) );
 

@@ -2,7 +2,7 @@
 Contributors: railmedia
 Tags: Woocommerce, Ecommerce, Order, Tip, Donation
 Requires at least: 3.0
-Stable tag: 1.5.3
+Stable tag: 1.5.5
 Tested up to: 6.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -92,10 +92,21 @@ CSS classes and IDs that allow customization:
 
 == Changelog ==
 
+= 1.5.5 =
+*Released 13 June 2025*
+
+* Security patch - server side validation of the tip to be applied. Patch is applied to all previous versions.
+
+= 1.5.4 =
+*Released 31 May 2025*
+
+* Based on v1.5.3, the persistent admin notification was not removed. v1.5.4 removes it
+
 = 1.5.3 =
 *Released 24 May 2025*
 
 * Fixed issue that triggered multiple tip reports to be duplicated
+* Removed persistent admin notification that would ask to save the Order Tip plugin's settings
 * Small other UI changes
 
 = 1.5.2 =

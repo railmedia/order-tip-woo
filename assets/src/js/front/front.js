@@ -37,8 +37,11 @@ import $ from 'jquery';
             
             let errors = 0,
                 tip    = container.find('.woo_order_tip.active').data('tip');
+                tip    = tip ? Math.abs( tip ) : 0;
 
-            const tip_label = tip + tip_type_symbol
+            console.log(tip);
+
+            const tip_label = tip + tip_type_symbol;
             
             if( tip == 'custom' ) {
 
