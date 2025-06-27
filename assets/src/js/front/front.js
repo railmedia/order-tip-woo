@@ -9,7 +9,7 @@ import $ from 'jquery';
 
         selectTip: trigger => {
 
-            const applyTip = trigger.parent().find('.woo_order_tip_custom_text_field');
+            const applyTip = trigger.parent().find('button.woo_order_tip_apply');
      
             jQuery('.woo_order_tip').removeClass('active');
      
@@ -19,7 +19,7 @@ import $ from 'jquery';
      
             if( tip == 'custom' ) {
                 applyTip.toggle();
-                jQuery('.woo_order_tip_apply').show();
+                trigger.parent().find('.woo_order_tip_custom_text').toggle().focus();
             } else {
                 WooOrderTip.applyTip( trigger );
             }
@@ -34,13 +34,13 @@ import $ from 'jquery';
                 tip_custom      = container.find('.woo_order_tip.active').data('tip-custom'),
                 tip_cash        = container.find('.woo_order_tip.active').data('tip-cash'),
                 tip_recurring   = container.find('#woo_recurring_tip').is(':checked');
-
-                
+            
             let errors = 0,
                 tip    = container.find('.woo_order_tip.active').data('tip');
-                tip    = tip && 'custom' !== tip && 'number' === typeof tip ? Math.abs( tip ) : tip;
-                
-            const tip_label = tip + tip_type_symbol;
+
+            tip = tip && 'custom' !== tip && 'number' === typeof tip ? Math.abs( tip ) : tip;
+
+            const tip_label = tip + tip_type_symbol
             
             if( tip == 'custom' ) {
 
@@ -78,7 +78,6 @@ import $ from 'jquery';
                     success: function (tipApplied) {
 
                         if( tipApplied.status && 'success' === tipApplied.status ) {
-
                             if( tip_custom ) {
                                 jQuery('.woo_order_tip[data-tip="custom"]').text( wootip.s.cut + ' (' + wootip.cs + tip.replace( ',', wootip.ds ).replace( '.', wootip.ds ) + ')' );
                             }
@@ -89,7 +88,7 @@ import $ from 'jquery';
                             
                             jQuery('.woo_order_tip_remove').show();
                             jQuery('.woo_order_tip_apply').hide();
-                            jQuery('.woo_order_tip_custom_text_field').hide();
+                            jQuery('.woo_order_tip_custom_text').hide();
 
                             document.dispatchEvent(orderTipPlacedEvent);
 
@@ -155,6 +154,7 @@ import $ from 'jquery';
         });
 
         jQuery('.woo_order_tip_custom_text').on('keypress', function(evt){
+            console.log(evt);
             if( evt.which == 13 ) {
                 evt.preventDefault();
                 return false;

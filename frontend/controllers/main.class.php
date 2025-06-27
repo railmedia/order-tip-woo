@@ -35,7 +35,6 @@ class WOO_Order_Tip_Main {
         $this->settings = WOO_Order_Tip_Service::get_settings();
         
         if( $this->settings['wc_order_tip_enabled_cart'] == 'yes' && $this->settings['wc_order_tip_cart_position'] ) {
-
             switch( $this->settings['wc_order_tip_cart_position'] ) {
                 case 'before_cart':
                     add_action( 'woocommerce_before_cart', array( $this, 'tip_form' ) );
@@ -53,11 +52,8 @@ class WOO_Order_Tip_Main {
                     add_action( 'woocommerce_after_cart', array( $this, 'tip_form' ) );
                 break;
             }
-
         }
-
         if( $this->settings['wc_order_tip_enabled_checkout'] == 'yes' && $this->settings['wc_order_tip_checkout_position'] ) {
-
             switch( $this->settings['wc_order_tip_checkout_position'] ) {
                 case 'before_checkout_form':
                     add_action( 'woocommerce_before_checkout_form', array( $this, 'tip_form' ) );
@@ -96,11 +92,9 @@ class WOO_Order_Tip_Main {
     * Initialize the classic PHP session. The tip is stored in both PHP session and Woo session.
     **/
     function init_session() {
-
-        if( function_exists( 'WC' ) && ! session_id() && WC()->session && WOO_Order_Tip_Service::should_use_php_session() ) {
+        if( function_exists( 'WC' ) && ! session_id() && WC()->session ) {
             session_start();
         }
-
     }
 
     /**
@@ -110,7 +104,7 @@ class WOO_Order_Tip_Main {
 
         check_ajax_referer( 'apply_order_tip', 'security' );
 
-        $session_tip = WOO_Order_Tip_Service::should_use_php_session() ? ( isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array() ) : array();
+        $session_tip = isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
 
         $wc_session = WC()->session;
         if( ! $session_tip ) {
@@ -118,12 +112,12 @@ class WOO_Order_Tip_Main {
         }
 
         $tip = array(
-            'tip'           => isset( $_POST['tip'] ) && ! empty( $_POST['tip'] ) ? abs( floatval( str_replace( ',', '.', sanitize_text_field( wp_unslash( $_POST['tip'] ) ) ) ) ) : 0,
-            'tip_type'      => isset( $_POST['tip_type'] ) && ! empty( $_POST['tip_type'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['tip_type'] ) ) ) : '',
-            'tip_label'     => isset( $_POST['tip_label'] ) && ! empty( $_POST['tip_label'] ) ? sanitize_text_field( wp_unslash( $_POST['tip_label'] ) ) : '',
-            'tip_cash'      => isset( $_POST['tip_cash'] ) && ! empty( $_POST['tip_cash'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['tip_cash'] ) ) ) : 0,
-            'tip_custom'    => isset( $_POST['tip_custom'] ) && ! empty( $_POST['tip_custom'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['tip_custom'] ) ) ) : 0,
-            'tip_recurring' => isset( $_POST['tip_recurring'] ) && ! empty( $_POST['tip_recurring'] ) && 'true' === sanitize_text_field( wp_unslash( $_POST['tip_recurring'] ) ) ? true : false
+            'tip'           => isset( $_REQUEST['tip'] ) && ! empty( $_REQUEST['tip'] ) ? abs( floatval( str_replace( ',', '.', sanitize_text_field( wp_unslash( $_REQUEST['tip'] ) ) ) ) ) : 0,
+            'tip_type'      => isset( $_REQUEST['tip_type'] ) && ! empty( $_REQUEST['tip_type'] ) ? intval( sanitize_text_field( wp_unslash( $_REQUEST['tip_type'] ) ) ) : '',
+            'tip_label'     => isset( $_REQUEST['tip_label'] ) && ! empty( $_REQUEST['tip_label'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tip_label'] ) ) : '',
+            'tip_cash'      => isset( $_REQUEST['tip_cashe'] ) && ! empty( $_REQUEST['tip_cash'] ) ? intval( sanitize_text_field( wp_unslash( $_REQUEST['tip_cash'] ) ) ) : 0,
+            'tip_custom'    => isset( $_REQUEST['tip_custom'] ) && ! empty( $_REQUEST['tip_custom'] ) ? intval( sanitize_text_field( wp_unslash( $_REQUEST['tip_custom'] ) ) ) : 0,
+            'tip_recurring' => isset( $_REQUEST['tip_recurring'] ) && ! empty( $_REQUEST['tip_recurring'] ) && 'true' === sanitize_text_field( wp_unslash( $_REQUEST['tip_recurring'] ) ) ? true : false
         );
 
         if( $session_tip && isset( $session_tip['active_tip_id'] ) ) {
@@ -142,9 +136,7 @@ class WOO_Order_Tip_Main {
             $tip['tip_label'] = get_option('wc_order_tip_cash_label');
         }
 
-        if( WOO_Order_Tip_Service::should_use_php_session() ) {
-            $_SESSION['tip'] = serialize( $tip );
-        }
+        $_SESSION['tip'] = serialize( $tip );
 
         $wc_session = WC()->session;
         $sess_customer = $wc_session->get('customer');
@@ -155,7 +147,6 @@ class WOO_Order_Tip_Main {
 
         wp_send_json( array(
             'tip' => $session_tip,
-            'tip_raw' => $tip,
             'status' => 'success'
         ) );
 
@@ -173,9 +164,7 @@ class WOO_Order_Tip_Main {
         $wc_session = WC()->session;
         $wc_session->__unset( 'tip' );
 
-        if( WOO_Order_Tip_Service::should_use_php_session() && isset( $_SESSION['tip'] ) ) {
-            unset( $_SESSION['tip'] );
-        }
+        unset( $_SESSION['tip'] );
 
         echo 'success';
 
@@ -187,9 +176,7 @@ class WOO_Order_Tip_Main {
     * Tip form shortcode callback
     **/
     function tip_form_shortcode() {
-        ob_start();
-        $this->tip_form();
-        return ob_get_clean();
+        return $this->tip_form();
     }
 
     /**
@@ -204,17 +191,17 @@ class WOO_Order_Tip_Main {
     **/
     function add_tip_to_cart( $cart ) {
 
-        $cart = $cart ? $cart : WC()->cart;
+        $tip_data = WOO_Order_Tip_Service::get_tip_data( $cart );
 
-        $tip_data = WOO_Order_Tip_Service::get_tip_data();
+        if( $tip_data && ( $cart || WC()->cart ) ) {
 
-        if( $tip_data && $cart ) {
+            $object = $cart;
 
             if( true != $tip_data['recurring']  ) {
-                $cart = WC()->cart;
+                $object = WC()->cart;
             }
 
-            $cart->add_fee( $tip_data['tip_label'], $tip_data['tip_amount'], $tip_data['is_taxable'], '' );
+            $object->add_fee( $tip_data['tip_label'], $tip_data['tip_amount'], $tip_data['is_taxable'], '' );
 
         }
 
@@ -232,14 +219,10 @@ class WOO_Order_Tip_Main {
                 $wc_session->__unset( 'tip' );
             }
 
-            if( WOO_Order_Tip_Service::should_use_php_session() ) {
-            
-                $session_tip = isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
+            $session_tip = isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
 
-                if( $session_tip ) {
-                    unset( $_SESSION['tip'] );
-                }
-                
+            if( $session_tip ) {
+                unset( $_SESSION['tip'] );
             }
 
         }

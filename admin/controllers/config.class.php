@@ -21,7 +21,6 @@ class WOO_Order_Tip_Admin_Config {
     function __construct() {
         add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ), 100 );
         add_filter( 'plugin_action_links', array( $this, 'plugin_action_links' ), 10, 2 );
-        add_action( 'admin_init', array( $this, 'consistent_options' ) );
     }
 
     /**
@@ -37,13 +36,19 @@ class WOO_Order_Tip_Admin_Config {
         wp_register_script( 'woo-order-tip-admin-reports', WOOOTIPURL . 'assets/build/adminReports.bundle.js', array('jquery'), WOOTIPVER, true );
         wp_localize_script( 'woo-order-tip-admin-reports', 'wootipar', array(
             'aju' => admin_url( 'admin-ajax.php' ),
-            'ajn' => wp_create_nonce('reps-' . date('Y-m-d H')),
-            'erc' => wp_create_nonce('export-report-to-csv-' . date('Y-m-d H')),
-            'def' => wp_create_nonce('delete-exported-file-' . date('Y-m-d H')),
+            'ajn' => wp_create_nonce('reps'),
+            'erc' => wp_create_nonce('export-report-to-csv'),
+            'def' => wp_create_nonce('delete-exported-file'),
             'fod' => $first_order_date ? $first_order_date->format('Y') : '',
             'cuy' => $date->format('Y'),
-            'exn' => esc_url( wp_nonce_url( admin_url( 'admin.php?page=wc-reports&tab=order_tip&a=export&from=fromDate&to=toDate&fees=Fees' ), 'export-report-to-csv-' . date('Y-m-d H'), 'wootip_export_nonce' ) )
+            'exn' => esc_url( wp_nonce_url( admin_url( 'admin.php?page=wc-reports&tab=order_tip&a=export&from=fromDate&to=toDate&fees=Fees' ), 'export-report-to-csv', 'wootip_export_nonce' ) )
         ) );
+
+        global $current_screen;
+
+        if( $current_screen && ( 'woocommerce_page_wc-reports' === $current_screen->id || 'woocommerce_page_wc-settings' === $current_screen->id ) ) {
+            wp_enqueue_script( 'woo-order-tip-admin', WOOOTIPURL . 'admin/assets/js/woo-order-tip-admin.js', array('jquery'), WOOTIPVER, true );
+        }
 
     }
 
@@ -62,17 +67,6 @@ class WOO_Order_Tip_Admin_Config {
 
         return array_merge( $new_actions, $plugin_actions );
 
-    }
-
-    /**
-    * Save default options
-    * @since 1.5.2
-    **/
-    function consistent_options() {
-        $wc_order_tip_session_type = get_option( 'wc_order_tip_session_type' );
-        if( ! $wc_order_tip_session_type ) {
-            update_option( 'wc_order_tip_session_type', '1' );
-        }
     }
 
 }

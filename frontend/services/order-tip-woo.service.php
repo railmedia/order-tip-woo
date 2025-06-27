@@ -71,9 +71,8 @@ class WOO_Order_Tip_Service {
     /**
     * Get tip data from session
     */
-    public static function get_tip_data() {
+    public static function get_tip_data( $selector ) {
 
-        $cart = WC()->cart;
         $settings = self::get_settings();
 
         $tip_data = array();
@@ -81,11 +80,11 @@ class WOO_Order_Tip_Service {
         $wc_session = WC()->session;
         $tip = $wc_session ? $wc_session->get('tip') : array();
         
-        if( ! $tip && self::should_use_php_session() && isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ) {
+        if( ! $tip && isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ) {
             $tip = isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
         }
 
-        if( $tip && $cart ) {
+        if( $tip && $selector ) {
 
             if( $tip == 'custom' ) {
 
@@ -96,7 +95,7 @@ class WOO_Order_Tip_Service {
                 switch( $tip['tip_type'] ) {
                     case '1':
                         //Get subtotal
-                        $subtotal = $cart->get_subtotal();
+                        $subtotal = $selector->get_subtotal();
                         $tip_amount = ( $tip['tip'] / 100 ) * $subtotal;
                     break;
                     case '2':
@@ -167,12 +166,10 @@ class WOO_Order_Tip_Service {
             $wc_session->__unset( 'tip' );
         }
 
-        if( self::should_use_php_session() ) {
-            $session_tip = isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
+        $session_tip = isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
 
-            if( $session_tip ) {
-                unset( $_SESSION['tip'] );
-            }
+        if( $session_tip ) {
+            unset( $_SESSION['tip'] );
         }
 
     }
@@ -190,50 +187,6 @@ class WOO_Order_Tip_Service {
         ) );
 
         return $orders ? $orders[0]->get_date_created() : '';
-
-    }
-
-    /**
-     * 
-     */
-    public static function should_use_php_session() {
-
-        $session_type = get_option( 'wc_order_tip_session_type' );
-
-        if( $session_type && '2' === $session_type ) {
-            return false;
-        }
-
-        $req_scheme = isset( $_SERVER['REQUEST_SCHEME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_SCHEME'] ) ) : 'https';
-        $server_name = isset( $_SERVER['SERVER_NAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) : '';
-        $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
-
-        $url = $req_scheme . '://' . $server_name . $request_uri;
-
-        $post_id = url_to_postid( $url );
-        $post = $post_id ? get_post( $post_id ) : false;
-
-        $enabled_cart = get_option( 'wc_order_tip_enabled_cart' );
-        $enabled_checkout = get_option( 'wc_order_tip_enabled_checkout' );
-
-        $cart_page_id = get_option( 'woocommerce_cart_page_id' );
-        $checkout_page_id = get_option( 'woocommerce_checkout_page_id' );
-
-        $use_session = false;
-
-        if( 
-            ( 'yes' === $enabled_cart && $post_id && $cart_page_id == $post_id )
-            || ( 'yes' === $enabled_checkout && $post_id && $checkout_page_id == $post_id )
-            || (
-                $post_id 
-                && $post
-                && has_shortcode( $post->post_content, 'order_tip_form' )
-            )
-        ) {
-            $use_session = true;
-        }
-
-        return $use_session;
 
     }
 

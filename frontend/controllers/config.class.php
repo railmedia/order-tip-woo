@@ -20,7 +20,6 @@ class WOO_Order_Tip_Config {
     **/
     function __construct() {
         add_action( 'wp_enqueue_scripts', array( $this, 'scripts' ), 100 );
-        add_action( 'wp', array( $this, 'consistent_options' ) );
     }
 
     /**
@@ -49,17 +48,6 @@ class WOO_Order_Tip_Config {
                 'cat' => esc_html( get_option( 'wc_order_tip_cash_label' ) )
             ),
         ) );
-    }
-
-    /**
-    * Save default options
-    * @since 1.5.2
-    **/
-    function consistent_options() {
-        $wc_order_tip_session_type = get_option( 'wc_order_tip_session_type' );
-        if( ! $wc_order_tip_session_type ) {
-            update_option( 'wc_order_tip_session_type', '1' );
-        }
     }
 
 }

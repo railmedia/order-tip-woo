@@ -86,8 +86,9 @@ do_action( 'before_order_tip_form' );
     </p>
     <?php } ?>
     
-    <p class="form-row woo_order_tip_custom_text_field" style="display:none;">
-        <input  
+    <p class="form-row woo_order_tip_custom_text_field">
+        <input 
+            style="display:none;" 
             type="text" 
             class="input-text woo_order_tip_custom_text" 
             data-tip-type="<?php echo esc_attr( $settings['wc_order_tip_type'] ); ?>" 

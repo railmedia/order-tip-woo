@@ -19,17 +19,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $idx          = esc_html( $i );
 $order_id     = esc_html( $row_data['order_id'] );
-$order_status = ! empty( $row_data['order_status'] ) && ! empty( $row_data['av_statuses'][ 'wc-' . $row_data['order_status'] ] ) ? $row_data['av_statuses'][ 'wc-' . $row_data['order_status'] ] : '';
-$order_status = ! $order_status && ! empty( $row_data['order_status'] ) ? ucfirst( $row_data['order_status'] ) : '';
-$order_status = $order_status ? esc_html( $order_status ) : '';
-// $order_status = esc_html( $row_data['av_statuses'] ? $row_data['av_statuses'][ 'wc-' . $row_data['order_status'] ] : ucfirst( $row_data['order_status'] ) );
+$order_status = esc_html( $row_data['av_statuses'] ? $row_data['av_statuses'][ 'wc-' . $row_data['order_status'] ] : ucfirst( $row_data['order_status'] ) );
 $customer     = esc_html( $row_data['customer'] );
 $fee_type     = esc_html( $row_data['type'] );
 $fee_value    = esc_html( $row_data['value'] );
 $date         = new DateTime( $row_data['date'] );
 $date         = esc_html( $date->format( $row_data['date_format'] ) )
 ?>
-<tr data-orderid="<?php echo $order_id; ?>">
+<tr>
     <td style="width: 30px;">
         <input title="<?php printf( /* translators: 1: Order ID */ esc_attr__( 'Select %d', 'order-tip-woo' ), esc_attr( $row_data['order_id'] ) ); ?>" class="select-order" type="checkbox" />
     </td>
