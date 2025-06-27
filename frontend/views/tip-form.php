@@ -76,16 +76,6 @@ do_action( 'before_order_tip_form' );
     <button id="woo_order_tip_custom" type="button" class="woo_order_tip <?php echo esc_attr( $active_class ); ?>" data-tip="custom" data-tip-type="2" data-tip-custom="1" data-tip-cash="0">
         <?php echo wp_kses_post( apply_filters( 'wc_order_tip_custom_label', $settings['wc_order_tip_custom_label'] ) ); ?><?php echo esc_html( $custom_tip_suffix ); ?>
     </button>
-    
-    <?php 
-        if( WOOOTIPSUB && isset( $settings['wc_order_tip_woo_subscriptions'] ) && $settings['wc_order_tip_woo_subscriptions'] == '4' ) { 
-            $checked = $recurring_tip === true ? 'checked="checked"' : ''
-    ?>
-    <p class="woo_order_tip_recurring_tip_field">
-        <input id="woo_recurring_tip" type="checkbox" <?php echo esc_attr( $checked ); ?> /> <label for="woo_recurring_tip"><?php esc_html_e( 'Recurring tip', 'order-tip-woo' ); ?></label>
-    </p>
-    <?php } ?>
-    
     <p class="form-row woo_order_tip_custom_text_field" style="display:none;">
         <input  
             type="text" 
@@ -95,6 +85,20 @@ do_action( 'before_order_tip_form' );
             placeholder="<?php echo wp_kses_post( apply_filters( 'wc_order_tip_custom_enter_tip_placeholder', $settings['wc_order_tip_enter_placeholder'] ) ); ?>" 
             value="<?php echo esc_attr( $custom_cash_val ); ?>"
         />
+    </p>
+    <?php } ?>
+    <?php 
+        if( 
+            WOOOTIPSUB 
+            && isset( $settings['wc_order_tip_woo_subscriptions'] ) 
+            && $settings['wc_order_tip_woo_subscriptions'] == '4'
+            && class_exists( 'WC_Subscriptions_Cart' )
+            && method_exists( 'WC_Subscriptions_Cart', 'cart_contains_subscription' )
+            && WC_Subscriptions_Cart::cart_contains_subscription()
+        ) { 
+    ?>
+    <p class="woo_order_tip_recurring_tip_field">
+        <input id="woo_recurring_tip" type="checkbox" <?php checked( $recurring_tip, true ); ?> /> <label for="woo_recurring_tip"><?php esc_html_e( 'Recurring tip', 'order-tip-woo' ); ?></label>
     </p>
     <?php } ?>
     <button class="woo_order_tip_apply" type="button" name="woo_order_tip_apply" style="display:none;"><?php echo esc_html( $settings['wc_order_tip_custom_apply_label'] ); ?><span></span></button>

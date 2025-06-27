@@ -34,13 +34,13 @@ import $ from 'jquery';
                 tip_custom      = container.find('.woo_order_tip.active').data('tip-custom'),
                 tip_cash        = container.find('.woo_order_tip.active').data('tip-cash'),
                 tip_recurring   = container.find('#woo_recurring_tip').is(':checked');
-            
+
+                
             let errors = 0,
                 tip    = container.find('.woo_order_tip.active').data('tip');
-
-            tip = tip && 'custom' !== tip && 'number' === typeof tip ? Math.abs( tip ) : tip;
-
-            const tip_label = tip + tip_type_symbol
+                tip    = tip && 'custom' !== tip && 'number' === typeof tip ? Math.abs( tip ) : tip;
+                
+            const tip_label = tip + tip_type_symbol;
             
             if( tip == 'custom' ) {
 
@@ -78,6 +78,7 @@ import $ from 'jquery';
                     success: function (tipApplied) {
 
                         if( tipApplied.status && 'success' === tipApplied.status ) {
+
                             if( tip_custom ) {
                                 jQuery('.woo_order_tip[data-tip="custom"]').text( wootip.s.cut + ' (' + wootip.cs + tip.replace( ',', wootip.ds ).replace( '.', wootip.ds ) + ')' );
                             }

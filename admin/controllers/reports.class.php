@@ -419,7 +419,7 @@ class WOO_Order_Tip_Admin_Reports {
             $errors[] = esc_html__( 'Failed to initialize the export requisites.', 'order-tip-woo' );
         }
 
-        $data         = isset( $_REQUEST['data'] ) ? map_deep( wp_unslash( $_REQUEST['data'] ), 'sanitize_text_field' ) : array();
+        $data         = isset( $_POST['data'] ) ? map_deep( wp_unslash( $_POST['data'] ), 'sanitize_text_field' ) : array();
         
         $uploads_dir  = wp_upload_dir();
         $upload_path  = $uploads_dir['basedir'];
@@ -494,7 +494,7 @@ class WOO_Order_Tip_Admin_Reports {
 
         }
 
-        $file_path = isset( $_REQUEST['filePath'] ) && ! empty( $_REQUEST['filePath'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['filePath'] ) ) : '';
+        $file_path = isset( $_POST['filePath'] ) && ! empty( $_POST['filePath'] ) ? sanitize_text_field( wp_unslash( $_POST['filePath'] ) ) : '';
 
         if( $wp_filesystem->is_file( $file_path ) ) {
             $wp_filesystem->delete( $file_path );
@@ -514,12 +514,12 @@ class WOO_Order_Tip_Admin_Reports {
     **/
     function export_tips_to_csv() {
 
-        $wootip_export_nonce = isset( $_REQUEST['wootip_export_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wootip_export_nonce'] ) ) : '';
-        $page      = isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '';
-        $tab       = isset( $_REQUEST['tab'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) : '';
-        $a         = isset( $_REQUEST['a'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['a'] ) ) : '';
-        $date_from = isset( $_REQUEST['from'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['from'] ) ) : '';
-        $date_to   = isset( $_REQUEST['to'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['to'] ) ) : '';
+        $wootip_export_nonce = isset( $_POST['wootip_export_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wootip_export_nonce'] ) ) : '';
+        $page      = isset( $_POST['page'] ) ? sanitize_text_field( wp_unslash( $_POST['page'] ) ) : '';
+        $tab       = isset( $_POST['tab'] ) ? sanitize_text_field( wp_unslash( $_POST['tab'] ) ) : '';
+        $a         = isset( $_POST['a'] ) ? sanitize_text_field( wp_unslash( $_POST['a'] ) ) : '';
+        $date_from = isset( $_POST['from'] ) ? sanitize_text_field( wp_unslash( $_POST['from'] ) ) : '';
+        $date_to   = isset( $_POST['to'] ) ? sanitize_text_field( wp_unslash( $_POST['to'] ) ) : '';
 
         if(
             $wootip_export_nonce
@@ -543,7 +543,7 @@ class WOO_Order_Tip_Admin_Reports {
 
             // @codingStandardsIgnoreStart
     		$this->get_tips_csv_header( $fp, $date_from, $date_to );
-    		$this->create_tips_csv_lines( $fp, $date_from, $date_to, $_REQUEST['fees'] );
+    		$this->create_tips_csv_lines( $fp, $date_from, $date_to, $_POST['fees'] );
     		fclose($fp); // No need to use WP_Filesystem for files generated on the fly and not stored on the server
             // @codingStandardsIgnoreEnd
 
