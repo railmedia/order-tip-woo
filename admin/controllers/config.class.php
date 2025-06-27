@@ -21,6 +21,7 @@ class WOO_Order_Tip_Admin_Config {
     function __construct() {
         add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ), 100 );
         add_filter( 'plugin_action_links', array( $this, 'plugin_action_links' ), 10, 2 );
+        add_action( 'admin_init', array( $this, 'consistent_options' ) );
     }
 
     /**
@@ -61,6 +62,17 @@ class WOO_Order_Tip_Admin_Config {
 
         return array_merge( $new_actions, $plugin_actions );
 
+    }
+
+    /**
+    * Save default options
+    * @since 1.5.2
+    **/
+    function consistent_options() {
+        $wc_order_tip_session_type = get_option( 'wc_order_tip_session_type' );
+        if( ! $wc_order_tip_session_type ) {
+            update_option( 'wc_order_tip_session_type', '1' );
+        }
     }
 
 }
