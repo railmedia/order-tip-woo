@@ -35,6 +35,7 @@ class WOO_Order_Tip_Main {
         $this->settings = WOO_Order_Tip_Service::get_settings();
         
         if( $this->settings['wc_order_tip_enabled_cart'] == 'yes' && $this->settings['wc_order_tip_cart_position'] ) {
+
             switch( $this->settings['wc_order_tip_cart_position'] ) {
                 case 'before_cart':
                     add_action( 'woocommerce_before_cart', array( $this, 'tip_form' ) );
@@ -52,8 +53,11 @@ class WOO_Order_Tip_Main {
                     add_action( 'woocommerce_after_cart', array( $this, 'tip_form' ) );
                 break;
             }
+
         }
+
         if( $this->settings['wc_order_tip_enabled_checkout'] == 'yes' && $this->settings['wc_order_tip_checkout_position'] ) {
+
             switch( $this->settings['wc_order_tip_checkout_position'] ) {
                 case 'before_checkout_form':
                     add_action( 'woocommerce_before_checkout_form', array( $this, 'tip_form' ) );
@@ -92,9 +96,11 @@ class WOO_Order_Tip_Main {
     * Initialize the classic PHP session. The tip is stored in both PHP session and Woo session.
     **/
     function init_session() {
-        if( function_exists( 'WC' ) && ! session_id() && WC()->session ) {
+
+        if( function_exists( 'WC' ) && ! session_id() && WC()->session && WOO_Order_Tip_Service::should_use_php_session() ) {
             session_start();
         }
+
     }
 
     /**
@@ -104,7 +110,7 @@ class WOO_Order_Tip_Main {
 
         check_ajax_referer( 'apply_order_tip', 'security' );
 
-        $session_tip = isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
+        $session_tip = WOO_Order_Tip_Service::should_use_php_session() ? ( isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array() ) : array();
 
         $wc_session = WC()->session;
         if( ! $session_tip ) {
@@ -136,7 +142,9 @@ class WOO_Order_Tip_Main {
             $tip['tip_label'] = get_option('wc_order_tip_cash_label');
         }
 
-        $_SESSION['tip'] = serialize( $tip );
+        if( WOO_Order_Tip_Service::should_use_php_session() ) {
+            $_SESSION['tip'] = serialize( $tip );
+        }
 
         $wc_session = WC()->session;
         $sess_customer = $wc_session->get('customer');
@@ -164,7 +172,9 @@ class WOO_Order_Tip_Main {
         $wc_session = WC()->session;
         $wc_session->__unset( 'tip' );
 
-        unset( $_SESSION['tip'] );
+        if( WOO_Order_Tip_Service::should_use_php_session() && isset( $_SESSION['tip'] ) ) {
+            unset( $_SESSION['tip'] );
+        }
 
         echo 'success';
 
@@ -176,7 +186,9 @@ class WOO_Order_Tip_Main {
     * Tip form shortcode callback
     **/
     function tip_form_shortcode() {
-        return $this->tip_form();
+        ob_start();
+        $this->tip_form();
+        return ob_get_clean();
     }
 
     /**
@@ -191,17 +203,17 @@ class WOO_Order_Tip_Main {
     **/
     function add_tip_to_cart( $cart ) {
 
-        $tip_data = WOO_Order_Tip_Service::get_tip_data( $cart );
+        $cart = $cart ? $cart : WC()->cart;
 
-        if( $tip_data && ( $cart || WC()->cart ) ) {
+        $tip_data = WOO_Order_Tip_Service::get_tip_data();
 
-            $object = $cart;
+        if( $tip_data && $cart ) {
 
             if( true != $tip_data['recurring']  ) {
-                $object = WC()->cart;
+                $cart = WC()->cart;
             }
 
-            $object->add_fee( $tip_data['tip_label'], $tip_data['tip_amount'], $tip_data['is_taxable'], '' );
+            $cart->add_fee( $tip_data['tip_label'], $tip_data['tip_amount'], $tip_data['is_taxable'], '' );
 
         }
 
@@ -219,10 +231,14 @@ class WOO_Order_Tip_Main {
                 $wc_session->__unset( 'tip' );
             }
 
-            $session_tip = isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
+            if( WOO_Order_Tip_Service::should_use_php_session() ) {
+            
+                $session_tip = isset( $_SESSION ) && isset( $_SESSION['tip'] ) && ! empty( $_SESSION['tip'] ) ? unserialize( sanitize_text_field( wp_unslash( $_SESSION['tip'] ) ) ) : array();
 
-            if( $session_tip ) {
-                unset( $_SESSION['tip'] );
+                if( $session_tip ) {
+                    unset( $_SESSION['tip'] );
+                }
+                
             }
 
         }

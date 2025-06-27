@@ -98,6 +98,14 @@ function woo_order_tip_admin_add_settings( $settings ) {
                     );
 
                     $settings_display = array(
+                        
+                        array(
+                            'name'     => __( 'Cart page', 'order-tip-woo' ),
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_tip_cart_page'
+                        ),
+                        
                         array(
                             'name'     => __( 'Enabled on Cart page', 'order-tip-woo' ),
                             'type'     => 'select',
@@ -139,6 +147,19 @@ function woo_order_tip_admin_add_settings( $settings ) {
                         ),
 
                         array(
+                            'name'     => '',
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_tip_cart_separator'
+                        ),
+
+                        array(
+                            'name'     => __( 'Checkout page', 'order-tip-woo' ),
+                            'type'     => 'title',
+                            'id'       => 'wc_order_tip_checkout_page'
+                        ),
+
+                        array(
                             'name'     => __( 'Enabled on Checkout page', 'order-tip-woo' ),
                             'type'     => 'select',
                             'desc'     => __( 'If checked, the tip form will appear under the Checkout form on the Checkout page', 'order-tip-woo' ),
@@ -177,22 +198,22 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             ),
                             'id'       => 'wc_order_tip_refresh_checkout'
                         ),
-
                         array(
-                            'name'     => __( 'Is taxable', 'order-tip-woo' ),
-                            'type'     => 'select',
-                            'desc'     => __( 'If checked, the tip amount will be taxed as per your WooCommerce Tax settings.', 'order-tip-woo' ),
-                            'desc_tip' => true,
-                            'options'  => array(
-                                'yes'   => __( 'Yes', 'order-tip-woo' ),
-                                'no'  => __( 'No', 'order-tip-woo' )
-                            ),
-                            'label'    => __( 'Enable', 'order-tip-woo' ),
-                            'id'       => 'wc_order_tip_is_taxable'
-                        )
+                            'name'     => '',
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_tip_settings_display_separator'
+                        ),
+
                     );
 
                     $settings_tip = array(
+                        array(
+                            'name'     => __( 'Tip settings', 'order-tip-woo' ),
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_tip_settings'
+                        ),
                         array(
                             'name'     => __( 'Tip fee name', 'order-tip-woo' ),
                             'type'     => 'text',
@@ -251,10 +272,72 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'id'       => 'wc_order_tip_percentage_total',
                             'desc'     => __( 'If Tip type is set to Percentage of the order total, this setting adds the tip amount below the tip percent.', 'order-tip-woo' ),
                             'desc_tip' => true
+                        ),
+
+                        array(
+                            'name'     => '',
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_tip_settings_tip_separator'
+                        ),
+
+                    );
+
+                    $settings_default_tip = array(
+                        array(
+                            'name'     => __( 'Default tip', 'order-tip-woo' ),
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_tip_default_tip'
+                        ),
+                        array(
+                            'name'     => __( 'Use default tip', 'order-tip-woo' ),
+                            'type'     => 'select',
+                            'options'  => array(
+                                '2'    => __( 'No', 'order-tip-woo' ),
+                                '1'    => __( 'Yes', 'order-tip-woo' )
+                            ),
+                            'id'       => 'wc_order_default_tip',
+                            'desc'     => __( 'Enable/disable the usage of default tip. This means that the tip will automatically be added when an item is added to the cart. The user will have the option to change the tip or remove it.', 'order-tip-woo' ),
+                            'desc_tip' => true
+                        ),
+                        array(
+                            'name'     => __( 'Default tip type', 'order-tip-woo' ),
+                            'type'     => 'select',
+                            'options'  => array(
+                                '1'    => __( 'Percent of the order total', 'order-tip-woo' ),
+                                '2'    => __( 'Fixed amount', 'order-tip-woo' )
+                            ),
+                            'id'       => 'wc_order_default_tip_type',
+                            'desc'     => __( 'Select the type of tip you would like to use for the default tip.', 'order-tip-woo' ),
+                            'desc_tip' => true
+                        ),
+                        array(
+                            'name'     => __( 'Default tip value', 'order-tip-woo' ),
+                            'type'     => 'number',
+                            'desc'     => __( 'The value of the default tip', 'order-tip-woo' ),
+                            'desc_tip' => true,
+                            'default'  => 'Tip',
+                            // 'label'    => __( 'Enable', 'order-tip-woo' ),
+                            'id'       => 'wc_order_default_tip_value'
+                        ),
+                        array(
+                            'name'     => '',
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_tip_settings_default_tip_separator'
                         )
                     );
 
+                    $settings_default_tip = array();
+
                     $settings_custom = array(
+                        array(
+                            'name'     => __( 'Custom tip', 'order-tip-woo' ),
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_tip_default_tip'
+                        ),
                         array(
                             'name'     => __( 'Enable custom tip field', 'order-tip-woo' ),
                             'type'     => 'select',
@@ -266,7 +349,6 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'desc'     => __( 'If enabled, the customer will be able to add their own fixed amount tip.', 'order-tip-woo' ),
                             'desc_tip' => true
                         ),
-
                         array(
                             'name'     => __( 'Custom tip field label', 'order-tip-woo' ),
                             'type'     => 'text',
@@ -275,7 +357,6 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'desc_tip' => true,
                             'default'  => __( 'Custom Tip', 'order-tip-woo' )
                         ),
-
                         array(
                             'name'     => __( 'Display custom tip field label in tip name', 'order-tip-woo' ),
                             'type'     => 'select',
@@ -287,7 +368,6 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'desc'     => __( 'Display the custom tip field label in the tip fee name in paranthesis. Eg.: Tip (Add your own amount). If set to "Yes", this will appear on the cart page, on the totals page and in the order emails.', 'order-tip-woo' ),
                             'desc_tip' => true
                         ),
-
                         array(
                             'name'     => __( 'Custom tip apply tip button label', 'order-tip-woo' ),
                             'type'     => 'text',
@@ -296,7 +376,6 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'desc_tip' => true,
                             'default'  => __( 'Add tip to order', 'order-tip-woo' )
                         ),
-
                         array(
                             'name'     => __( 'Custom tip enter tip input placeholder label', 'order-tip-woo' ),
                             'type'     => 'text',
@@ -305,7 +384,6 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'desc_tip' => true,
                             'default'  => __( 'Enter tip amount', 'order-tip-woo' )
                         ),
-
                         array(
                             'name'     => __( 'Custom tip remove tip button label', 'order-tip-woo' ),
                             'type'     => 'text',
@@ -313,10 +391,22 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'desc'     => __( 'Set a label of your choice for the custom tip remove button. The default label is "Remove tip"', 'order-tip-woo' ),
                             'desc_tip' => true,
                             'default'  => __( 'Remove tip', 'order-tip-woo' )
+                        ),
+                        array(
+                            'name'     => '',
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_tip_settings_custom_tip_separator'
                         )
                     );
 
                     $settings_cash = array(
+                        array(
+                            'name'     => __( 'Cash tip', 'order-tip-woo' ),
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_tip_cash_tip'
+                        ),
                         array(
                             'name'     => __( 'Enable cash tip', 'order-tip-woo' ),
                             'type'     => 'select',
@@ -328,7 +418,6 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'desc'     => __( 'If enabled, customers will be able to choose to tip by cash (on delivery or local pickup).', 'order-tip-woo' ),
                             'desc_tip' => true
                         ),
-
                         array(
                             'name'     => __( 'Cash tip field label', 'order-tip-woo' ),
                             'type'     => 'text',
@@ -336,10 +425,34 @@ function woo_order_tip_admin_add_settings( $settings ) {
                             'desc'     => __( 'Set a label of your choice for the cash tip button. The default label is "Cash"', 'order-tip-woo' ),
                             'desc_tip' => true,
                             'default'  => __( 'Cash', 'order-tip-woo' )
+                        ),
+                        array(
+                            'name'     => '',
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_tip_settings_cash_tip_separator'
                         )
                     );
 
-                    $settings_ui = array(
+                    $settings_workflow = array(
+                        array(
+                            'name'     => __( 'Workflow', 'order-tip-woo' ),
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_workflow'
+                        ),
+                        array(
+                            'name'     => __( 'Is taxable', 'order-tip-woo' ),
+                            'type'     => 'select',
+                            'desc'     => __( 'If checked, the tip amount will be taxed as per your WooCommerce Tax settings.', 'order-tip-woo' ),
+                            'desc_tip' => true,
+                            'options'  => array(
+                                'yes'   => __( 'Yes', 'order-tip-woo' ),
+                                'no'  => __( 'No', 'order-tip-woo' )
+                            ),
+                            'label'    => __( 'Enable', 'order-tip-woo' ),
+                            'id'       => 'wc_order_tip_is_taxable'
+                        ),
                         array(
                             'name'     => __( 'Clear tip after the order has been placed', 'order-tip-woo' ),
                             'type'     => 'select',
@@ -374,10 +487,22 @@ function woo_order_tip_admin_add_settings( $settings ) {
                         ),
 
                         array(
-                            'name'     => __( 'Updated to 1.1', 'order-tip-woo' ),
-                            'type'     => 'text',
-                            'id'       => 'wc_order_tip_updated_1_1',
-                            'default'  => '1'
+                            'name'     => __( 'PHP/WooCommerce session usage', 'order-tip-woo' ),
+                            'type'     => 'select',
+                            'options'  => array(
+                                '1'    => __( 'PHP and WooCommerce', 'order-tip-woo' ),
+                                '2'    => __( 'WooCommerce only', 'order-tip-woo' )
+                            ),
+                            'id'       => 'wc_order_tip_session_type',
+                            'desc'     => __( 'PHP and WooCommerce will use both types of sessions, in parallel. Activating any of the PHP sessions, will imply the usage of the PHPSESSID cookie which on certain servers may result in an impossibility of allows your server to use the caching systems properly.', 'order-tip-woo' ),
+                            'desc_tip' => true
+                        ),
+
+                        array(
+                            'name'     => '',
+                            'type'     => 'title',
+                            'desc'     => '',
+                            'id'       => 'wc_order_tip_settings_misc_separator'
                         )
                     );
 
@@ -404,7 +529,7 @@ function woo_order_tip_admin_add_settings( $settings ) {
                         )
                     );
 
-                    $settings = apply_filters( 'wc_order_tip_settings', array_merge( $settings_open, $settings_display, $settings_tip, $settings_custom, $settings_cash, $settings_ui, $settings_woo_subscriptions, $settings_closed ) );
+                    $settings = apply_filters( 'wc_order_tip_settings', array_merge( $settings_open, $settings_display, $settings_tip, $settings_default_tip, $settings_custom, $settings_cash, $settings_workflow, $settings_woo_subscriptions, $settings_closed ) );
 
                 break;
 

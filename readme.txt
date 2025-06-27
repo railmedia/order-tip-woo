@@ -2,8 +2,8 @@
 Contributors: railmedia
 Tags: Woocommerce, Ecommerce, Order, Tip, Donation
 Requires at least: 3.0
-Stable tag: 1.5.0
-Tested up to: 6.6
+Stable tag: 1.5.1
+Tested up to: 6.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,12 @@ CSS classes and IDs that allow customization:
 6. Backend Order displaying tip
 
 == Changelog ==
+
+= 1.5.1 =
+*Released 2 February 2025*
+
+* Added new option to select the type of session you would like to use for tip storage. On certain hosting platforms, such as Dreamhost, the usage of the PHPSESSID session, destroys the page cache and therefore, the shop should use WooCommerce only session, while on other hosters, you can use the PHP session as well.
+* Other small fixes and compatibility checks
 
 = 1.5.0 =
 *Released 26 October 2024*
