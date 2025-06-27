@@ -20,6 +20,41 @@ import '/node_modules/jquery-ui/dist/themes/base/jquery-ui.min.css';
 
         },
 
+        getRowData: row => {
+
+            const lastRow = jQuery('#woo-order-tip-reports-table tbody tr:last-child').index();
+
+            return (
+                `<tr data-orderid="${ row['orderId'] }">
+                    <td style="width: 30px;">
+                        <input class="select-order" type="checkbox" />
+                    </td>
+                    <td class="row-count" data-value="${ lastRow + 1 }">
+                        ${ lastRow + 1 }
+                    </td>
+                    <td class="order-id" data-value="${ row['orderId'] }">
+                        <a href="${ row['orderLink'] }" target="_blank" rel="noopener noreferrer">${ row['orderId'] }</a>
+                    </td>
+                    <td class="order-status-col" data-value="${ row['orderStatus'] }">
+                        ${ row['orderStatus'] }
+                    </td>
+                    <td class="customer-name" data-value="${ row['customer'] }">
+                        ${ row['customer'] }
+                    </td>
+                    <td class="fee-type" data-value="${ row['feeType'] }">
+                        ${ row['feeType'] }
+                    </td>
+                    <td class="order-value" data-value="${ row['feeValue'] }">
+                        ${ row['feePrice'] }
+                    </td>
+                    <td class="order-date" data-value="${ row['orderDate'] }">
+                        ${ row['orderDate'] }
+                    </td>
+                </tr>`
+            );
+
+        },
+
         getFilteredTipOrders: paged => {
 
             const dateFrom   = jQuery('#wot-reports-date-from'),
@@ -73,7 +108,18 @@ import '/node_modules/jquery-ui/dist/themes/base/jquery-ui.min.css';
                             }
 
                             if( paged > 1 ) {
-                                containerRes.append( data.result );
+
+                                // containerRes.append( data.result );
+
+                                console.log(data.result);
+                                for( const key in data.result ) {
+
+                                    if( ! jQuery(`#woo-order-tip-reports-table tbody tr[data-orderid="${ data.result[key]['orderId'] }"]`).length ) {
+                                        const rowData = WOOTAdminReports.getRowData( data.result[key] );
+                                        containerRes.append( rowData );
+                                    }
+                                    // containerRes.append( data.result[key] );
+                                }
                             }
 
                             WOOTAdminReports.resetRowsData();

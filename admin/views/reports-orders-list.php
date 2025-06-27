@@ -177,7 +177,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         ?>
         <?php $i++; } ?>
         </tbody>
-        <?php if( $data['order_ids'] && $total ) { ?>
+        <?php //if( $data['order_ids'] && $total ) { ?>
         <tfoot>
             <td>
                 <input class="select-all" title="<?php esc_attr_e( 'Select all', 'order-tip-woo' ); ?>" style="margin-left:0;" type="checkbox" />
@@ -189,6 +189,6 @@ if ( ! defined( 'ABSPATH' ) ) {
             <td></td>
             <td colspan="2"><strong><?php esc_html_e( 'Total', 'order-tip-woo' ); ?>: <?php echo esc_html( get_woocommerce_currency_symbol() ); ?><span id="woo-order-tip-reports-total"><?php echo esc_html( number_format( $total, 2 ) ); ?></span></strong></td>
         </tfoot>
-        <?php } ?>
+        <?php //} ?>
     </table>
 </div>

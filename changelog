@@ -1,5 +1,16 @@
 == Changelog ==
 
+= 1.5.3 =
+*Released 24 May 2025*
+
+* Fixed issue that triggered multiple tip reports to be duplicated
+* Small other UI changes
+
+= 1.5.2 =
+*Released 4 February 2025*
+
+* Added default options. Some options require default values for the correct workings of the plugin. Added *wc_order_tip_session_type* for the time being
+
 = 1.5.1 =
 *Released 2 February 2025*
 
